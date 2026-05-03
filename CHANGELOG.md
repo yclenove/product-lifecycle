@@ -4,6 +4,15 @@ All notable changes to this skill will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/).
 
+## [0.8.0] - 2026-05-03
+
+### Changed
+- SKILL.md：修复"8 个 Agent"→"12 个 Agent"一致性问题
+- SKILL.md：Agent 角色表扩展到 12 个，增加"模式"列区分 A/B
+- SKILL.md：编号规则表补全所有 12 个 Agent
+- SKILL.md：快速启动示例改为通用占位符
+- README.md：重写为 12 Agent 结构，区分自驱动层和执行层
+
 ## [0.7.0] - 2026-05-03
 
 ### Added
