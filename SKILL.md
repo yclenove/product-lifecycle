@@ -45,13 +45,24 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 适用：已有产品、用户反馈驱动、版本升级。
 
 **迭代流程：**
-1. 反馈分析师收集用户反馈、bug 报告、竞品动态
-2. 迭代规划师制定迭代计划（功能清单 + 影响分析 + 回滚方案）
-3. 架构师评估变更影响
-4. 开发工程师增量实现（向后兼容）
-5. 测试经理回归测试
-6. 质量门禁审查
-7. 发布 + 更新 CHANGELOG
+1. 需求侦察兵主动扫描市场 + 产品体检
+2. 反馈分析师收集用户反馈、bug 报告、竞品动态
+3. 迭代规划师制定迭代计划（功能清单 + 影响分析 + 回滚方案）
+4. 架构师评估变更影响
+5. 开发工程师增量实现（向后兼容）
+6. 测试经理回归测试
+7. 质量门禁审查
+8. 发布 + 更新 CHANGELOG
+
+### 自驱动能力
+
+市场分析师、产品经理、需求侦察兵不需要等待输入，它们会：
+- **主动搜索** 竞品动态、用户痛点、市场趋势
+- **主动发现** 机会和威胁
+- **主动提出** 功能建议和行动方案
+- **主动输出** 侦察报告和机会清单
+
+你可以直接说"帮我看看市场上有什么新动态"，它们就会自主工作。
 
 ## 快速启动
 
@@ -80,6 +91,7 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 | `agents/quality-gatekeeper.md` | 质量门禁（代码审查 + lint + MCP） |
 | `agents/feedback-analyst.md` | 反馈分析师（持续迭代用） |
 | `agents/iteration-planner.md` | 迭代规划师（持续迭代用） |
+| `agents/proactive-scout.md` | 需求侦察兵（自驱动，持续监控） |
 
 用法：读取 prompt 文件，替换 `{{PROJECT_NAME}}` 和 `{{PROJECT_DESCRIPTION}}`，传给 Agent 工具。
 

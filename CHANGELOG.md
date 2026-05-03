@@ -4,6 +4,17 @@ All notable changes to this skill will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/).
 
+## [0.7.0] - 2026-05-03
+
+### Added
+- `agents/proactive-scout.md`：需求侦察兵（自驱动，持续监控市场 + 产品体检）
+- SKILL.md：自驱动能力说明
+
+### Changed
+- 市场分析师：从被动分析改为主动发现（主动搜索竞品动态、用户痛点、市场趋势）
+- 产品经理：从翻译需求改为主动创新（主动提出功能建议、产品路线图）
+- Agent 角色从 11 个扩展到 12 个
+
 ## [0.6.0] - 2026-05-03
 
 ### Added
