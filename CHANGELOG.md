@@ -4,6 +4,22 @@ All notable changes to this skill will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/).
 
+## [1.0.0] - 2026-05-03
+
+### Added
+- README：多工具使用说明（Claude Code / Cursor / OpenCode / Codex）
+- SKILL.md：非线性工作流（含反馈循环）
+
+### Changed
+- README：从 Claude Code 专属改为工具无关
+- 工作流：从单向改为含反馈循环（测试→开发→测试、部署→运维→部署）
+
+## [0.9.0] - 2026-05-03
+
+### Changed
+- 增强 6 个核心 Agent prompt（编排总监、开发工程师、测试经理、架构师、运维工程师、技术文档师）
+- 所有 Agent prompt 从 26-31 行增强到 52-139 行
+
 ## [0.8.0] - 2026-05-03
 
 ### Changed
