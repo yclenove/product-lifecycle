@@ -24,11 +24,24 @@
 
 > 明确本期（Phase）包含和不包含的功能。
 
+### 1.4 网络调研 [必填]
+
+> **必须使用 WebSearch/WebFetch 工具进行在线调研**，补充市场分析师的发现。
+>
+> 调研清单：
+> - [ ] 搜索竞品功能列表和 roadmap（"[竞品名] features"、"[竞品名] roadmap"）
+> - [ ] 搜索用户痛点（"[领域] pain points"、"[领域] problems"、"I wish [产品] had"）
+> - [ ] 搜索同类产品的 feature request（GitHub Issues、Product Hunt 评论）
+> - [ ] 搜索行业 idea 和趋势（"[领域] trends 2025"、"[领域] innovations"）
+> - [ ] 搜索类似产品的差异化卖点（"[竞品] alternative"、"best [领域] tools"）
+
 ## 2. 用户故事 [必填]
 
 ### 2.1 核心用户故事 [必填]
 
 > 以 "作为[角色]，我希望[功能]，以便[价值]" 格式列出。
+>
+> **调研要求：** 使用 WebSearch 搜索 "[领域] user stories"、"[竞品] use cases"，参考同类产品的真实用例。搜索 "[领域] feature requests" 获取用户真正想要的功能。
 
 ### 2.2 用户旅程 [可选]
 
@@ -39,6 +52,8 @@
 ### 3.1 功能清单 [必填]
 
 > 表格形式，每项包含：ID、功能名称、优先级（P0/P1/P2）、实现状态、验收标准。
+>
+> **调研要求：** 使用 WebSearch 搜索 "[竞品] features comparison"、"[领域] must have features"，确保功能清单覆盖用户核心需求。搜索 Product Hunt 上同类产品的功能亮点获取灵感。
 
 ### 3.2 功能详细说明 [必填]
 
