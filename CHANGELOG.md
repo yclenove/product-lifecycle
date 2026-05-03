@@ -4,6 +4,23 @@ All notable changes to this skill will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/).
 
+## [1.4.0] - 2026-05-03
+
+### Added
+- `.claude/agents/` 目录：6 个正式 subagent 定义
+  - orchestrator.md：编排总监（含项目结构自动检测）
+  - market-analyst.md：市场分析师（含 WebSearch 工具）
+  - architect.md：架构师（含技术栈自动检测）
+  - developer.md：开发工程师（含测试目录检测）
+  - qa-manager.md：测试经理（含已有测试检测）
+  - quality-gatekeeper.md：质量门禁（含 lint 配置检测）
+- 动态上下文注入：使用 `!`command` 语法自动注入项目信息
+- 工具限制：每个 Agent 只能使用指定的工具
+- 模型选择：默认使用 Sonnet
+
+### Changed
+- SKILL.md：添加 Claude Code Subagent 定义说明
+
 ## [1.3.0] - 2026-05-03
 
 ### Changed
