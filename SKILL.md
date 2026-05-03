@@ -94,7 +94,7 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 ### Agent Prompts（可直接使用）
 
-`agents/` 目录包含 8 个 Agent 的完整 prompt，可直接复制到 Agent 工具中：
+`agents/` 目录包含 12 个 Agent 的完整 prompt，可直接复制到 Agent 工具中：
 
 | 文件 | 角色 |
 |------|------|
