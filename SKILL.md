@@ -1,6 +1,10 @@
 ---
 name: product-lifecycle
 description: Use when starting a new product/project and need to orchestrate a full development lifecycle from market analysis through architecture, implementation, testing, deployment, and continuous iteration
+when_to_use: "new product launch, full lifecycle management, Phase kickoff, product iteration, market analysis needed, PRD creation, architecture design"
+argument-hint: "[project-name] [project-description]"
+disable-model-invocation: true
+allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 ---
 
 # 多 Agent 产品开发全流程
@@ -20,6 +24,31 @@ description: Use when starting a new product/project and need to orchestrate a f
 - 小功能迭代（直接用 writing-plans）
 - Bug 修复（用 systematic-debugging）
 - 纯文档生成（无代码产出）
+
+## 快速启动
+
+```
+/product-lifecycle [项目名] [一句话描述]
+```
+
+示例：`/product-lifecycle patchbay 企业级消息中继平台`
+
+## 模板目录
+
+所有模板位于 `${CLAUDE_SKILL_DIR}/templates/`：
+
+| 模板 | 用途 |
+|------|------|
+| `workflow_plan_template.md` | 工作流框架（编排总监用） |
+| `market_template.md` | 市场分析报告 |
+| `product_template.md` | PRD |
+| `architecture_template.md` | 技术设计文档 |
+| `developer_template.md` | 开发任务 |
+| `qa_template.md` | 测试计划 |
+| `devops_template.md` | 运维任务 |
+| `docwriter_template.md` | 文档任务 |
+
+读取模板：`Read ${CLAUDE_SKILL_DIR}/templates/[角色]_template.md`
 
 ## 核心模式
 
@@ -156,7 +185,7 @@ Phase 4: 发布与反馈
 
 ### 在 Claude Code 中执行
 
-使用 `Agent` 工具（`subagent_type: "general-purpose"`）启动每个角色。关键原则：
+使用 `Agent` 工具启动每个角色。关键原则：
 
 1. **编排总监先启动** — 制定 WORKFLOW_PLAN.md，确认模板和门禁
 2. **市场分析师 + 产品经理可并行** — 用多个 Agent 工具调用
@@ -171,19 +200,19 @@ Phase 4: 发布与反馈
 - 搜索 feature request 和 idea 获取产品灵感
 - 所有调研结果必须标注数据来源
 
-**并行执行示例：**
+### 并行执行示例
 
 ```
 # 同时启动市场分析师和产品经理
-Agent(description="市场分析", prompt="你是 [项目] 的市场分析师...")
-Agent(description="产品需求", prompt="你是 [项目] 的产品经理...")
+Agent(description="市场分析", prompt="你是 $ARGUMENTS 的市场分析师...")
+Agent(description="产品需求", prompt="你是 $ARGUMENTS 的产品经理...")
 ```
 
-**顺序依赖示例：**
+### 顺序依赖示例
 
 ```
 # 等 PRD 完成后再启动架构师
-Agent(description="架构设计", prompt="你是 [项目] 的架构师。PRD 已完成：[路径]...")
+Agent(description="架构设计", prompt="你是 $ARGUMENTS 的架构师。PRD 已完成：[路径]...")
 ```
 
 ### Agent 启动模板
@@ -199,7 +228,7 @@ Agent(description="架构设计", prompt="你是 [项目] 的架构师。PRD 已
 ## 你的任务
 1. 读取以下文件获取上下文：
    - [PROJECT]/docs/PRODUCT_PLAN.md
-   - [DOC_REPO]/drafts/templates/[角色]_template.md
+   - Read ${CLAUDE_SKILL_DIR}/templates/[角色]_template.md
    - [DOC_REPO]/drafts/WORKFLOW_PLAN.md
    - [相关代码文件]
 
