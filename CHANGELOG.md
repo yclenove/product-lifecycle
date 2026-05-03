@@ -4,6 +4,18 @@ All notable changes to this skill will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/).
 
+## [1.1.0] - 2026-05-03
+
+### Added
+- 文档健康检查机制：每个 Agent 启动时先检查输入文档是否齐全
+- 编排总监：检查 docs/ 目录，缺失则创建
+- 架构师：检查 PRD，缺失则从代码反推
+- 开发工程师：检查 PRD + 架构设计，缺失则先补再开发
+- 测试经理：检查 PRD + 架构设计，缺失则先补再测试
+- 运维工程师：检查架构设计，缺失则从代码反推
+- 技术文档师：检查 PRD，缺失则从代码反推
+- 迭代规划师：检查 PRD + 反馈分析，缺失则先收集
+
 ## [1.0.0] - 2026-05-03
 
 ### Added
