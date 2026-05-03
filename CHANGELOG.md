@@ -4,6 +4,19 @@ All notable changes to this skill will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/).
 
+## [0.6.0] - 2026-05-03
+
+### Added
+- `agents/feedback-analyst.md`：反馈分析师（收集用户反馈、bug 报告、竞品动态）
+- `agents/iteration-planner.md`：迭代规划师（影响分析、迭代计划、版本策略）
+- `templates/feedback_template.md`：反馈分析报告模板
+- `templates/iteration_template.md`：迭代计划模板
+- SKILL.md：两种模式（0-to-1 / 持续迭代）流程说明
+
+### Changed
+- Agent 角色从 9 个扩展到 11 个（新增反馈分析师、迭代规划师）
+- SKILL.md：支撑文件索引更新
+
 ## [0.5.0] - 2026-05-03
 
 ### Added

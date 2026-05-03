@@ -24,6 +24,35 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 - Bug 修复（用 systematic-debugging）
 - 纯文档生成（无代码产出）
 
+## 两种模式
+
+### 模式 A：从 0 到 1（新产品）
+
+```
+编排总监 → 市场分析师 + 产品经理 → 架构师
+    → 开发 + 测试 + 运维 + 文档 + 质量门禁 → 发布
+```
+
+适用：新项目启动、新 Phase、从零构建。
+
+### 模式 B：持续迭代（已有产品）
+
+```
+反馈分析师 → 迭代规划师 → 架构师（影响分析）
+    → 开发 + 测试 + 质量门禁 → 发布
+```
+
+适用：已有产品、用户反馈驱动、版本升级。
+
+**迭代流程：**
+1. 反馈分析师收集用户反馈、bug 报告、竞品动态
+2. 迭代规划师制定迭代计划（功能清单 + 影响分析 + 回滚方案）
+3. 架构师评估变更影响
+4. 开发工程师增量实现（向后兼容）
+5. 测试经理回归测试
+6. 质量门禁审查
+7. 发布 + 更新 CHANGELOG
+
 ## 快速启动
 
 ```
@@ -49,6 +78,8 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 | `agents/devops.md` | 运维工程师 |
 | `agents/docwriter.md` | 技术文档师 |
 | `agents/quality-gatekeeper.md` | 质量门禁（代码审查 + lint + MCP） |
+| `agents/feedback-analyst.md` | 反馈分析师（持续迭代用） |
+| `agents/iteration-planner.md` | 迭代规划师（持续迭代用） |
 
 用法：读取 prompt 文件，替换 `{{PROJECT_NAME}}` 和 `{{PROJECT_DESCRIPTION}}`，传给 Agent 工具。
 
@@ -66,6 +97,8 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 | `qa_template.md` | 测试计划 |
 | `devops_template.md` | 运维任务 |
 | `docwriter_template.md` | 文档任务 |
+| `feedback_template.md` | 反馈分析报告（持续迭代用） |
+| `iteration_template.md` | 迭代计划（持续迭代用） |
 
 ### 项目检测
 
