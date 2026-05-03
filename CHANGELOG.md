@@ -4,6 +4,21 @@ All notable changes to this skill will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/).
 
+## [1.3.0] - 2026-05-03
+
+### Changed
+- SKILL.md: 445 → 233 行，详细内容移到 docs/WORKFLOW_DETAILS.md
+- 保持 SKILL.md 精简，支撑文件承载详细信息
+
+### Fixed
+- 修复 "8 个 Agent" 残留引用 → "12 个 Agent"
+- 修复 workflow_plan_template.md "N 个专业 Agent" → "12 个专业 Agent"
+
+## [1.2.0] - 2026-05-03
+
+### Fixed
+- 修复一致性问题（迭代1）
+
 ## [1.1.0] - 2026-05-03
 
 ### Added
