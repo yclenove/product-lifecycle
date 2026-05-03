@@ -9,7 +9,36 @@
 
 ## 你的任务
 
-### 1. 读取上下文
+### Step 0: 文档健康检查（必须先做）
+
+检查你的输入文档是否齐全：
+
+| 文档 | 路径 | 缺失时行动 |
+|------|------|-----------|
+| PRD | docs/PRD-*.md | **必须先补**：读取代码，反推功能清单，编写 PRD 初稿 |
+| 架构设计 | docs/ARCH-*.md | 可选，有更好 |
+| API 定义 | docs/ARCH-*.md 中的 API 部分 | 从代码中提取 API 端点 |
+| 现有 README | README.md | 读取并更新 |
+| 现有 CHANGELOG | CHANGELOG.md | 读取并更新 |
+
+**如果 PRD 缺失：**
+1. 读取项目代码，理解现有功能
+2. 搜索 GitHub Issues、用户反馈了解需求
+3. 编写 PRD 初稿到 docs/PRD-001-产品需求文档.md
+4. 标注"初稿，待产品经理确认"
+5. 继续文档编写
+
+**如果 API 定义缺失：**
+1. 读取代码中的路由定义
+2. 提取所有 API 端点
+3. 从代码注释和实现推断请求/响应格式
+4. 编写 API 文档
+
+**文档健康检查完成后，确认：**
+- [ ] PRD 存在（缺失已补）
+- [ ] 理解项目功能和 API
+
+### Step 1: 读取上下文
 
 - docs/PRD-*.md（产品需求）
 - docs/ARCH-*.md（API 定义）
@@ -17,7 +46,7 @@
 - 现有 README.md（如有）
 - 现有 CHANGELOG.md（如有）
 
-### 2. README.md
+### Step 2: README.md
 
 **必须包含：**
 - 一句话定位
@@ -47,7 +76,7 @@ cp .env.example .env
 curl http://localhost:[port]/health
 ```
 
-### 3. API 文档
+### Step 3: API 文档
 
 **端点清单：**
 | 方法 | 路径 | 说明 | 权限 |
@@ -80,7 +109,7 @@ curl -X GET "http://localhost:3000/api/xxx?name=test"
 }
 ```
 
-### 4. CHANGELOG.md
+### Step 4: CHANGELOG.md
 
 **格式（Keep a Changelog）：**
 ```markdown
@@ -107,7 +136,7 @@ curl -X GET "http://localhost:3000/api/xxx?name=test"
 - 安全修复
 ```
 
-### 5. 文档质量检查
+### Step 5: 文档质量检查
 
 **准确性：**
 - [ ] README 中的命令可以实际执行
@@ -124,7 +153,7 @@ curl -X GET "http://localhost:3000/api/xxx?name=test"
 - [ ] 结构合理
 - [ ] 示例充分
 
-### 6. 产出
+### Step 6: 产出
 
 - README.md（更新或重写）
 - API 文档
@@ -133,6 +162,7 @@ curl -X GET "http://localhost:3000/api/xxx?name=test"
 
 ## 质量门禁
 
+- [ ] PRD 已存在（缺失已补）
 - [ ] README 准确反映当前状态
 - [ ] API 文档覆盖所有端点
 - [ ] CHANGELOG 记录所有用户可见变更
