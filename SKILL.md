@@ -92,9 +92,29 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 ## 支撑文件
 
-### Agent Prompts（可直接使用）
+### Claude Code Subagent 定义（推荐）
 
-`agents/` 目录包含 12 个 Agent 的完整 prompt，可直接复制到 Agent 工具中：
+`.claude/agents/` 目录包含正式的 subagent 定义，可直接在 Claude Code 中使用：
+
+| 文件 | 角色 | 工具限制 |
+|------|------|---------|
+| `.claude/agents/orchestrator.md` | 编排总监 | Read, Glob, Grep, Write, Edit, Bash |
+| `.claude/agents/market-analyst.md` | 市场分析师 | Read, Glob, Grep, WebSearch, WebFetch, Write |
+| `.claude/agents/architect.md` | 架构师 | Read, Glob, Grep, Write, Edit |
+| `.claude/agents/developer.md` | 开发工程师 | Read, Glob, Grep, Write, Edit, Bash |
+| `.claude/agents/qa-manager.md` | 测试经理 | Read, Glob, Grep, Write, Edit, Bash |
+| `.claude/agents/quality-gatekeeper.md` | 质量门禁 | Read, Glob, Grep, Write, Edit, Bash |
+
+用法：在 Claude Code 中说"使用编排总监 agent"或"启动市场分析师 agent"。
+
+特性：
+- **动态上下文注入**：自动注入项目结构、技术栈、Git 状态
+- **工具限制**：每个 Agent 只能使用指定的工具
+- **模型选择**：默认使用 Sonnet，可按需调整
+
+### Agent Prompts（通用版本）
+
+`agents/` 目录包含 12 个 Agent 的通用 prompt，适用于任何 AI 工具：
 
 | 文件 | 角色 |
 |------|------|
@@ -106,10 +126,10 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 | `agents/qa-manager.md` | 测试经理 |
 | `agents/devops.md` | 运维工程师 |
 | `agents/docwriter.md` | 技术文档师 |
-| `agents/quality-gatekeeper.md` | 质量门禁（代码审查 + lint + MCP） |
-| `agents/feedback-analyst.md` | 反馈分析师（持续迭代用） |
-| `agents/iteration-planner.md` | 迭代规划师（持续迭代用） |
-| `agents/proactive-scout.md` | 需求侦察兵（自驱动，持续监控） |
+| `agents/quality-gatekeeper.md` | 质量门禁 |
+| `agents/feedback-analyst.md` | 反馈分析师 |
+| `agents/iteration-planner.md` | 迭代规划师 |
+| `agents/proactive-scout.md` | 需求侦察兵 |
 
 用法：读取 prompt 文件，替换 `{{PROJECT_NAME}}` 和 `{{PROJECT_DESCRIPTION}}`，传给 Agent 工具。
 
