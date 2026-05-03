@@ -15,7 +15,7 @@ git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/pro
 /product-lifecycle [项目名] [一句话描述]
 ```
 
-示例：`/product-lifecycle patchbay 企业级消息中继平台`
+示例：`/product-lifecycle myapp "SaaS 协作平台"`
 
 ## 8 个 Agent 角色
 
@@ -54,7 +54,8 @@ product-lifecycle/
 │   ├── developer.md
 │   ├── qa-manager.md
 │   ├── devops.md
-│   └── docwriter.md
+│   ├── docwriter.md
+│   └── quality-gatekeeper.md
 ├── templates/            # 文档模板
 │   ├── workflow_plan_template.md
 │   ├── market_template.md
@@ -67,7 +68,7 @@ product-lifecycle/
 ├── scripts/              # 工具脚本
 │   └── detect.sh         # 项目自动检测
 └── examples/             # 完整示例
-    └── patchbay.md       # patchbay 项目 worked example
+    └── cloudflow.md      # CloudFlow 虚构项目 worked example
 ```
 
 ## 适用场景

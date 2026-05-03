@@ -4,6 +4,21 @@ All notable changes to this skill will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/).
 
+## [0.5.0] - 2026-05-03
+
+### Added
+- `agents/quality-gatekeeper.md`：质量门禁 Agent（代码审查 + lint 配置 + pre-commit hook + MCP 集成）
+- `examples/cloudflow.md`：虚构项目 CloudFlow 的完整 worked example（替代真实项目）
+- workflow_plan_template：新增质量门禁 Agent 定义和编号
+
+### Changed
+- 移除 `disable-model-invocation: true`，允许 Claude 自动触发 skill
+- Example 从真实项目改为虚构项目 CloudFlow
+- README 示例改为通用占位符
+
+### Removed
+- `examples/patchbay.md`（替换为虚构项目）
+
 ## [0.4.0] - 2026-05-03
 
 ### Added

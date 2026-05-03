@@ -1,9 +1,8 @@
 ---
 name: product-lifecycle
 description: Use when starting a new product/project and need to orchestrate a full development lifecycle from market analysis through architecture, implementation, testing, deployment, and continuous iteration
-when_to_use: "new product launch, full lifecycle management, Phase kickoff, product iteration, market analysis needed, PRD creation, architecture design"
+when_to_use: "new product launch, full lifecycle management, Phase kickoff, product iteration, market analysis needed, PRD creation, architecture design, product upgrade, new feature lifecycle"
 argument-hint: "[project-name] [project-description]"
-disable-model-invocation: true
 allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 ---
 
@@ -49,6 +48,7 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 | `agents/qa-manager.md` | 测试经理 |
 | `agents/devops.md` | 运维工程师 |
 | `agents/docwriter.md` | 技术文档师 |
+| `agents/quality-gatekeeper.md` | 质量门禁（代码审查 + lint + MCP） |
 
 用法：读取 prompt 文件，替换 `{{PROJECT_NAME}}` 和 `{{PROJECT_DESCRIPTION}}`，传给 Agent 工具。
 
@@ -77,7 +77,7 @@ bash ${CLAUDE_SKILL_DIR}/scripts/detect.sh [项目路径]
 
 ### Worked Example
 
-`examples/patchbay.md` — 完整的 patchbay 项目生命周期示例，包含时间线和产出物清单。
+`examples/cloudflow.md` — 虚构项目 CloudFlow 的完整生命周期示例，包含时间线和产出物清单。
 
 ## 核心模式
 
@@ -93,6 +93,7 @@ bash ${CLAUDE_SKILL_DIR}/scripts/detect.sh [项目路径]
 | **测试经理** | 测试策略、用例、质量门禁 | PRD + 架构设计 | 测试计划 |
 | **运维工程师** | 环境搭建、部署、监控 | 架构设计 + 代码 | 可运行环境 |
 | **技术文档师** | 用户文档、API 文档、变更日志 | 代码 + PRD | 用户文档 |
+| **质量门禁** | 代码审查、lint 规则、MCP 配置、质量门禁 | 代码 + 测试 | 质量报告 + 自动化工具 |
 
 ### 全流程闭环
 
@@ -140,12 +141,13 @@ Phase 4: 发布与反馈
     ↓
 架构师
     ↓
-┌───────┬───────┬───────┐
+┌───────┬───────┬───────┬───────┐
 开发工程师 测试经理 运维工程师 技术文档师
     ↓       ↓       ↓       ↓
     └───────┴───────┴───────┘
             ↓
-        质量门禁
+        质量门禁 Agent
+      （审查 + lint + MCP）
             ↓
          发布
 ```
@@ -347,4 +349,4 @@ Agent(description="架构设计", prompt="你是 $ARGUMENTS 的架构师。PRD �
 
 ## 实际效果
 
-详见 `examples/patchbay.md` — patchbay 项目从零到完整可运行产品，2.5 小时，3582 行设计文档。
+详见 `examples/cloudflow.md` — 虚构项目 CloudFlow 的完整生命周期演示。
