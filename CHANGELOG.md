@@ -4,6 +4,18 @@ All notable changes to this skill will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/).
 
+## [0.4.0] - 2026-05-03
+
+### Added
+- `agents/` 目录：8 个 Agent 的可直接使用 prompt 文件（含 `{{PROJECT_NAME}}` 占位符）
+- `scripts/detect.sh`：项目自动检测脚本（技术栈、已有文档、测试覆盖、Git 状态）
+- `examples/patchbay.md`：完整的 patchbay 项目 worked example（时间线、产出物、关键决策）
+- SKILL.md 支撑文件索引（agents、scripts、examples）
+
+### Changed
+- SKILL.md：移除内联的"实际效果"段落，改为引用 `examples/patchbay.md`
+- SKILL.md：支撑文件部分扩展为完整的文件索引
+
 ## [0.3.0] - 2026-05-03
 
 ### Added

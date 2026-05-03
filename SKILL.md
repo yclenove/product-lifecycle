@@ -33,9 +33,28 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 示例：`/product-lifecycle patchbay 企业级消息中继平台`
 
-## 模板目录
+## 支撑文件
 
-所有模板位于 `${CLAUDE_SKILL_DIR}/templates/`：
+### Agent Prompts（可直接使用）
+
+`agents/` 目录包含 8 个 Agent 的完整 prompt，可直接复制到 Agent 工具中：
+
+| 文件 | 角色 |
+|------|------|
+| `agents/orchestrator.md` | 编排总监 |
+| `agents/market-analyst.md` | 市场分析师 |
+| `agents/product-manager.md` | 产品经理 |
+| `agents/architect.md` | 架构师 |
+| `agents/developer.md` | 开发工程师 |
+| `agents/qa-manager.md` | 测试经理 |
+| `agents/devops.md` | 运维工程师 |
+| `agents/docwriter.md` | 技术文档师 |
+
+用法：读取 prompt 文件，替换 `{{PROJECT_NAME}}` 和 `{{PROJECT_DESCRIPTION}}`，传给 Agent 工具。
+
+### 文档模板
+
+`templates/` 目录包含各角色的文档模板：
 
 | 模板 | 用途 |
 |------|------|
@@ -48,7 +67,17 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 | `devops_template.md` | 运维任务 |
 | `docwriter_template.md` | 文档任务 |
 
-读取模板：`Read ${CLAUDE_SKILL_DIR}/templates/[角色]_template.md`
+### 项目检测
+
+```bash
+bash ${CLAUDE_SKILL_DIR}/scripts/detect.sh [项目路径]
+```
+
+自动识别：技术栈、已有文档、测试覆盖、Git 状态。
+
+### Worked Example
+
+`examples/patchbay.md` — 完整的 patchbay 项目生命周期示例，包含时间线和产出物清单。
 
 ## 核心模式
 
@@ -318,23 +347,4 @@ Agent(description="架构设计", prompt="你是 $ARGUMENTS 的架构师。PRD �
 
 ## 实际效果
 
-在 patchbay 项目中，8 个 Agent 协作完成了：
-
-**调研阶段（30 分钟）：**
-- 市场分析报告（332 行，4 竞品，3 用户画像）
-- PRD（15 功能项，Given/When/Then 验收标准）
-
-**设计阶段（30 分钟）：**
-- 系统架构设计（10 张表，27 个 API，Docker 部署方案）
-- 测试计划（42 用例，质量门禁）
-
-**实现阶段（60 分钟）：**
-- 多目标广播功能（rule_destinations 关联表）
-- 前端多选目标支持
-- Dockerfile 修复
-
-**部署阶段（30 分钟）：**
-- WSL 环境搭建（Go 1.26、Node.js 22、PostgreSQL 17）
-- 健康检查通过
-
-**总计：** 3582 行设计文档 + 完整可运行产品 + 自动化部署
+详见 `examples/patchbay.md` — patchbay 项目从零到完整可运行产品，2.5 小时，3582 行设计文档。

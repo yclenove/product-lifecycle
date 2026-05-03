@@ -11,13 +11,11 @@ git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/pro
 
 ## 使用
 
-在 Claude Code 中触发：
-
 ```
-/product-lifecycle
+/product-lifecycle [项目名] [一句话描述]
 ```
 
-或直接描述需求，Claude 会自动匹配此 skill。
+示例：`/product-lifecycle patchbay 企业级消息中继平台`
 
 ## 8 个 Agent 角色
 
@@ -41,18 +39,36 @@ Phase 3: 质量门禁 → 发布
 Phase 4: 用户反馈 → 下一迭代
 ```
 
-## 模板
+## 目录结构
 
-`templates/` 目录包含 8 个角色的文档模板：
-
-- `workflow_plan_template.md` — 工作流框架模板
-- `market_template.md` — 市场分析报告模板
-- `product_template.md` — PRD 模板
-- `architecture_template.md` — 技术设计模板
-- `developer_template.md` — 开发任务模板
-- `qa_template.md` — 测试计划模板
-- `devops_template.md` — 运维任务模板
-- `docwriter_template.md` — 文档任务模板
+```
+product-lifecycle/
+├── SKILL.md              # 主文档（skill 入口）
+├── CHANGELOG.md          # 版本记录
+├── README.md             # 本文件
+├── agents/               # 8 个 Agent 的可直接使用 prompt
+│   ├── orchestrator.md
+│   ├── market-analyst.md
+│   ├── product-manager.md
+│   ├── architect.md
+│   ├── developer.md
+│   ├── qa-manager.md
+│   ├── devops.md
+│   └── docwriter.md
+├── templates/            # 文档模板
+│   ├── workflow_plan_template.md
+│   ├── market_template.md
+│   ├── product_template.md
+│   ├── architecture_template.md
+│   ├── developer_template.md
+│   ├── qa_template.md
+│   ├── devops_template.md
+│   └── docwriter_template.md
+├── scripts/              # 工具脚本
+│   └── detect.sh         # 项目自动检测
+└── examples/             # 完整示例
+    └── patchbay.md       # patchbay 项目 worked example
+```
 
 ## 适用场景
 
