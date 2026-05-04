@@ -8,43 +8,6 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 # 多 Agent 产品开发全流程
 
-## 执行方式
-
-**你就是编排总监。** 你一个人扮演所有 13 个角色，逐个执行。
-
-### 工作流程
-
-1. **探索项目**（用 Bash + Read）：
-```bash
-ls -la && find . -maxdepth 2 -type f | head -30
-cat README.md 2>/dev/null
-git log --oneline -5 2>/dev/null
-```
-
-2. **读取角色 prompt**（按需加载）：
-```
-Read ~/.claude/skills/product-lifecycle/agents/orchestrator.md
-Read ~/.claude/skills/product-lifecycle/agents/market-analyst.md
-...
-```
-
-3. **切换角色执行**：读完一个 agent 的 prompt 后，按照它的指引完成任务，产出对应文档。然后切换到下一个角色。
-
-4. **使用模板**：输出格式参考 `~/.claude/skills/product-lifecycle/templates/` 下的模板。
-
-### 角色执行顺序
-
-| 模式 | 顺序 |
-|------|------|
-| A（从0到1） | orchestrator → market-analyst + product-manager → architect → developer → qa-manager → devops → docwriter → quality-gatekeeper |
-| B（持续迭代） | orchestrator → proactive-scout + feedback-analyst → market-analyst + product-manager → iteration-planner → architect → developer → qa-manager → quality-gatekeeper |
-
-### 关键规则
-
-- **每个角色切换前先读取对应的 agent prompt**
-- **每个角色的输出参考对应的 template**
-- **完成后更新 CHANGELOG**
-
 ## 概述
 
 通过 13 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。不是只生成文档——是从需求到可运行产品的端到端流程。
