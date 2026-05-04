@@ -8,41 +8,46 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 # 多 Agent 产品开发全流程
 
-## ⚠️ 必须使用 Agent 工具
+## 执行方式
 
-**你不能一个人完成所有任务。你必须使用 `Agent` 工具启动子代理来执行每个角色。**
+**你就是编排总监。** 你一个人扮演所有 13 个角色，逐个执行。
 
-具体做法：
-1. 先用 `Bash` + `Read` 探索项目（不要用内置 Explore Agent）
-2. 为每个角色使用 `Agent` 工具启动子代理：
-   - `Agent(subagent_type: "", prompt: "读取 ~/.claude/skills/product-lifecycle/agents/orchestrator.md，按照指引执行编排总监角色...")`
-   - 依次启动：market-analyst → product-manager → architect → developer → ...
-3. 每个子代理独立完成任务后返回结果，你汇总结果
-4. **禁止自己直接执行 Agent 角色的任务**——必须委派给子代理
+### 工作流程
+
+1. **探索项目**（用 Bash + Read）：
+```bash
+ls -la && find . -maxdepth 2 -type f | head -30
+cat README.md 2>/dev/null
+git log --oneline -5 2>/dev/null
+```
+
+2. **读取角色 prompt**（按需加载）：
+```
+Read ~/.claude/skills/product-lifecycle/agents/orchestrator.md
+Read ~/.claude/skills/product-lifecycle/agents/market-analyst.md
+...
+```
+
+3. **切换角色执行**：读完一个 agent 的 prompt 后，按照它的指引完成任务，产出对应文档。然后切换到下一个角色。
+
+4. **使用模板**：输出格式参考 `~/.claude/skills/product-lifecycle/templates/` 下的模板。
+
+### 角色执行顺序
+
+| 模式 | 顺序 |
+|------|------|
+| A（从0到1） | orchestrator → market-analyst + product-manager → architect → developer → qa-manager → devops → docwriter → quality-gatekeeper |
+| B（持续迭代） | orchestrator → proactive-scout + feedback-analyst → market-analyst + product-manager → iteration-planner → architect → developer → qa-manager → quality-gatekeeper |
+
+### 关键规则
+
+- **每个角色切换前先读取对应的 agent prompt**
+- **每个角色的输出参考对应的 template**
+- **完成后更新 CHANGELOG**
 
 ## 概述
 
 通过 13 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。不是只生成文档——是从需求到可运行产品的端到端流程。
-
-## 重要：项目探索方式
-
-**不要使用内置的 Explore Agent（`Agent` 工具）。** 使用以下方式直接探索：
-
-```bash
-# 项目结构
-ls -la
-find . -maxdepth 2 -type f | head -30
-
-# 读取关键文件
-cat README.md
-cat package.json 2>/dev/null || cat go.mod 2>/dev/null || cat requirements.txt 2>/dev/null
-
-# Git 状态
-git log --oneline -5
-git status
-```
-
-用 `Bash` + `Read` + `Glob` + `Grep` 替代 Agent 工具探索项目。
 
 ## 各工具用法（分文档）
 
