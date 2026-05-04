@@ -19,10 +19,10 @@ fi
 # 2. .claude/agents/ 数量
 echo -n ".claude/agents/ 数量: "
 count=$(ls "$ROOT/.claude/agents/"*.md 2>/dev/null | wc -l)
-if [ "$count" -eq 12 ]; then
+if [ "$count" -eq 13 ]; then
   echo "✓ ($count)"
 else
-  echo "✗ ($count/12)"
+  echo "✗ ($count/13)"
   errors=$((errors+1))
 fi
 
@@ -47,11 +47,44 @@ fi
 # 5. 上下文管理
 echo -n "上下文管理覆盖: "
 count=$(grep -l "上下文管理" "$ROOT/agents/"*.md 2>/dev/null | wc -l)
-if [ "$count" -eq 12 ]; then
-  echo "✓ ($count/12)"
+if [ "$count" -eq 13 ]; then
+  echo "✓ ($count/13)"
 else
-  echo "✗ ($count/12)"
+  echo "✗ ($count/13)"
   errors=$((errors+1))
+fi
+
+# 6. 检查 agent 必需章节
+echo -n "Agent 必需章节: "
+missing=0
+for f in "$ROOT"/agents/*.md; do
+  for section in "任务" "输出" "质量门禁" "上下文管理"; do
+    if ! grep -q "## .*${section}" "$f"; then
+      echo -n "$(basename $f) 缺少 ${section} "
+      missing=$((missing+1))
+    fi
+  done
+done
+if [ $missing -eq 0 ]; then
+  echo "✓"
+else
+  echo "✗ ($missing 项缺失)"
+  errors=$((errors+1))
+fi
+
+# 7. 检查模板元数据
+echo -n "模板元数据: "
+missing=0
+for f in "$ROOT"/templates/*.md; do
+  if ! grep -q "| 字段 |" "$f" && ! grep -q "| 字段" "$f"; then
+    echo -n "$(basename $f) "
+    missing=$((missing+1))
+  fi
+done
+if [ $missing -eq 0 ]; then
+  echo "✓"
+else
+  echo "✗ ($missing 个缺失)"
 fi
 
 echo ""

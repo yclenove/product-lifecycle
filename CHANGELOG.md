@@ -8,6 +8,41 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 
 <!-- 下一版本条目写于此 -->
 
+## [2.2.0] - 2026-05-05
+
+### Added
+- `agents/reviewer.md`：代码审查员 Agent
+- `docs/DOC-MAP.md`：文档导航地图
+- `docs/CHANGELOG-GUIDE.md`：CHANGELOG 维护指南
+- `docs/LINT-RULES.md`：Lint 规则
+- `docs/QUALITY-METRICS.md`：质量指标
+- `docs/AGENT-COMMUNICATION.md`：Agent 通信协议
+- `docs/WINDSURF-GUIDE.md`：Windsurf 集成指南
+- `docs/CURSOR-RULES-INTEGRATION.md`：Cursor Rules 集成指南
+- `scripts/gen-changelog.sh`：CHANGELOG 自动生成
+- `scripts/bump-version.sh`：版本号管理
+- `scripts/validate-templates.sh`：模板验证
+- `scripts/test-agents.sh`：Agent prompt 测试
+- `scripts/test-templates.sh`：模板测试
+- `examples/microservice.md`：微服务项目示例
+
+### Changed
+- `agents/orchestrator.md`：添加智能并行调度、边缘案例、输出格式规范
+- `agents/architect.md`：添加输出格式规范
+- `agents/developer.md`：添加代码产出规范、代码审查自检
+- `agents/qa-manager.md`：添加测试报告输出规范
+- `agents/devops.md`：添加部署清单输出规范
+- `agents/quality-gatekeeper.md`：添加自动修复建议
+- `agents/market-analyst.md`：添加搜索降级策略
+- `agents/feedback-analyst.md`：添加反馈去重规则
+- `agents/proactive-scout.md`：添加侦察策略增强
+- `scripts/validate.sh`：新增 Agent 必需章节和模板元数据检查
+- `docs/WORKFLOW_DETAILS.md`：添加 Agent 交互模式
+- `docs/CONTEXT-MANAGEMENT.md`：添加 Agent 间信息交接规范
+- `docs/SKILL-CLAUDE-CODE.md`：添加高级用法
+- `SKILL.md`：添加 DOC-MAP 引用
+- `README.md`：更新目录结构
+
 ## [2.1.0] - 2026-05-05
 
 ### Added

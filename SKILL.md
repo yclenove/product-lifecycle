@@ -10,7 +10,7 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 ## 概述
 
-通过 12 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。不是只生成文档——是从需求到可运行产品的端到端流程。
+通过 13 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。不是只生成文档——是从需求到可运行产品的端到端流程。
 
 ## 各工具用法（分文档）
 
@@ -119,6 +119,7 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 | 开发工程师 | 代码实现           | **必选** — 有代码要写时   |
 | 测试经理  | 测试策略和执行        | **必选** — 验证实现时    |
 | 质量门禁  | 代码审查           | **必选** — 发布前审查    |
+| 代码审查员 | 代码质量、安全性、可维护性审查 | 按需 — 深度代码审查时    |
 
 
 ### 扩展 Agent（按需添加）
@@ -175,6 +176,7 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 - `[examples/cloudflow.md](examples/cloudflow.md)` — CloudFlow 完整生命周期演示（模式 A，从 0 到 1）
 - `[examples/saas-iteration.md](examples/saas-iteration.md)` — SaaS 产品持续迭代演示（模式 B）
 - `[examples/cli-tool.md](examples/cli-tool.md)` — CLI 工具渐进式采用演示（4 核心 Agent）
+- `[examples/microservice.md](examples/microservice.md)` — 微服务项目演示（模式 A，含代码审查）
 
 ## 进阶资源
 
@@ -182,6 +184,7 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 - `[docs/FAQ.md](docs/FAQ.md)` — 常见问题解答，覆盖使用、技术、工作流、集成等场景
 - `[docs/QUICK-START.md](docs/QUICK-START.md)` — 快速入门指南，包含进阶用法（自定义 Agent、CI/CD 集成、多项目管理）
 - `[docs/CONTEXT-MANAGEMENT.md](docs/CONTEXT-MANAGEMENT.md)` — 上下文管理策略，解决 Agent 输出过多/过少问题
+- `[docs/DOC-MAP.md](docs/DOC-MAP.md)` — 文档导航地图，帮你快速找到需要的文档
 
 ## 快速入门
 

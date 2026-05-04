@@ -95,6 +95,33 @@ bash ${CLAUDE_SKILL_DIR}/scripts/detect.sh [项目路径]
 
 自动识别：技术栈、已有文档、测试覆盖、Git 状态。
 
+## 高级用法
+
+### 自定义 Agent 组合
+
+```bash
+# 只用核心 4 个 Agent
+# 在对话中说：只启动编排总监、开发、测试、质量门禁
+
+# 只用调研 Agent
+# 在对话中说：启动市场分析师和产品经理，做竞品分析
+```
+
+### 工作流自定义
+
+在 WORKFLOW_PLAN.md 中可以自定义：
+- Agent 执行顺序
+- 并行/串行策略
+- 质量门禁标准
+- 输出格式要求
+
+### 上下文优化技巧
+
+1. **分层读取**：先读摘要，按需读全文
+2. **增量传递**：只传递变更部分
+3. **预算控制**：在 agent prompt 中设置输出长度限制
+4. **模型选择**：简单任务用 haiku，复杂推理用 opus
+
 ## 与通用 prompt 的关系
 
 通用文本 prompt 仍位于 `agents/`（见 `docs/SKILL-ASSETS.md`）。在 Claude Code 中优先使用 `.claude/agents/` 的 subagent 定义；其他场景读取 `agents/*.md`，替换 `{{PROJECT_NAME}}` 与 `{{PROJECT_DESCRIPTION}}` 后使用。

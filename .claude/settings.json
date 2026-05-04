@@ -5,7 +5,12 @@
       "Bash(bash scripts/iterate.sh*)",
       "Bash(bash scripts/detect.sh*)",
       "Bash(bash scripts/evolve.sh*)",
-      "Bash(bash scripts/validate.sh*)"
+      "Bash(bash scripts/validate.sh*)",
+      "Bash(bash scripts/gen-changelog.sh*)",
+      "Bash(bash scripts/bump-version.sh*)",
+      "Bash(bash scripts/validate-templates.sh*)",
+      "Bash(bash scripts/test-agents.sh*)",
+      "Bash(bash scripts/test-templates.sh*)"
     ]
   }
 }

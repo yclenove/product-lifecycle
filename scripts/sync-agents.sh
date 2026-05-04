@@ -34,6 +34,7 @@ declare -A DESCRIPTIONS=(
   [proactive-scout]="需求侦察兵：持续监控市场+产品体检，主动发现机会和威胁。当用户说'侦察市场'、'产品体检'、'市场扫描'时使用。"
   [feedback-analyst]="反馈分析师：收集用户反馈、bug报告，分类量化分析。当用户说'分析反馈'、'用户反馈'、'bug分析'时使用。"
   [iteration-planner]="迭代规划师：影响分析、制定迭代计划、版本策略。当用户说'迭代计划'、'版本规划'、'下个迭代'时使用。"
+  [reviewer]="代码审查员：审查代码质量、安全性、可维护性。当用户说'代码审查'、'review'、'检查代码'时使用。"
 )
 
 declare -A TOOLS=(
@@ -49,6 +50,7 @@ declare -A TOOLS=(
   [proactive-scout]='["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write"]'
   [feedback-analyst]='["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write"]'
   [iteration-planner]='["Read", "Glob", "Grep", "Write", "Edit"]'
+  [reviewer]='["Read", "Glob", "Grep", "Bash", "Write"]'
 )
 
 declare -A MODELS=(
@@ -64,6 +66,7 @@ declare -A MODELS=(
   [iteration-planner]="sonnet"
   [docwriter]="haiku"
   [quality-gatekeeper]="haiku"
+  [reviewer]="sonnet"
 )
 
 # 动态上下文注入代码块

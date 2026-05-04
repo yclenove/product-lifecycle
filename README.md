@@ -2,7 +2,7 @@
 
 [![Quality Gate](https://github.com/yclenove/product-lifecycle/actions/workflows/quality-gate.yml/badge.svg)](https://github.com/yclenove/product-lifecycle/actions/workflows/quality-gate.yml)
 
-通过 12 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。
+通过 13 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。
 
 **工具无关** — 核心价值（Agent prompt + 文档模板 + 方法论）可在任何 AI 编码工具中使用。
 
@@ -103,7 +103,7 @@ git clone https://github.com/yclenove/product-lifecycle.git
 6. **部署循环** — 部署失败 → 运维修复 → 重新部署
 7. **发布** — 质量门禁通过后发布
 
-## 12 个 Agent 角色
+## 13 个 Agent 角色
 
 ### 自驱动层（不需要输入）
 
@@ -124,6 +124,7 @@ git clone https://github.com/yclenove/product-lifecycle.git
 | 运维工程师 | 环境搭建、部署、监控 | 可运行环境 | sonnet |
 | 技术文档师 | 用户文档、API 文档 | 用户文档 | haiku |
 | 质量门禁 | 代码审查、lint、MCP | 质量报告 | haiku |
+| 代码审查员 | 代码质量、安全性、可维护性审查 | 代码审查报告 | sonnet |
 | 反馈分析师 | 收集用户反馈、bug 报告 | 反馈分析报告 | sonnet |
 | 迭代规划师 | 影响分析、迭代计划 | 迭代计划 | sonnet |
 
@@ -152,8 +153,8 @@ git clone https://github.com/yclenove/product-lifecycle.git
 product-lifecycle/
 ├── SKILL.md              # Claude Code 入口（其他工具可忽略）
 ├── .cursor/skills/product-lifecycle/SKILL.md  # Cursor Agent Skill 入口
-├── .cursor/agents/       # Cursor Subagent 薄封装（/orchestrator、/market-analyst …）
-├── .claude/agents/       # Claude Code Subagent 定义（12 角色，含动态上下文注入）
+├── .cursor/agents/       # Cursor Subagent 薄封装（/orchestrator、/market-analyst … /reviewer）
+├── .claude/agents/       # Claude Code Subagent 定义（13 角色，含动态上下文注入）
 ├── CHANGELOG.md          # 版本记录
 ├── README.md             # 本文件
 ├── agents/               # 12 个 Agent 的通用 prompt（真源）
@@ -168,7 +169,8 @@ product-lifecycle/
 │   ├── quality-gatekeeper.md # 质量门禁
 │   ├── proactive-scout.md # 需求侦察兵
 │   ├── feedback-analyst.md # 反馈分析师
-│   └── iteration-planner.md # 迭代规划师
+│   ├── iteration-planner.md # 迭代规划师
+│   └── reviewer.md       # 代码审查员
 ├── templates/            # 文档模板
 │   ├── workflow_plan_template.md
 │   ├── market_template.md
@@ -181,7 +183,8 @@ product-lifecycle/
 │   ├── feedback_template.md
 │   ├── iteration_template.md
 │   ├── scout_template.md          # 侦察报告模板
-│   └── quality_report_template.md # 质量报告模板
+│   ├── quality_report_template.md # 质量报告模板
+│   └── adr_template.md            # 架构决策记录模板
 ├── docs/                 # 项目文档
 │   ├── QUICK-START.md    # 快速入门指南
 │   ├── SKILL-CURSOR.md   # Cursor 用法与 PACKAGE_ROOT
@@ -190,15 +193,32 @@ product-lifecycle/
 │   ├── SKILL-ASSETS.md   # 角色/模板/门禁索引
 │   ├── WORKFLOW_DETAILS.md
 │   ├── CONTEXT-MANAGEMENT.md # 上下文管理最佳实践
-│   └── CONSISTENCY-CHECKLIST.md # 三目录一致性检查清单
+│   ├── CONSISTENCY-CHECKLIST.md # 三目录一致性检查清单
+│   ├── DOC-MAP.md        # 文档导航地图
+│   ├── SECURITY.md       # 安全指南
+│   ├── TOKEN-EFFICIENCY.md # Token 优化
+│   ├── PERFORMANCE-BASELINE.md # 性能基线
+│   ├── DECISION-TREE.md  # Agent 选择决策树
+│   ├── FAQ.md            # 常见问题
+│   ├── TROUBLESHOOTING.md # 故障排除
+│   ├── INTERNATIONALIZATION.md # 国际化
+│   ├── ACCESSIBILITY.md  # 可访问性
+│   └── CHANGELOG-GUIDE.md # CHANGELOG 维护指南
 ├── scripts/              # 工具脚本
 │   ├── detect.sh         # 项目自动检测
 │   ├── install-cursor-subagents.ps1  # Cursor Subagent 安装（Windows）
-│   └── install-cursor-subagents.sh   # Cursor Subagent 安装（Unix）
+│   ├── install-cursor-subagents.sh   # Cursor Subagent 安装（Unix）
+│   ├── sync-agents.sh    # Agent 同步
+│   ├── iterate.sh        # 迭代执行
+│   ├── evolve.sh         # 进化执行
+│   ├── validate.sh       # 验证检查
+│   ├── test-agents.sh    # Agent prompt 测试（完整性/一致性）
+│   └── test-templates.sh # 模板完整性测试
 └── examples/             # 完整示例
     ├── cloudflow.md      # CloudFlow 完整生命周期（模式 A）
     ├── saas-iteration.md # SaaS 持续迭代（模式 B）
-    └── cli-tool.md       # CLI 工具渐进式采用（4 核心 Agent）
+    ├── cli-tool.md       # CLI 工具渐进式采用（4 核心 Agent）
+    └── microservice.md   # 微服务项目示例（模式 A）
 ```
 
 ## 适用场景

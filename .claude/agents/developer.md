@@ -152,6 +152,42 @@ Test_FunctionName_InvalidInput_ReturnsError
 - 迁移文件（如涉及 schema 变更）
 - 开发任务文档（参考 templates/developer_template.md）
 
+## 代码产出规范
+
+### 文件结构
+- 每个功能一个文件/模块
+- 测试文件与源文件同目录或 tests/ 目录
+- 配置文件集中管理
+
+### 代码风格
+- 函数/方法不超过 50 行
+- 文件不超过 300 行
+- 每个公共函数有文档注释
+- 变量命名清晰，避免缩写
+
+### 提交规范
+- 每个逻辑变更一个 commit
+- commit message: type(scope): description
+- type: feat/fix/docs/refactor/test/chore
+
+## 代码审查自检
+
+在提交代码前，自行检查：
+
+### 必检项
+- [ ] 无硬编码的密钥/密码/token
+- [ ] 无 console.log/print 调试语句（生产代码）
+- [ ] 无 TODO/FIXME 遗留（或已记录到 issue）
+- [ ] 错误处理完整（try-catch、边界检查）
+- [ ] 输入验证（外部数据必须校验）
+- [ ] 无未使用的变量/导入
+
+### 建议项
+- [ ] 函数不超过 50 行
+- [ ] 文件不超过 300 行
+- [ ] 有单元测试覆盖
+- [ ] 命名清晰无歧义
+
 ## 安全编码规范
 
 ### 必须做

@@ -142,6 +142,19 @@ echo "All quality checks passed!"
 | 警告 | 代码规范不一致、测试覆盖不足、性能隐患 | 建议修复，不阻塞发布 |
 | 建议 | 可读性改进、命名优化、文档补充 | 记录，后续迭代处理 |
 
+## 自动修复建议
+
+对于常见问题，提供一键修复命令：
+
+| 问题 | 修复命令 |
+|------|----------|
+| 编号重复 | `grep -n "重复编号" file.md` 定位后手动修复 |
+| 年份过时 | `sed -i 's/trends 2025/trends 2026/g' file.md` |
+| PRODUCT_PLAN 残留 | `sed -i 's/PRODUCT_PLAN/PRD/g' file.md` |
+| 缺少上下文管理 | `bash scripts/sync-agents.sh` |
+| frontmatter 缺失 | 手动添加 --- 块 |
+| CHANGELOG 格式错误 | 参考 Keep a Changelog 规范修复 |
+
 ## 输出
 
 质量报告写入 docs/QUALITY-001-质量报告.md
