@@ -108,7 +108,7 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 ## 渐进式采用
 
-不需要一次使用全部 12 个 Agent。根据项目规模选择合适的子集：
+不需要一次使用全部 13 个 Agent。根据项目规模选择合适的子集：
 
 ### 核心 Agent（最小可用集）
 
@@ -151,7 +151,7 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 - **原型/MVP**（1-2 天）→ 编排总监 + 开发 + 测试（3 个）
 - **小型项目**（1-2 周）→ 核心 4 个 + 架构师（5 个）
 - **中型项目**（1-2 月）→ 核心 4 个 + 市场 + 产品 + 架构师（7 个）
-- **大型项目**（3 月+）→ 全部 12 个 Agent
+- **大型项目**（3 月+）→ 全部 13 个 Agent
 
 **启动命令与精简模式**（Claude Code）：见 `[docs/SKILL-CLAUDE-CODE.md](docs/SKILL-CLAUDE-CODE.md)`。
 

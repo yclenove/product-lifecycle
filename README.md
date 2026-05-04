@@ -157,7 +157,7 @@ product-lifecycle/
 ├── .claude/agents/       # Claude Code Subagent 定义（13 角色，含动态上下文注入）
 ├── CHANGELOG.md          # 版本记录
 ├── README.md             # 本文件
-├── agents/               # 12 个 Agent 的通用 prompt（真源）
+├── agents/               # 13 个 Agent 的通用 prompt（真源）
 │   ├── orchestrator.md   # 编排总监
 │   ├── market-analyst.md # 市场分析师
 │   ├── product-manager.md # 产品经理

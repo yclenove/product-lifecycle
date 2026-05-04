@@ -53,7 +53,7 @@ SKILL.md
 ├── docs/SKILL-CLAUDE-CODE.md
 ├── docs/SKILL-OTHER-TOOLS.md
 ├── docs/SKILL-ASSETS.md
-│   ├── agents/*.md（12 个）
+│   ├── agents/*.md（13 个）
 │   └── templates/*.md（13 个）
 ├── docs/WORKFLOW_DETAILS.md
 ├── docs/CONTEXT-MANAGEMENT.md

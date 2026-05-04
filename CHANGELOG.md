@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 
 <!-- 下一版本条目写于此 -->
 
+## [2.3.0] - 2026-05-05
+
+### Changed
+- agents/*.md: 全部 13 个 Agent 补全输出格式规范（13/13）
+- agents/*.md: 全部 13 个 Agent 补全安全规范（13/13）
+- agents/*.md: 全部 13 个 Agent 补全错误处理/容错机制（13/13）
+- Agent prompt 质量从 9/10 提升至 10/10
+
 ## [2.2.0] - 2026-05-05
 
 ### Added
