@@ -107,3 +107,45 @@
 | 版本 | 日期 | 作者 | 变更说明 |
 |------|------|------|----------|
 | v0.1 | YYYY-MM-DD | 技术文档师 | 初稿 |
+
+---
+
+<details>
+<summary>使用示例（点击展开）</summary>
+
+### 示例：用户管理 API 文档
+
+**端点清单：**
+| 方法 | 路径 | 说明 | 权限 |
+|------|------|------|------|
+| POST | /api/users | 创建用户 | 公开 |
+| GET | /api/users/:id | 获取用户 | 登录 |
+| PUT | /api/users/:id | 更新用户 | 登录+本人 |
+| DELETE | /api/users/:id | 删除用户 | 管理员 |
+
+**请求/响应示例：**
+```bash
+# 创建用户
+curl -X POST http://localhost:3000/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"12345678","name":"张三"}'
+```
+
+**响应（201）：**
+```json
+{
+  "id": "usr_abc123",
+  "email": "user@example.com",
+  "name": "张三",
+  "createdAt": "2026-05-05T10:00:00Z"
+}
+```
+
+**错误码说明：**
+| 错误码 | HTTP 状态 | 说明 |
+|--------|-----------|------|
+| E1001 | 400 | 邮箱格式错误 |
+| E1002 | 409 | 邮箱已注册 |
+| E1003 | 401 | 认证失败 |
+
+</details>

@@ -88,7 +88,7 @@
 
 > 各组件版本、端口占用、容器状态。
 
-## 8. 后续优化 [必选]
+## 8. 后续优化 [必填]
 
 > 环境优化建议。
 
@@ -97,3 +97,45 @@
 | 版本 | 日期 | 作者 | 变更说明 |
 |------|------|------|----------|
 | v0.1 | YYYY-MM-DD | 运维工程师 | 初稿 |
+
+---
+
+<details>
+<summary>使用示例（点击展开）</summary>
+
+### 示例：Docker Compose 部署
+
+**环境变量配置（.env）：**
+```
+POSTGRES_DB=appdb
+POSTGRES_USER=app
+POSTGRES_PASSWORD=secret123
+JWT_SECRET=your-secret-key
+APP_PORT=3000
+```
+
+**部署步骤：**
+```bash
+# 1. 启动数据库
+docker compose up -d postgres
+# 2. 等待健康检查通过
+docker compose exec postgres pg_isready
+# 3. 启动应用
+docker compose up -d app
+# 4. 查看日志
+docker compose logs -f app
+```
+
+**健康检查：**
+```bash
+curl http://localhost:3000/health
+# 预期输出: {"status":"ok","db":"connected"}
+```
+
+**环境报告：**
+| 组件 | 版本 | 端口 | 状态 |
+|------|------|------|------|
+| PostgreSQL | 16.2 | 5432 | running |
+| App | v1.0.0 | 3000 | running |
+
+</details>

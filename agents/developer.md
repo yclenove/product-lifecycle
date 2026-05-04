@@ -95,6 +95,13 @@ Test_FunctionName_InvalidInput_ReturnsError
 - 测试覆盖率 > 80%
 - 没有重复代码
 
+**代码规范检查清单：**
+- [ ] 命名：变量/函数/类名清晰表达意图，无歧义缩写
+- [ ] 结构：单一职责，函数 <50 行，类 <300 行
+- [ ] 错误处理：不吞异常，关键路径有 try-catch，错误信息可操作
+- [ ] 日志：关键操作有日志，敏感信息不入日志，日志级别正确
+- [ ] 测试：公开接口有测试，边界条件覆盖，测试独立无副作用
+
 ### Step 5: 向后兼容
 
 **检查清单：**
@@ -108,12 +115,58 @@ Test_FunctionName_InvalidInput_ReturnsError
 - 必须提供迁移指南
 - 必须有回滚方案
 
-### Step 6: 产出
+### Step 6: Git 提交规范
+
+使用 Conventional Commits 格式：
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer]
+```
+
+**type 类型：**
+| type | 说明 | 示例 |
+|------|------|------|
+| feat | 新功能 | feat(auth): 添加 JWT 登录 |
+| fix | 修复 bug | fix(api): 修复空指针异常 |
+| docs | 文档变更 | docs(readme): 更新安装步骤 |
+| refactor | 重构 | refactor(user): 抽取验证逻辑 |
+| test | 测试 | test(auth): 补充登录测试用例 |
+| chore | 构建/工具 | chore(ci): 添加 GitHub Actions |
+
+**规范要点：**
+- subject 使用祈使句，首字母小写，结尾不加句号
+- body 说明 why，不重复 what
+- breaking change 在 footer 标注 `BREAKING CHANGE:`
+
+### Step 7: 产出
 
 - 代码实现（写入项目源码目录）
 - 单元测试（写入项目测试目录）
 - 迁移文件（如涉及 schema 变更）
 - 开发任务文档（参考 templates/developer_template.md）
+
+## 安全编码规范
+
+### 必须做
+- 输入验证：所有外部输入必须校验
+- 输出转义：所有输出到页面的内容必须转义
+- 参数化查询：数据库操作使用参数化查询
+- 最小权限：文件和数据库连接使用最小必要权限
+
+### 禁止做
+- 硬编码密钥、密码、token
+- eval() 或动态代码执行
+- 不安全的反序列化
+- 日志中输出敏感信息
+
+### 安全测试
+- 每个 API 端点测试：正常输入、边界值、恶意输入
+- 认证测试：未授权访问、token 过期、权限提升
+- 数据测试：SQL 注入、XSS、CSRF
 
 ## 质量门禁
 
@@ -123,3 +176,20 @@ Test_FunctionName_InvalidInput_ReturnsError
 - [ ] 代码 review 通过
 - [ ] 向后兼容（除非有 ADR）
 - [ ] 文档已更新（如有 API 变更）
+
+## 上下文管理
+
+### 输入管理
+- 优先读取摘要，按需读取原文
+- 如果文档超过 5000 字，只读取与你任务相关的段落
+- 使用 grep 定位关键词
+
+### 输出管理
+- 总长度控制在 1500 字以内
+- 使用表格和列表，避免长段落
+- 代码示例不超过 20 行
+- 关键信息前置
+
+### 状态更新
+- 完成后更新 WORKFLOW_PLAN.md 的项目状态快照
+- 生成结构化摘要供下游使用

@@ -6,7 +6,7 @@
 | 作者 | 产品经理 |
 | 日期 | YYYY-MM-DD |
 | 状态 | 草稿 |
-| 关联文档 | PRODUCT_PLAN.md §5-§7, MKT-xxx |
+| 关联文档 | docs/PRD-*.md §5-§7, MKT-xxx |
 
 ---
 
@@ -32,7 +32,7 @@
 > - [ ] 搜索竞品功能列表和 roadmap（"[竞品名] features"、"[竞品名] roadmap"）
 > - [ ] 搜索用户痛点（"[领域] pain points"、"[领域] problems"、"I wish [产品] had"）
 > - [ ] 搜索同类产品的 feature request（GitHub Issues、Product Hunt 评论）
-> - [ ] 搜索行业 idea 和趋势（"[领域] trends 2025"、"[领域] innovations"）
+> - [ ] 搜索行业 idea 和趋势（"[领域] trends 2026"、"[领域] innovations"）
 > - [ ] 搜索类似产品的差异化卖点（"[竞品] alternative"、"best [领域] tools"）
 
 ## 2. 用户故事 [必填]
@@ -61,7 +61,7 @@
 
 ## 4. 非功能需求 [必填]
 
-> 与 PRODUCT_PLAN.md NFR 章节对齐，表格形式列出：类别、要求、验收标准。
+> 与 docs/PRD-*.md NFR 章节对齐，表格形式列出：类别、要求、验收标准。
 
 ## 5. 数据模型 [条件：涉及数据变更]
 
@@ -92,3 +92,19 @@
 | 版本 | 日期 | 作者 | 变更说明 |
 |------|------|------|----------|
 | v0.1 | YYYY-MM-DD | 产品经理 | 初稿 |
+
+---
+
+<details>
+<summary>使用示例（点击展开）</summary>
+
+### 示例：用户注册功能 PRD
+
+**用户故事：** 作为新用户，我希望通过邮箱注册账号，以便使用平台功能。
+
+**验收标准：**
+- Given 用户输入有效邮箱和密码，When 点击注册，Then 账号创建成功
+- Given 邮箱已注册，When 点击注册，Then 提示"邮箱已注册"
+- Given 密码少于 8 位，When 点击注册，Then 提示"密码过短"
+
+</details>

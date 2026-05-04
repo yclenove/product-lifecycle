@@ -77,3 +77,37 @@
 | 版本 | 日期 | 作者 | 变更说明 |
 |------|------|------|----------|
 | v0.1 | YYYY-MM-DD | 开发工程师 | 初稿 |
+
+---
+
+<details>
+<summary>使用示例（点击展开）</summary>
+
+### 示例：用户登录功能开发任务分解
+
+**需求来源：** PRD-001 §3.2 用户认证功能
+
+**技术方案：** ARCH-001 §4.2 JWT 认证流程
+
+**实现范围：**
+- 包含：邮箱密码登录、JWT 签发、Token 刷新
+- 不包含：OAuth 第三方登录（Phase 2）
+
+**后端实现：**
+| 文件 | 变更类型 | 说明 |
+|------|----------|------|
+| src/auth/login.ts | 新增 | 登录接口，密码 bcrypt 校验 |
+| src/auth/jwt.ts | 新增 | JWT 签发与验证工具函数 |
+| src/middleware/auth.ts | 修改 | Token 校验中间件 |
+| src/routes/auth.ts | 新增 | /api/auth/login 路由 |
+
+**单元测试：**
+- `tests/auth/login.test.ts`：正常登录、密码错误、用户不存在
+- `tests/auth/jwt.test.ts`：Token 签发、过期校验、刷新逻辑
+
+**验证步骤：**
+1. `curl -X POST /api/auth/login -d '{"email":"test@example.com","password":"123456"}'`
+2. 返回 `{ "token": "eyJ...", "expiresIn": 3600 }`
+3. 使用 Token 访问 `GET /api/users/me` 返回用户信息
+
+</details>

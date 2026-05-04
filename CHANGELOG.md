@@ -4,22 +4,136 @@ All notable changes to this skill will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/).
 
+## [Unreleased]
+
+<!-- 下一版本条目写于此 -->
+
+## [2.1.0] - 2026-05-05
+
+### Added
+- `docs/TROUBLESHOOTING.md`：排障指南（10 个常见问题）
+- `docs/SECURITY.md`：安全指南
+- `docs/TOKEN-EFFICIENCY.md`：Token 效率指南
+- `docs/PERFORMANCE-BASELINE.md`：性能基准
+- `docs/DECISION-TREE.md`：Agent 选择决策树
+- `docs/FAQ.md`：常见问题（22 个问答）
+- `docs/INTERNATIONALIZATION.md`：国际化指南
+- `docs/ACCESSIBILITY.md`：可访问性指南
+- `templates/adr_template.md`：架构决策记录模板
+- `scripts/validate.sh`：自动化验证脚本
+- `scripts/evolve.sh`：自进化迭代脚本
+- `scripts/iterate.sh`：迭代收尾脚本
+- `.github/workflows/quality-gate.yml`：CI 质量门禁
+- `.github/PULL_REQUEST_TEMPLATE.md`：PR 模板
+- `.github/ISSUE_TEMPLATE/`：Issue 模板（bug + feature）
+- `templates/*.md`：全部 13 个模板的使用示例
+
+### Changed
+- `agents/orchestrator.md`：添加错误处理、Agent 组合推荐、输出精简规则
+- `agents/qa-manager.md`：添加验证规则
+- `agents/quality-gatekeeper.md`：添加安全检查、自动化检查清单
+- `agents/developer.md`：添加安全编码规范
+- `docs/CONTEXT-MANAGEMENT.md`：添加实战案例
+- `docs/WORKFLOW_DETAILS.md`：添加并行策略详解
+- `docs/QUICK-START.md`：添加进阶用法
+- `SKILL.md`：添加进阶资源章节、安全门禁
+- `README.md`：更新目录结构、Agent 表、CI 说明
+
+## [2.0.0] - 2026-05-05
+
+### Added
+- `docs/QUICK-START.md`：快速入门指南（30 秒理解 + 5 分钟体验 + 最小可用集 + FAQ）
+- `docs/CONSISTENCY-CHECKLIST.md`：agents/ vs .claude/agents/ vs .cursor/agents/ 一致性检查清单
+- `examples/saas-iteration.md`：SaaS 产品持续迭代示例（模式 B）
+- `examples/cli-tool.md`：CLI 工具渐进式采用示例（4 核心 Agent）
+- `docs/SKILL-CURSOR.md`：Skill vs Subagent 概念辨析章节
+- `docs/SKILL-CURSOR.md`：Hooks 集成指南
+- `docs/SKILL-ASSETS.md`：引用语法规范 + 模型选择策略
+- `templates/*.md`：3 个核心模板新增使用示例折叠区块
+- `agents/*.md`：全部 12 个 Agent 嵌入上下文管理指令（含输出预算）
+- `agents/feedback-analyst.md`：增强 prompt（69→126 行，含收集策略、分类规则、优先级公式）
+- `agents/iteration-planner.md`：增强 prompt（107→203 行，含影响分析、回滚方案模板）
+
+### Changed
+- SKILL.md：工具文档索引表增加「何时读取」列
+- SKILL.md：渐进式采用增加决策树（按项目规模分 4 档）
+- SKILL.md：实际效果章节扩展为 3 个示例
+- README.md：目录结构树全面更新、Agent 角色表增加模型列
+- `.cursor/agents/`：description 字段统一为中文（与 .claude/agents/ 一致）
+- `.cursor/agents/`：model 字段同步（orchestrator/architect → opus，docwriter/quality-gatekeeper → haiku）
+- `examples/cloudflow.md`：新增上下文管理与迭代章节
+- `templates/*.md`：年份统一更新为 2026
+- `docs/CONTEXT-MANAGEMENT.md`：年份更新
+
+### Fixed
+- 统一文档引用语法规范
+- 清理 PRODUCT_PLAN.md 虚引用残留
+- 模板格式统一（元数据表、[必填]/[可选] 标记、修订记录）
+
+## [1.9.0] - 2026-05-04
+
+### Changed
+- .cursor/agents/ model 字段同步：orchestrator/architect → opus，docwriter/quality-gatekeeper → haiku，其余 inherit
+- docs/SKILL-CLAUDE-CODE.md 模型描述更新为 opus/sonnet/haiku 三级策略
+- agents/orchestrator.md 和 .claude/agents/orchestrator.md 健康检查表同步为 4 列
+
+## [1.8.0] - 2026-05-04
+
+### Fixed
+- SKILL.md frontmatter 修复（`## name:` → `name:`，补充关闭 `---`）
+- workflow_plan_template.md 编号规则补全（新增 SCOUT、FB、ITER 三个 Agent）
+- CHANGELOG [Unreleased] 清理混入的过程稿条目
+
+### Changed
+- .claude/agents/ model 字段三级分布：opus（orchestrator, architect）/ sonnet（8 个）/ haiku（docwriter, quality-gatekeeper）
+- SKILL.md 文档健康检查表新增"质量不达标时"列
+- SKILL.md 直接引用 docs/CONTEXT-MANAGEMENT.md
+- docs/SKILL-ASSETS.md 新增模型选择策略说明
+
+## [1.7.0] - 2026-05-04
+
+### Added
+- `scripts/install-cursor-subagents.ps1`、`scripts/install-cursor-subagents.sh`：向新业务项目一键安装 `.cursor/agents/` 并写入技能包绝对路径（因 Cursor 无法自动注入）。
+- `.cursor/agents/`：12 个 Cursor Subagent 薄封装（YAML frontmatter + Read `agents/<role>.md`），含 `README.md`；可在 Agent 中用 `/orchestrator`、`/market-analyst` 等显式调用。
+- 规划迭代（2026-05-05）：`docs/ITER-003-迭代计划-v1.8.md`、`docs/ROLE-RUN-LOG-2026-05-05.md`、`docs/WORKFLOW_PLAN.md`（更新）；分角色过程稿 SCOUT-004、FEEDBACK-004、MKT-003、PRD-003、ARCH-002、DEV-002、QA-003、QG-002。
+- `docs/SKILL-CURSOR.md`：在 Cursor 上用 `/create-subagent` 与 `agents/*.md` 对齐 Claude Code 的编排与多 Subagent 体验；含能力对照表、系统提示词模板、并行与依赖说明。
+- `README.md`：Cursor 小节增加「与 Claude Code 对齐」用法（第 3 条）。
+
+### Changed
+- `docs/SKILL-OTHER-TOOLS.md`：文首增加 Cursor 安装与 Subagent 指向 `SKILL-CURSOR.md` 的说明。
+- `SKILL.md`：工具表中 Cursor 条目指向上述 CC 对齐说明。
+- `.cursor/skills/product-lifecycle/SKILL.md`：明确 Subagent 路径与 `SKILL-CURSOR.md` 权威展开。
+- `docs/SKILL-CURSOR.md`：按 [Cursor 官方 Subagents 文档](https://cursor.com/docs/subagents) 扩充——内置 Explore/Bash/Browser、`.cursor/agents/` / `.claude/agents/` 路径与优先级、`frontmatter` 字段、`/name` 与并行/恢复、Skills/Hooks 链接、成本提示；推荐改为「薄封装 `.md` + Read `agents/` 真源」；修正早期稿中错误 markdown（如 `**/create-subagent**`）。
+- `docs/WORKFLOW_DETAILS.md`：文首增加 Cursor 执行指针与官方文档链接。
+- `docs/SKILL-ASSETS.md`：通用 Agent 表处补充 Cursor Subagent 与官方文档引用。
+- `README.md`：Cursor 段补充官方 Subagents 文档链接。
+
+## [1.6.0] - 2026-05-03
+
+### Fixed
+- 清理所有 PRODUCT_PLAN.md 虚引用（templates/、agents/orchestrator.md）
+- 更新 README.md 目录结构树（添加 scout_template、quality_report_template、CONTEXT-MANAGEMENT.md）
+- SKILL.md 支撑文件索引添加上下文管理文档引用
+
+## [1.5.0] - 2026-05-03
+
+### Added
+- .claude/agents/: 补全 6 个缺失的 subagent 定义（product-manager, devops, docwriter, proactive-scout, feedback-analyst, iteration-planner）
+- templates/scout_template.md: 需求侦察兵专用模板
+- templates/quality_report_template.md: 质量门禁专用模板
+- docs/CONTEXT-MANAGEMENT.md: 上下文管理最佳实践
+- SKILL.md: 渐进式采用指引（核心 Agent 子集 + 精简模式）
+
+### Fixed
+- 搜索关键词年份更新：2025 → 2026
+- 修复 workflow_plan_template.md 编号重复（两个 1.2）
+- 清理 PRODUCT_PLAN.md 虚引用（SKILL.md, WORKFLOW_DETAILS.md）
+
 ## [1.4.0] - 2026-05-03
 
 ### Added
-- `.claude/agents/` 目录：6 个正式 subagent 定义
-  - orchestrator.md：编排总监（含项目结构自动检测）
-  - market-analyst.md：市场分析师（含 WebSearch 工具）
-  - architect.md：架构师（含技术栈自动检测）
-  - developer.md：开发工程师（含测试目录检测）
-  - qa-manager.md：测试经理（含已有测试检测）
-  - quality-gatekeeper.md：质量门禁（含 lint 配置检测）
-- 动态上下文注入：使用 `!`command` 语法自动注入项目信息
-- 工具限制：每个 Agent 只能使用指定的工具
-- 模型选择：默认使用 Sonnet
-
-### Changed
-- SKILL.md：添加 Claude Code Subagent 定义说明
+- .claude/agents/: 正式 Subagent 定义（6 个核心 Agent：orchestrator, market-analyst, architect, developer, qa-manager, quality-gatekeeper）
+- 动态上下文注入：每个 Subagent 自动检测项目结构、技术栈、Git 状态
 
 ## [1.3.0] - 2026-05-03
 

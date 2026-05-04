@@ -1,0 +1,39 @@
+name: Quality Gate
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate SKILL.md frontmatter
+        run: |
+          head -1 SKILL.md | grep -q "^---" || (echo "Missing frontmatter" && exit 1)
+
+      - name: Check .claude/agents/ completeness
+        run: |
+          count=$(ls .claude/agents/*.md | wc -l)
+          [ "$count" -eq 12 ] || (echo "Expected 12 agents, got $count" && exit 1)
+
+      - name: Check for stale references
+        run: |
+          grep -rn "PRODUCT_PLAN" --include="*.md" agents/ templates/ .claude/agents/ SKILL.md && exit 1 || true
+
+      - name: Check search keyword year
+        run: |
+          grep -rn "trends 2025" agents/ .claude/agents/ templates/ && exit 1 || true
+
+      - name: Validate templates
+        run: |
+          for f in templates/*.md; do
+            grep -q "修订记录" "$f" || echo "WARNING: $f missing 修订记录"
+          done
+
+      - name: Run validation script
+        run: bash scripts/validate.sh

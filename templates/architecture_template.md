@@ -6,7 +6,8 @@
 | 作者 | 架构师 |
 | 日期 | YYYY-MM-DD |
 | 状态 | 草稿 |
-| 关联文档 | PRD-xxx, PRODUCT_PLAN.md §5, §8 |
+| 关联文档 | PRD-xxx, docs/PRD-*.md §5, §8 |
+
 
 ---
 
@@ -22,7 +23,7 @@
 
 ### 1.3 技术约束 [必填]
 
-> 引用 PRODUCT_PLAN.md 中的技术栈约束。
+> 引用 docs/PRD-*.md 中的技术栈约束。
 
 ## 2. 架构总览 [必填]
 
@@ -115,3 +116,26 @@
 | 版本 | 日期 | 作者 | 变更说明 |
 |------|------|------|----------|
 | v0.1 | YYYY-MM-DD | 架构师 | 初稿 |
+
+---
+
+<details>
+<summary>使用示例（点击展开）</summary>
+
+### 示例：REST API 架构设计
+
+**模块划分：**
+| 模块 | 职责 | 技术栈 |
+|------|------|--------|
+| API Gateway | 路由、认证 | Express.js |
+| User Service | 用户管理 | Node.js + PostgreSQL |
+| Auth Service | JWT 认证 | Node.js + Redis |
+
+**API 清单：**
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| POST | /api/users | 创建用户 |
+| GET | /api/users/:id | 获取用户 |
+| POST | /api/auth/login | 登录 |
+
+</details>

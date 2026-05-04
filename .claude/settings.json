@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash scripts/sync-agents.sh*)",
+      "Bash(bash scripts/iterate.sh*)",
+      "Bash(bash scripts/detect.sh*)",
+      "Bash(bash scripts/evolve.sh*)",
+      "Bash(bash scripts/validate.sh*)"
+    ]
+  }
+}

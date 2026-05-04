@@ -110,7 +110,20 @@ echo "All quality checks passed!"
 
 安装方式：在项目的 `.claude/settings.json` 中配置 MCP server。
 
-### 5. 质量报告
+### 5. 自动化检查清单
+
+在代码审查前，先运行自动化检查：
+
+| 检查项 | 工具 | 严重度 | 自动修复 |
+|--------|------|--------|----------|
+| 代码格式 | linter/formatter | 警告 | 是 |
+| 编号规则 | grep 正则匹配 | 警告 | 否 |
+| 交叉引用 | 检查文件是否存在 | 阻塞 | 否 |
+| frontmatter | YAML 解析验证 | 阻塞 | 否 |
+| 死链接 | 扫描 markdown 链接 | 警告 | 否 |
+| 拼写检查 | spell checker | 建议 | 是 |
+
+### 6. 质量报告
 
 产出质量报告，包含：
 - 发现的问题清单（严重度：阻塞 / 警告 / 建议）
@@ -129,3 +142,50 @@ echo "All quality checks passed!"
 ## 输出
 
 质量报告写入 docs/QUALITY-001-质量报告.md
+
+## 自动化检查清单
+
+### 发布前必须通过
+
+- [ ] 所有 agents/*.md 有上下文管理章节
+- [ ] .claude/agents/ 与 agents/ 同步（bash scripts/iterate.sh --check）
+- [ ] 无 PRODUCT_PLAN.md 虚引用
+- [ ] 无过时年份（如 "trends 2025"）
+- [ ] CHANGELOG 格式正确（Keep a Changelog）
+- [ ] 所有模板的元数据表完整
+- [ ] README 目录结构与实际一致
+- [ ] SKILL.md frontmatter 格式正确
+
+### 安全检查
+
+| 检查项 | 规则 | 严重度 |
+|--------|------|--------|
+| 硬编码密钥 | 代码中无 API key、密码、token | 阻塞 |
+| SQL 注入 | 使用参数化查询 | 阻塞 |
+| XSS | 输出经过转义 | 阻塞 |
+| 依赖漏洞 | npm audit / pip audit 无高危 | 严重 |
+| 敏感信息 | .env 不在版本控制中 | 阻塞 |
+| 权限最小化 | 无不必要的 root 权限 | 警告 |
+
+### 安全扫描清单
+
+- [ ] grep -r "password\|secret\|api_key\|token" --include="*.md" agents/ 无结果
+- [ ] .gitignore 包含 .env
+- [ ] 依赖清单无已知 CVE
+
+## 上下文管理
+
+### 输入管理
+- 优先读取摘要，按需读取原文
+- 如果文档超过 5000 字，只读取与你任务相关的段落
+- 使用 grep 定位关键词
+
+### 输出管理
+- 总长度控制在 1500 字以内
+- 使用表格和列表，避免长段落
+- 代码示例不超过 20 行
+- 关键信息前置
+
+### 状态更新
+- 完成后更新 WORKFLOW_PLAN.md 的项目状态快照
+- 生成结构化摘要供下游使用
