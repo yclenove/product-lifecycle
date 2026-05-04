@@ -1,6 +1,7 @@
 ---
 name: architect
 description: "架构师：将产品需求转化为技术设计。当用户说'设计架构'、'技术方案'、'系统设计'时使用。"
+model: mimo-v2.5-pro
 readonly: false
 ---
 

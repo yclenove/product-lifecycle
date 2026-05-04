@@ -105,3 +105,10 @@
 - **`docs/CONTEXT-MANAGEMENT.md`** — 多 Agent 协作时的上下文管理（摘要传递、上下文预算、交接规范）。
 - **`examples/cloudflow.md`** — 虚构项目 CloudFlow 的完整生命周期示例（时间线与产出物清单）。
 
+
+### 当前模型配置（小米 Mimo）
+
+| 模型 | 适用场景 | Agent |
+|------|----------|-------|
+| mimo-v2.5-pro | 复杂推理、全局协调 | orchestrator, architect |
+| mimo-v2.5 | 常规任务 | 其余 11 个 Agent |

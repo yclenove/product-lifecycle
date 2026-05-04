@@ -53,6 +53,22 @@ declare -A TOOLS=(
   [reviewer]='["Read", "Glob", "Grep", "Bash", "Write"]'
 )
 
+declare -A MODELS=(
+  [orchestrator]="mimo-v2.5-pro"
+  [architect]="mimo-v2.5-pro"
+  [developer]="mimo-v2.5"
+  [qa-manager]="mimo-v2.5"
+  [devops]="mimo-v2.5"
+  [product-manager]="mimo-v2.5"
+  [market-analyst]="mimo-v2.5"
+  [proactive-scout]="mimo-v2.5"
+  [feedback-analyst]="mimo-v2.5"
+  [iteration-planner]="mimo-v2.5"
+  [docwriter]="mimo-v2.5"
+  [quality-gatekeeper]="mimo-v2.5"
+  [reviewer]="mimo-v2.5"
+)
+
 # 动态上下文注入代码块
 CONTEXT_INJECTION='## 项目现状
 
@@ -107,6 +123,7 @@ derive_agent() {
 ---
 description: "${DESCRIPTIONS[$name]}"
 tools: ${TOOLS[$name]}
+model: "${MODELS[$name]}"
 ---
 
 ${core_content}

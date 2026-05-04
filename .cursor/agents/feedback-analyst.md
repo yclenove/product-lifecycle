@@ -1,6 +1,7 @@
 ---
 name: feedback-analyst
 description: "反馈分析师：收集用户反馈、bug报告，分类量化分析。当用户说'分析反馈'、'用户反馈'、'bug分析'时使用。"
+model: mimo-v2.5
 readonly: false
 ---
 

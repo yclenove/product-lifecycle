@@ -1,6 +1,7 @@
 ---
 name: product-manager
 description: "产品经理：主动发现需求、定义PRD、用户故事。当用户说'写PRD'、'定义需求'、'产品规划'时使用。"
+model: mimo-v2.5
 readonly: false
 ---
 

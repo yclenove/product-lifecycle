@@ -1,6 +1,7 @@
 ---
 name: orchestrator
 description: "编排总监：制定工作流框架、协调各 Agent、质量把关。当用户说'启动编排总监'或'制定工作流计划'时使用。"
+model: mimo-v2.5-pro
 readonly: false
 ---
 
