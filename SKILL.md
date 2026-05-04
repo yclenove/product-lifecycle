@@ -8,9 +8,41 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 # 多 Agent 产品开发全流程
 
+## ⚠️ 必须使用 Agent 工具
+
+**你不能一个人完成所有任务。你必须使用 `Agent` 工具启动子代理来执行每个角色。**
+
+具体做法：
+1. 先用 `Bash` + `Read` 探索项目（不要用内置 Explore Agent）
+2. 为每个角色使用 `Agent` 工具启动子代理：
+   - `Agent(subagent_type: "", prompt: "读取 ~/.claude/skills/product-lifecycle/agents/orchestrator.md，按照指引执行编排总监角色...")`
+   - 依次启动：market-analyst → product-manager → architect → developer → ...
+3. 每个子代理独立完成任务后返回结果，你汇总结果
+4. **禁止自己直接执行 Agent 角色的任务**——必须委派给子代理
+
 ## 概述
 
 通过 13 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。不是只生成文档——是从需求到可运行产品的端到端流程。
+
+## 重要：项目探索方式
+
+**不要使用内置的 Explore Agent（`Agent` 工具）。** 使用以下方式直接探索：
+
+```bash
+# 项目结构
+ls -la
+find . -maxdepth 2 -type f | head -30
+
+# 读取关键文件
+cat README.md
+cat package.json 2>/dev/null || cat go.mod 2>/dev/null || cat requirements.txt 2>/dev/null
+
+# Git 状态
+git log --oneline -5
+git status
+```
+
+用 `Bash` + `Read` + `Glob` + `Grep` 替代 Agent 工具探索项目。
 
 ## 各工具用法（分文档）
 
