@@ -8,6 +8,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 
 <!-- 下一版本条目写于此 -->
 
+## [2.4.0] - 2026-05-05
+
+### Added
+- `scripts/validate.sh`：新增 Agent 行数范围检查（80-400 行）
+
+### Fixed
+- SKILL.md：改为单 agent 多角色模式（兼容非 Claude API）
+- SKILL.md：明确使用 Bash + Read 探索项目（避免 Explore Agent 的 haiku 模型问题）
+- .claude/agents/：模型配置改为小米 Mimo 系列（mimo-v2.5-pro / mimo-v2.5）
+
 ## [2.3.0] - 2026-05-05
 
 ### Changed

@@ -87,6 +87,26 @@ else
   echo "✗ ($missing 个缺失)"
 fi
 
+# 8. 检查 Agent 行数范围
+echo -n "Agent 行数范围: "
+line_issues=0
+for f in "$ROOT"/agents/*.md; do
+  name=$(basename "$f" .md)
+  lines=$(wc -l < "$f")
+  if [ $lines -lt 80 ]; then
+    echo -n "$name($lines 行偏少) "
+    line_issues=$((line_issues+1))
+  elif [ $lines -gt 400 ]; then
+    echo -n "$name($lines 行偏多) "
+    line_issues=$((line_issues+1))
+  fi
+done
+if [ $line_issues -eq 0 ]; then
+  echo "✓ (全部在 80-400 行范围)"
+else
+  echo " ⚠ ($line_issues 个超出范围)"
+fi
+
 echo ""
 if [ $errors -eq 0 ]; then
   echo "全部通过 ✓"
