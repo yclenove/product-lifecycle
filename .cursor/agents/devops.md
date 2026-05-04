@@ -1,7 +1,6 @@
 ---
 name: devops
 description: "运维工程师：环境搭建、容器化、部署验证。当用户说'部署'、'搭建环境'、'Docker'时使用。"
-model: inherit
 readonly: false
 ---
 

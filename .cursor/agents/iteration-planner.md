@@ -1,7 +1,6 @@
 ---
 name: iteration-planner
 description: "迭代规划师：影响分析、制定迭代计划、版本策略。当用户说'迭代计划'、'版本规划'、'下个迭代'时使用。"
-model: inherit
 readonly: false
 ---
 

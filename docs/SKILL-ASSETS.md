@@ -80,11 +80,14 @@
 
 ### 模型选择策略
 
+模型选择取决于你的 API 提供商。Subagent 定义中不指定 model 字段，自动继承用户全局配置。
+
+如需指定模型，在 .claude/agents/*.md 的 frontmatter 中添加 `model: "模型名"`。
+
 | 模型 | 适用场景 | Agent |
 |------|----------|-------|
-| opus | 复杂推理、全局协调 | orchestrator, architect |
 | sonnet | 常规任务、代码实现 | developer, qa-manager, devops, market-analyst, product-manager, proactive-scout, feedback-analyst, iteration-planner |
-| haiku | 模式固定、低复杂度 | docwriter, quality-gatekeeper |
+| sonnet | 模式固定、低复杂度 | docwriter, quality-gatekeeper |
 
 ## 引用语法规范
 

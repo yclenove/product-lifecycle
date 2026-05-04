@@ -1,7 +1,6 @@
 ---
 name: developer
 description: "开发工程师：根据 PRD 和架构设计实现代码、编写测试。当用户说'开发功能'、'实现代码'、'写代码'时使用。"
-model: inherit
 readonly: false
 ---
 

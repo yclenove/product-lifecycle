@@ -45,7 +45,7 @@ git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/pro
 
 - **动态上下文注入**：自动注入项目结构、技术栈、Git 状态
 - **工具限制**：每个 Agent 只能使用指定的工具
-- **模型分级**：编排总监/架构师用 Opus（深度推理），开发/测试/运维/产品经理等用 Sonnet（平衡），技术文档师/质量门禁用 Haiku（高效）
+- **模型选择：Subagent 默认继承全局配置，可在 frontmatter 中按需指定
 
 ## 用 Agent 工具执行时的原则
 
@@ -120,7 +120,7 @@ bash ${CLAUDE_SKILL_DIR}/scripts/detect.sh [项目路径]
 1. **分层读取**：先读摘要，按需读全文
 2. **增量传递**：只传递变更部分
 3. **预算控制**：在 agent prompt 中设置输出长度限制
-4. **模型选择**：简单任务用 haiku，复杂推理用 opus
+4. **模型可在 frontmatter 中按需配置
 
 ## 与通用 prompt 的关系
 

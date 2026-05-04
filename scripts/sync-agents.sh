@@ -53,22 +53,6 @@ declare -A TOOLS=(
   [reviewer]='["Read", "Glob", "Grep", "Bash", "Write"]'
 )
 
-declare -A MODELS=(
-  [orchestrator]="opus"
-  [architect]="opus"
-  [developer]="sonnet"
-  [qa-manager]="sonnet"
-  [devops]="sonnet"
-  [product-manager]="sonnet"
-  [market-analyst]="sonnet"
-  [proactive-scout]="sonnet"
-  [feedback-analyst]="sonnet"
-  [iteration-planner]="sonnet"
-  [docwriter]="haiku"
-  [quality-gatekeeper]="haiku"
-  [reviewer]="sonnet"
-)
-
 # 动态上下文注入代码块
 CONTEXT_INJECTION='## 项目现状
 
@@ -123,7 +107,6 @@ derive_agent() {
 ---
 description: "${DESCRIPTIONS[$name]}"
 tools: ${TOOLS[$name]}
-model: "${MODELS[$name]}"
 ---
 
 ${core_content}

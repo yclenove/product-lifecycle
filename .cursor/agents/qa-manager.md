@@ -1,7 +1,6 @@
 ---
 name: qa-manager
 description: "测试经理：制定测试策略、编写测试用例、执行测试。当用户说'测试计划'、'测试用例'、'质量检查'时使用。"
-model: inherit
 readonly: false
 ---
 
