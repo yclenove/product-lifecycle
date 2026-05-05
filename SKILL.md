@@ -16,22 +16,35 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 **启动任何工作流前，先执行以下配置检查：**
 
-### 1. 读取当前子代理模型配置
+### 1. 探测可用模型 + 读取当前配置
 
 ```bash
-# 读取 ~/.claude/skills/product-lifecycle/.claude/agents/ 下所有文件的 model 字段
+# 探测 API 支持的模型
+echo "=== 可用模型 ==="
+API_URL="${ANTHROPIC_BASE_URL%/anthropic}/v1/models"
+curl -s --connect-timeout 5 "$API_URL" \
+  -H "Authorization: Bearer $ANTHROPIC_AUTH_TOKEN" 2>/dev/null \
+  | tr ',' '\n' | grep '"id"' | sed 's/.*"id":"\([^"]*\)".*/  - \1/' | grep -vi tts | grep -vi omni
+
+echo ""
+echo "=== 当前子代理配置 ==="
 for f in ~/.claude/skills/product-lifecycle/.claude/agents/*.md; do
   name=$(basename "$f" .md)
-  model=$(grep "^model:" "$f" | sed 's/model: *//' | tr -d '"')
+  model=$(grep "^model:" "$f" 2>/dev/null | sed 's/model: *//' | tr -d '"')
   echo "$name: ${model:-继承当前模型}"
 done
 ```
 
-### 2. 向用户展示配置并询问
+### 2. 向用户展示并询问
 
 把结果整理成表格展示给用户：
 
 ```
+你的 API 支持以下模型：
+  - mimo-v2.5-pro（最强）
+  - mimo-v2.5（平衡）
+  - mimo-v2-pro（旧版）
+
 当前子代理模型配置：
 
 | Agent | 角色 | 当前模型 |
@@ -41,18 +54,40 @@ done
 | developer | 开发工程师 | 继承当前模型 |
 | ... | ... | ... |
 
-"继承当前模型" = 子代理使用你当前选定的模型。
-如需指定特定模型，告诉我模型名，我会自动更新配置。
+"继承当前模型" = 子代理使用你当前选定的模型，最稳定。
+
+推荐配置（省钱+稳定）：
+  编排总监/架构师 → mimo-v2.5-pro（复杂推理）
+  其余 11 个 → mimo-v2.5（常规任务）
+
+你要怎么配置？
+  1. 不改（全部继承当前模型，最稳定）
+  2. 用推荐配置（分级省钱）
+  3. 自定义（告诉我具体分配）
 ```
 
 ### 3. 根据用户回复处理
 
-- **用户说"不用改"或"继续"** → 直接进入工作流
-- **用户说"全部用 xxx"** → 批量更新所有 .claude/agents/*.md 的 model 字段
-- **用户说"编排和架构用 xxx，其余用 yyy"** → 按指定更新
-- **用户说"把 model 字段去掉"** → 移除所有 model 字段（回到继承模式）
+- **用户选 1 或"不用改"** → 直接进入工作流
+- **用户选 2 或"用推荐配置"** → 自动更新：orchestrator/architect 设为最强模型，其余设为平衡模型
+- **用户选 3 或自定义** → 按用户指定更新
+- **用户说"把 model 字段去掉"** → 移除所有 model 字段（回到纯继承模式）
 
-更新配置后运行 `bash scripts/sync-agents.sh` 同步。
+更新配置的脚本：
+```bash
+# 批量设置模型
+MODEL="$1"  # 如 mimo-v2.5
+for f in ~/.claude/skills/product-lifecycle/.claude/agents/*.md; do
+  if grep -q "^model:" "$f"; then
+    sed -i "s/^model:.*/model: \"$MODEL\"/" "$f"
+  else
+    sed -i "/^description:/a model: \"$MODEL\"" "$f"
+  fi
+done
+echo "✓ 已设置全部子代理为 $MODEL"
+```
+
+更新后运行 `bash ~/.claude/skills/product-lifecycle/scripts/sync-agents.sh` 同步到项目目录。
 
 ## Agent 调用示例（配置完成后执行）
 
