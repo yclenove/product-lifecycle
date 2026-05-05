@@ -110,48 +110,46 @@ else
   if [[ -d "$SKILL_DIR/.git" ]]; then
     # Git 仓库：先检查是否有未提交的本地修改
     if [[ -n "$(cd "$SKILL_DIR" && git status --porcelain 2>/dev/null)" ]]; then
-      echo -e "  ${YELLOW}!${NC} 本机 skill 有未提交的修改，跳过 pull"
-      echo "  请先处理 $SKILL_DIR 中的本地修改"
-    else
-      # 复制变更的文件（而不是 git pull，因为开发目录可能不是同一个 repo）
-      echo "  同步文件到 $SKILL_DIR ..."
-
-      # 核心文件
-      for f in SKILL.md README.md CHANGELOG.md; do
-        if [[ -f "$ROOT_DIR/$f" ]]; then
-          cp "$ROOT_DIR/$f" "$SKILL_DIR/$f"
-        fi
-      done
-
-      # agents/
-      mkdir -p "$SKILL_DIR/agents"
-      cp "$AGENTS_DIR"/*.md "$SKILL_DIR/agents/"
-
-      # .claude/agents/
-      mkdir -p "$SKILL_DIR/.claude/agents"
-      cp "$CLAUDE_DIR"/*.md "$SKILL_DIR/.claude/agents/"
-
-      # templates/
-      mkdir -p "$SKILL_DIR/templates"
-      cp "$ROOT_DIR/templates"/*.md "$SKILL_DIR/templates/"
-
-      # docs/
-      mkdir -p "$SKILL_DIR/docs"
-      cp "$ROOT_DIR/docs"/*.md "$SKILL_DIR/docs/" 2>/dev/null || true
-
-      # examples/
-      mkdir -p "$SKILL_DIR/examples"
-      cp "$ROOT_DIR/examples"/*.md "$SKILL_DIR/examples/" 2>/dev/null || true
-
-      # scripts/
-      mkdir -p "$SKILL_DIR/scripts"
-      cp "$ROOT_DIR/scripts"/*.sh "$SKILL_DIR/scripts/" 2>/dev/null || true
-
-      echo -e "  ${GREEN}✓${NC} 本机 skill 已更新"
+      echo -e "  ${YELLOW}!${NC} 本机 skill 有未提交的修改，跳过 git pull（但仍然同步文件）"
     fi
+
+    # 始终复制文件（不管 git 状态如何）
+    echo "  同步文件到 $SKILL_DIR ..."
+
+    # 核心文件
+    for f in SKILL.md README.md CHANGELOG.md; do
+      if [[ -f "$ROOT_DIR/$f" ]]; then
+        cp "$ROOT_DIR/$f" "$SKILL_DIR/$f"
+      fi
+    done
+
+    # agents/
+    mkdir -p "$SKILL_DIR/agents"
+    cp "$AGENTS_DIR"/*.md "$SKILL_DIR/agents/"
+
+    # .claude/agents/
+    mkdir -p "$SKILL_DIR/.claude/agents"
+    cp "$CLAUDE_DIR"/*.md "$SKILL_DIR/.claude/agents/"
+
+    # templates/
+    mkdir -p "$SKILL_DIR/templates"
+    cp "$ROOT_DIR/templates"/*.md "$SKILL_DIR/templates/"
+
+    # docs/
+    mkdir -p "$SKILL_DIR/docs"
+    cp "$ROOT_DIR/docs"/*.md "$SKILL_DIR/docs/" 2>/dev/null || true
+
+    # examples/
+    mkdir -p "$SKILL_DIR/examples"
+    cp "$ROOT_DIR/examples"/*.md "$SKILL_DIR/examples/" 2>/dev/null || true
+
+    # scripts/
+    mkdir -p "$SKILL_DIR/scripts"
+    cp "$ROOT_DIR/scripts"/*.sh "$SKILL_DIR/scripts/" 2>/dev/null || true
+
+    echo -e "  ${GREEN}✓${NC} 本机 skill 已更新"
   else
     echo -e "  ${YELLOW}!${NC} 本机 skill 不是 git 仓库，直接复制文件"
-    # 直接复制
     for f in SKILL.md README.md CHANGELOG.md; do
       cp "$ROOT_DIR/$f" "$SKILL_DIR/$f" 2>/dev/null || true
     done
