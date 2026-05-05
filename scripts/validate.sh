@@ -19,10 +19,10 @@ fi
 # 2. .claude/agents/ 数量
 echo -n ".claude/agents/ 数量: "
 count=$(ls "$ROOT/.claude/agents/"*.md 2>/dev/null | wc -l)
-if [ "$count" -eq 13 ]; then
+if [ "$count" -eq 14 ]; then
   echo "✓ ($count)"
 else
-  echo "✗ ($count/13)"
+  echo "✗ ($count/14)"
   errors=$((errors+1))
 fi
 
@@ -47,10 +47,10 @@ fi
 # 5. 上下文管理
 echo -n "上下文管理覆盖: "
 count=$(grep -l "上下文管理" "$ROOT/agents/"*.md 2>/dev/null | wc -l)
-if [ "$count" -eq 13 ]; then
-  echo "✓ ($count/13)"
+if [ "$count" -eq 14 ]; then
+  echo "✓ ($count/14)"
 else
-  echo "✗ ($count/13)"
+  echo "✗ ($count/14)"
   errors=$((errors+1))
 fi
 
@@ -118,7 +118,7 @@ for f in "$ROOT"/agents/*.md; do
   fi
 done
 if [ $sync_issues -eq 0 ]; then
-  echo "✓ (13/13 同步)"
+  echo "✓ (14/14 同步)"
 else
   echo "✗ ($sync_issues 个不同步)"
   errors=$((errors+1))

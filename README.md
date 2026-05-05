@@ -2,7 +2,7 @@
 
 [![Quality Gate](https://github.com/yclenove/product-lifecycle/actions/workflows/quality-gate.yml/badge.svg)](https://github.com/yclenove/product-lifecycle/actions/workflows/quality-gate.yml)
 
-通过 13 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。
+通过 14 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。
 
 **工具无关** — 核心价值（Agent prompt + 文档模板 + 方法论）可在任何 AI 编码工具中使用。
 
@@ -103,7 +103,7 @@ git clone https://github.com/yclenove/product-lifecycle.git
 6. **部署循环** — 部署失败 → 运维修复 → 重新部署
 7. **发布** — 质量门禁通过后发布
 
-## 13 个 Agent 角色
+## 14 个 Agent 角色
 
 ### 自驱动层（不需要输入）
 
@@ -125,6 +125,7 @@ git clone https://github.com/yclenove/product-lifecycle.git
 | 技术文档师 | 用户文档、API 文档 | 用户文档 |
 | 质量门禁 | 代码审查、lint、MCP | 质量报告 |
 | 代码审查员 | 代码质量、安全性、可维护性审查 | 代码审查报告 |
+| 数据库管理员 | 数据库架构、SQL优化、数据迁移、性能调优 | 数据库架构文档 |
 | 反馈分析师 | 收集用户反馈、bug 报告 | 反馈分析报告 |
 | 迭代规划师 | 影响分析、迭代计划 | 迭代计划 |
 
@@ -157,7 +158,7 @@ product-lifecycle/
 ├── .claude/agents/       # Claude Code Subagent 定义（13 角色，含动态上下文注入）
 ├── CHANGELOG.md          # 版本记录
 ├── README.md             # 本文件
-├── agents/               # 13 个 Agent 的通用 prompt（真源）
+├── agents/               # 14 个 Agent 的通用 prompt（真源）
 │   ├── orchestrator.md   # 编排总监
 │   ├── market-analyst.md # 市场分析师
 │   ├── product-manager.md # 产品经理
@@ -170,7 +171,8 @@ product-lifecycle/
 │   ├── proactive-scout.md # 需求侦察兵
 │   ├── feedback-analyst.md # 反馈分析师
 │   ├── iteration-planner.md # 迭代规划师
-│   └── reviewer.md       # 代码审查员
+│   ├── reviewer.md       # 代码审查员
+│   └── dba.md            # 数据库管理员
 ├── templates/            # 文档模板
 │   ├── workflow_plan_template.md
 │   ├── market_template.md

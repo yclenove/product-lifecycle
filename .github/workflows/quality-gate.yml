@@ -19,7 +19,7 @@ jobs:
       - name: Check .claude/agents/ completeness
         run: |
           count=$(ls .claude/agents/*.md | wc -l)
-          [ "$count" -eq 13 ] || (echo "Expected 13 agents, got $count" && exit 1)
+          [ "$count" -eq 14 ] || (echo "Expected 14 agents, got $count" && exit 1)
 
       - name: Check for stale references
         run: |

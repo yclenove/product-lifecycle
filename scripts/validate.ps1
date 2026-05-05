@@ -1,0 +1,75 @@
+﻿# validate.ps1 - Automated validation (PowerShell)
+# Usage: powershell -File scripts/validate.ps1
+
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+$ErrorActionPreference = "Continue"
+$Root = Split-Path (Split-Path $MyInvocation.MyCommand.Path)
+$errors = 0
+
+Write-Host "=== Validation Checks ==="
+
+Write-Host -NoNewline "SKILL.md frontmatter: "
+$firstLine = (Get-Content "$Root\SKILL.md" -TotalCount 1 -Encoding UTF8).Trim()
+if ($firstLine -eq "---") { Write-Host "PASS" } else { Write-Host "FAIL"; $errors++ }
+
+Write-Host -NoNewline ".claude/agents/ count: "
+$agentCount = (Get-ChildItem "$Root\.claude\agents\*.md" -ErrorAction SilentlyContinue).Count
+if ($agentCount -eq 13) { Write-Host "PASS ($agentCount)" } else { Write-Host "FAIL ($agentCount/13)"; $errors++ }
+
+Write-Host -NoNewline "PRODUCT_PLAN refs: "
+$stale = Get-ChildItem "$Root\agents\*.md","$Root\templates\*.md","$Root\.claude\agents\*.md","$Root\SKILL.md" -ErrorAction SilentlyContinue | Select-String -Pattern "PRODUCT_PLAN" -Encoding UTF8 | Where-Object { $_.Filename -notmatch "CHANGELOG|quality-gatekeeper" }
+if ($stale) { Write-Host "FAIL"; $errors++ } else { Write-Host "PASS" }
+
+Write-Host -NoNewline "trends 2025 refs: "
+$old = Get-ChildItem "$Root\agents\*.md","$Root\.claude\agents\*.md","$Root\templates\*.md" -ErrorAction SilentlyContinue | Select-String -Pattern "trends 2025" -Encoding UTF8 | Where-Object { $_.Filename -notmatch "quality-gatekeeper" }
+if ($old) { Write-Host "FAIL"; $errors++ } else { Write-Host "PASS" }
+
+Write-Host -NoNewline "Context mgmt coverage: "
+$ctxCount = 0
+foreach ($f in Get-ChildItem "$Root\agents\*.md") {
+    $content = [System.IO.File]::ReadAllText($f.FullName, [System.Text.Encoding]::UTF8)
+    if ($content -match "\u4e0a\u4e0b\u6587\u7ba1\u7406") { $ctxCount++ }
+}
+if ($ctxCount -eq 13) { Write-Host "PASS ($ctxCount/13)" } else { Write-Host "FAIL ($ctxCount/13)"; $errors++ }
+
+Write-Host -NoNewline "Agent required sections: "
+$miss = 0
+$secs = @("\u4efb\u52a1","\u8f93\u51fa","\u8d28\u91cf\u95e8\u7981","\u4e0a\u4e0b\u6587\u7ba1\u7406")
+foreach ($f in Get-ChildItem "$Root\agents\*.md") {
+    $content = [System.IO.File]::ReadAllText($f.FullName, [System.Text.Encoding]::UTF8)
+    foreach ($sec in $secs) {
+        if ($content -notmatch "## .*$sec") { Write-Host -NoNewline "$($f.BaseName)/sec "; $miss++ }
+    }
+}
+if ($miss -eq 0) { Write-Host "PASS" } else { Write-Host "FAIL ($miss)"; $errors++ }
+
+Write-Host -NoNewline "Template metadata: "
+$metaMiss = 0
+foreach ($f in Get-ChildItem "$Root\templates\*.md") {
+    $content = [System.IO.File]::ReadAllText($f.FullName, [System.Text.Encoding]::UTF8)
+    if ($content -notmatch "\| \u5b57\u6bb5") { Write-Host -NoNewline "$($f.Name) "; $metaMiss++ }
+}
+if ($metaMiss -eq 0) { Write-Host "PASS" } else { Write-Host "FAIL ($metaMiss)" }
+
+Write-Host -NoNewline "Agent line count: "
+$lineIssues = 0
+foreach ($f in Get-ChildItem "$Root\agents\*.md") {
+    $lines = (Get-Content $f.FullName -Encoding UTF8).Count
+    if ($lines -lt 80) { Write-Host -NoNewline "$($f.BaseName)($lines) "; $lineIssues++ }
+    elseif ($lines -gt 400) { Write-Host -NoNewline "$($f.BaseName)($lines) "; $lineIssues++ }
+}
+if ($lineIssues -eq 0) { Write-Host "PASS (80-400)" } else { Write-Host "WARN ($lineIssues)" }
+
+Write-Host -NoNewline ".claude/agents/ sync: "
+$syncMiss = 0
+foreach ($f in Get-ChildItem "$Root\agents\*.md") {
+    $targetPath = Join-Path $Root (Join-Path '.claude' (Join-Path 'agents' $f.Name))
+    if (-not (Test-Path $targetPath)) { Write-Host -NoNewline "$($f.BaseName)(missing) "; $syncMiss++ }
+}
+if ($syncMiss -eq 0) { Write-Host "PASS (13/13)" } else { Write-Host "FAIL ($syncMiss)"; $errors++ }
+
+Write-Host ""
+if ($errors -eq 0) { Write-Host "All checks passed"; exit 0 }
+else { Write-Host "$errors check(s) failed"; exit 1 }
+

@@ -133,6 +133,55 @@ ID: TC-模块-序号
 2. 受影响模块的 P1 用例
 3. 冒烟测试覆盖其他模块
 
+### Step 5.5: UI 自动化测试（有前端页面时）
+
+**MCP 工具依赖：**
+
+| MCP 工具 | 用途 | 配置方式 |
+|----------|------|----------|
+| chrome-devtools | 浏览器自动化测试 | Claude Code 内置，无需额外配置 |
+
+**UI 测试能力（通过 chrome-devtools MCP）：**
+
+| 操作 | 工具 | 用途 |
+|------|------|------|
+| 页面导航 | `navigate_page` | 打开 URL、前进后退 |
+| 元素点击 | `click` | 模拟用户点击 |
+| 表单填写 | `fill` / `fill_form` | 填写输入框、选择下拉 |
+| 页面截图 | `take_screenshot` | 截图记录测试结果 |
+| 页面快照 | `take_snapshot` | 获取页面元素树 |
+| 键盘操作 | `press_key` / `type_text` | 模拟键盘输入 |
+| 等待元素 | `wait_for` | 等待页面内容出现 |
+| 控制台检查 | `list_console_messages` | 检查 JS 错误 |
+| 网络检查 | `list_network_requests` | 检查 API 调用 |
+| Lighthouse 审计 | `lighthouse_audit` | 可访问性、SEO、性能 |
+
+**UI 测试流程：**
+1. 打开目标页面
+2. 按测试用例步骤操作（点击、填写、导航）
+3. 截图记录关键状态
+4. 检查控制台无 JS 错误
+5. 检查网络请求状态码
+6. 验证页面内容符合预期
+
+**UI 测试用例格式：**
+```
+ID: UI-模块-序号
+名称: [简短描述]
+URL: [测试页面地址]
+步骤:
+  1. navigate_page → 打开 URL
+  2. click → 点击按钮
+  3. fill → 填写表单
+  4. take_screenshot → 截图
+验证: 页面显示 xxx
+```
+
+**没有 chrome-devtools MCP 时的降级方案：**
+- 生成手动测试步骤文档
+- 提供测试检查清单
+- 输出到 docs/QA-002-手动测试步骤.md
+
 ### Step 6: 质量门禁
 
 **准入标准：**

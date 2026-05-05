@@ -35,6 +35,7 @@ declare -A DESCRIPTIONS=(
   [feedback-analyst]="反馈分析师：收集用户反馈、bug报告，分类量化分析。当用户说'分析反馈'、'用户反馈'、'bug分析'时使用。"
   [iteration-planner]="迭代规划师：影响分析、制定迭代计划、版本策略。当用户说'迭代计划'、'版本规划'、'下个迭代'时使用。"
   [reviewer]="代码审查员：审查代码质量、安全性、可维护性。当用户说'代码审查'、'review'、'检查代码'时使用。"
+  [dba]="数据库管理员：数据库架构、SQL优化、数据迁移、性能调优。当用户说'数据库'、'建表'、'SQL'、'迁移'、'DBA'时使用。需配置 mysql-mcp-server 或 polyglot-db-mcp-server。"
 )
 
 declare -A TOOLS=(
@@ -51,6 +52,7 @@ declare -A TOOLS=(
   [feedback-analyst]='["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write"]'
   [iteration-planner]='["Read", "Glob", "Grep", "Write", "Edit"]'
   [reviewer]='["Read", "Glob", "Grep", "Bash", "Write"]'
+  [dba]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
 )
 
 

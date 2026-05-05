@@ -8,6 +8,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 
 <!-- 下一版本条目写于此 -->
 
+## [2.6.0] - 2026-05-05
+
+### Added
+- agents/dba.md：数据库管理员 Agent（14 个 Agent）
+  - 支持 mysql-mcp-server / polyglot-db-mcp-server MCP 工具
+  - 数据库架构设计、SQL 优化、数据迁移、性能调优
+  - 无 MCP 工具时降级为生成 SQL 脚本
+- agents/qa-manager.md：UI 自动化测试章节
+  - 支持 chrome-devtools MCP 工具
+  - 页面导航、点击、填写、截图、Lighthouse 审计
+  - 无 MCP 工具时降级为手动测试步骤
+- scripts/validate.ps1：PowerShell 版验证脚本（9 项检查全部通过）
+- .cursor/agents/dba.md：Cursor Subagent 薄封装
+
+### Changed
+- Agent 数量：13 → 14
+- validate.sh / CI：检查数量更新为 14
+- SKILL.md / README.md / SKILL-ASSETS.md：添加 DBA 角色
+
 ## [2.5.0] - 2026-05-05
 
 ### Fixed
