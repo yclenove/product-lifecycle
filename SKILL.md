@@ -1,8 +1,8 @@
 ---
 name: product-lifecycle
-description: Use when starting a new product/project and need to orchestrate a full development lifecycle from market analysis through architecture, implementation, testing, deployment, and continuous iteration
-when_to_use: "new product launch, full lifecycle management, Phase kickoff, product iteration, market analysis needed, PRD creation, architecture design, product upgrade, new feature lifecycle"
-argument-hint: "[project-name] [project-description]"
+description: Use when starting a new product/project and need to orchestrate a full development lifecycle from market analysis through architecture, implementation, testing, deployment, and continuous iteration. 中文触发：产品迭代、全流程开发、产品生命周期、市场分析+开发+测试、13个Agent协作。
+when_to_use: "new product launch, full lifecycle management, Phase kickoff, product iteration, market analysis needed, PRD creation, architecture design, product upgrade, new feature lifecycle, 产品迭代, 全流程开发, 产品生命周期, 市场分析, 需求分析, 产品规划, PRD编写, 架构设计, 版本迭代, 持续迭代, 多Agent协作, 编排总监, 需求侦察, 反馈分析, 迭代计划, 使用product-lifecycle, 跑一轮迭代, 帮我迭代"
+argument-hint: "[项目名] [一句话描述]"
 allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 ---
 
