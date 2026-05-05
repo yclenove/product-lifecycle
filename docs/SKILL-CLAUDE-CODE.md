@@ -45,7 +45,7 @@ git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/pro
 
 - **动态上下文注入**：自动注入项目结构、技术栈、Git 状态
 - **工具限制**：每个 Agent 只能使用指定的工具
-- **模型选择：Subagent 默认继承全局配置，可在 frontmatter 中按需指定
+- **模型选择**：默认使用 mimo-v2.5-pro（orchestrator、architect）和 mimo-v2.5（其余 Agent），可在 .claude/agents/*.md 的 frontmatter 中按需指定
 
 ## 用 Agent 工具执行时的原则
 
@@ -120,7 +120,7 @@ bash ${CLAUDE_SKILL_DIR}/scripts/detect.sh [项目路径]
 1. **分层读取**：先读摘要，按需读全文
 2. **增量传递**：只传递变更部分
 3. **预算控制**：在 agent prompt 中设置输出长度限制
-4. **模型可在 frontmatter 中按需配置
+4. **模型可在 frontmatter 中按需配置**（默认：mimo-v2.5-pro 用于复杂推理，mimo-v2.5 用于常规任务）
 
 ## 与通用 prompt 的关系
 

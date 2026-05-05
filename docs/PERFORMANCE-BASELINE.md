@@ -4,15 +4,15 @@
 
 | 阶段 | Agent | 预估 Input | 预估 Output | 模型 |
 |------|-------|-----------|-------------|------|
-| 编排 | orchestrator | 2000 | 3000 | opus |
-| 调研 | market-analyst | 3000 | 2000 | sonnet |
-| 调研 | product-manager | 3000 | 2500 | sonnet |
-| 设计 | architect | 4000 | 3000 | opus |
-| 实现 | developer | 5000 | 1500 | sonnet |
-| 测试 | qa-manager | 3000 | 1500 | sonnet |
-| 部署 | devops | 3000 | 1500 | sonnet |
-| 文档 | docwriter | 3000 | 2000 | haiku |
-| 审查 | quality-gatekeeper | 3000 | 1500 | haiku |
+| 编排 | orchestrator | 2000 | 3000 | mimo-v2.5-pro |
+| 调研 | market-analyst | 3000 | 2000 | mimo-v2.5 |
+| 调研 | product-manager | 3000 | 2500 | mimo-v2.5 |
+| 设计 | architect | 4000 | 3000 | mimo-v2.5-pro |
+| 实现 | developer | 5000 | 1500 | mimo-v2.5 |
+| 测试 | qa-manager | 3000 | 1500 | mimo-v2.5 |
+| 部署 | devops | 3000 | 1500 | mimo-v2.5 |
+| 文档 | docwriter | 3000 | 2000 | mimo-v2.5 |
+| 审查 | quality-gatekeeper | 3000 | 1500 | mimo-v2.5 |
 | **总计** | | **~32,000** | **~18,500** | |
 
 ## 迭代场景 Token 消耗（模式 B 单轮）

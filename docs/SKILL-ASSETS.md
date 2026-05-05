@@ -40,6 +40,7 @@
 | `iteration_template.md`      | 迭代计划（持续迭代用）   |
 | `scout_template.md`          | 侦察报告（需求侦察兵用）  |
 | `quality_report_template.md` | 质量报告（质量门禁用）   |
+| `reviewer_template.md`       | 代码审查报告（代码审查员用） |
 
 
 ## 13 Agent 角色与产出（速览）
@@ -59,6 +60,7 @@
 | **需求侦察兵** | 持续监控市场 + 产品体检       | 主动搜索       | 侦察报告       | B   |
 | **反馈分析师** | 收集用户反馈、bug 报告       | 反馈渠道       | 反馈分析报告     | B   |
 | **迭代规划师** | 影响分析、迭代计划、版本策略      | 反馈分析       | 迭代计划       | B   |
+| **代码审查员** | 代码质量、安全性、可维护性审查    | 代码 + 测试    | 代码审查报告     | A/B |
 
 
 > 模式 A = 从 0 到 1，模式 B = 持续迭代
@@ -78,17 +80,6 @@
 | 安全  | 无硬编码密钥、依赖无高危 CVE、.env 不入库、安全检查通过 |
 
 
-### 模型选择策略
-
-模型选择取决于你的 API 提供商。Subagent 定义中不指定 model 字段，自动继承用户全局配置。
-
-如需指定模型，在 .claude/agents/*.md 的 frontmatter 中添加 `model: "模型名"`。
-
-| 模型 | 适用场景 | Agent |
-|------|----------|-------|
-| sonnet | 常规任务、代码实现 | developer, qa-manager, devops, market-analyst, product-manager, proactive-scout, feedback-analyst, iteration-planner |
-| sonnet | 模式固定、低复杂度 | docwriter, quality-gatekeeper |
-
 ## 引用语法规范
 
 | 引用类型 | 语法 | 示例 |
@@ -106,7 +97,13 @@
 - **`examples/cloudflow.md`** — 虚构项目 CloudFlow 的完整生命周期示例（时间线与产出物清单）。
 
 
-### 当前模型配置（小米 Mimo）
+### 模型选择策略
+
+模型选择取决于你的 API 提供商。Subagent 定义中不指定 model 字段，自动继承用户全局配置。
+
+如需指定模型，在 .claude/agents/*.md 的 frontmatter 中添加 `model: "模型名"`。
+
+当前默认模型配置（小米 Mimo）：
 
 | 模型 | 适用场景 | Agent |
 |------|----------|-------|

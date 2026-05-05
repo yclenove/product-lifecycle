@@ -67,7 +67,7 @@ bash scripts/iterate.sh
 
 ### 9. model 字段未分级
 
-**症状：** 所有 Agent 都用 sonnet
+**症状：** 所有 Agent 都用 mimo-v2.5
 
 **解决：** 参考 SKILL-ASSETS.md 的模型选择策略
 

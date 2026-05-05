@@ -107,6 +107,23 @@ else
   echo " ⚠ ($line_issues 个超出范围)"
 fi
 
+# 9. 检查 .claude/agents/ 与 agents/ 同步
+echo -n ".claude/agents/ 同步: "
+sync_issues=0
+for f in "$ROOT"/agents/*.md; do
+  name=$(basename "$f" .md)
+  if [ ! -f "$ROOT/.claude/agents/$name.md" ]; then
+    echo -n "$name(缺失) "
+    sync_issues=$((sync_issues+1))
+  fi
+done
+if [ $sync_issues -eq 0 ]; then
+  echo "✓ (13/13 同步)"
+else
+  echo "✗ ($sync_issues 个不同步)"
+  errors=$((errors+1))
+fi
+
 echo ""
 if [ $errors -eq 0 ]; then
   echo "全部通过 ✓"

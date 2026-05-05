@@ -8,6 +8,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 
 <!-- 下一版本条目写于此 -->
 
+## [2.5.0] - 2026-05-05
+
+### Fixed
+- README.md：修复两个损坏的 markdown 表格（GitHub 渲染异常）
+- docs/SKILL-ASSETS.md：删除矛盾的旧模型策略表，统一为 mimo 配置
+- docs/SKILL-CLAUDE-CODE.md：更新模型描述为 mimo-v2.5-pro / mimo-v2.5
+- docs/PERFORMANCE-BASELINE.md：替换 9 处旧模型名（opus/sonnet/haiku → mimo）
+- docs/TROUBLESHOOTING.md：更新模型名
+- docs/TOKEN-EFFICIENCY.md：更新模型定价表
+- docs/WORKFLOW_PLAN.md：更新模型配置描述
+
+### Added
+- templates/reviewer_template.md：代码审查报告模板（模板覆盖 14/14）
+- scripts/validate.sh：新增 .claude/agents/ 同步检查（第 9 项）
+- docs/SKILL-ASSETS.md：Agent 表补全 reviewer 角色（13/13）
+
+### Added
+- templates/reviewer_template.md：代码审查报告模板（模板覆盖 14/14）
+
 ## [2.4.0] - 2026-05-05
 
 ### Added
