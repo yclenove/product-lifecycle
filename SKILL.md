@@ -16,93 +16,131 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 **你必须执行以下步骤，然后等用户回复后才能继续。绝对不能自动跳过、不能自己判断"配置没问题就继续"。**
 
-步骤：
-1. 运行 bash 读取当前配置
-2. 尝试探测 API 可用模型
-3. **把结果展示给用户，然后停下来等用户选择**
-4. 用户回复后，按用户选择处理
-5. 处理完才能进入工作流
+### 1. 一键探测 + 生成推荐方案
 
-### 1. 读取当前子代理配置
+运行以下脚本，自动完成：探测可用模型 → 读取当前配置 → 生成推荐方案：
 
 ```bash
-echo "=== 当前子代理模型配置 ==="
-for f in ~/.claude/skills/product-lifecycle/.claude/agents/*.md; do
-  name=$(basename "$f" .md)
-  model=$(grep "^model:" "$f" 2>/dev/null | sed 's/model: *//' | tr -d '"')
-  echo "$name: ${model:-继承当前模型}"
-done
-```
-
-### 2. 尝试探测 API 可用模型（可选）
-
-```bash
-# 尝试 OpenAI 兼容的 /v1/models 端点
+# 探测 API 可用模型
+echo "=== 可用模型 ==="
 if [ -n "$ANTHROPIC_BASE_URL" ]; then
   API_URL="${ANTHROPIC_BASE_URL%/anthropic}/v1/models"
   TOKEN="${ANTHROPIC_AUTH_TOKEN:-$ANTHROPIC_API_KEY}"
-  echo "=== API 可用模型 ==="
-  curl -s --connect-timeout 5 "$API_URL" \
+  MODELS=$(curl -s --connect-timeout 5 "$API_URL" \
     -H "Authorization: Bearer $TOKEN" 2>/dev/null \
-    | tr ',' '\n' | grep '"id"' | sed 's/.*"id":"\([^"]*\)".*/  - \1/' \
-    | grep -vi tts | grep -vi omni || echo "  （无法探测，请手动输入模型名）"
+    | tr ',' '\n' | grep '"id"' | sed 's/.*"id":"\([^"]*\)".*/\1/' \
+    | grep -vi tts | grep -vi omni)
+  if [ -z "$MODELS" ]; then
+    echo "  （无法探测）"
+    MODEL_COUNT=0
+  else
+    echo "$MODELS" | sed 's/^/  - /'
+    MODEL_COUNT=$(echo "$MODELS" | wc -l)
+  fi
 else
-  echo "=== API 可用模型 ==="
-  echo "  （无法自动探测，请告诉我你的 API 支持哪些模型）"
+  echo "  （无法自动探测）"
+  MODEL_COUNT=0
+fi
+
+echo ""
+echo "=== 当前配置 ==="
+for f in ~/.claude/skills/product-lifecycle/.claude/agents/*.md; do
+  name=$(basename "$f" .md)
+  model=$(grep "^model:" "$f" 2>/dev/null | sed 's/model: *//' | tr -d '"')
+  echo "  $name: ${model:-继承当前模型}"
+done
+
+echo ""
+echo "=== 推荐方案 ==="
+if [ "$MODEL_COUNT" -eq 0 ]; then
+  echo "  无法自动推荐（未探测到模型）"
+  echo "  建议：保持全部继承当前模型"
+elif [ "$MODEL_COUNT" -eq 1 ]; then
+  ONLY=$(echo "$MODELS" | head -1)
+  echo "  只有 1 个模型：$ONLY"
+  echo "  推荐：全部设为 $ONLY"
+elif [ "$MODEL_COUNT" -eq 2 ]; then
+  STRONG=$(echo "$MODELS" | head -1)
+  BALANCED=$(echo "$MODELS" | tail -1)
+  echo "  推荐分级配置："
+  echo "    复杂推理（编排总监 + 架构师）→ $STRONG"
+  echo "    常规任务（其余 12 个）→ $BALANCED"
+  echo "  预计省钱：~30-40%"
+elif [ "$MODEL_COUNT" -ge 3 ]; then
+  STRONG=$(echo "$MODELS" | head -1)
+  BALANCED=$(echo "$MODELS" | sed -n '2p')
+  echo "  推荐分级配置："
+  echo "    复杂推理（编排总监 + 架构师）→ $STRONG"
+  echo "    常规任务（其余 12 个）→ $BALANCED"
+  echo "  预计省钱：~30-40%"
 fi
 ```
 
-### 3. 向用户展示并询问（必须停下来等回复）
+### 2. 向用户展示推荐方案并等待确认
 
-**⚠️ 执行到这里必须停下来，等用户回复后才能继续下一步。不能自己决定跳过。**
+**⚠️ 执行到这里必须停下来，等用户回复后才能继续。不能自己决定跳过。**
 
-向用户展示以下内容（用 AskUserQuestion 工具或直接输出）：
+根据探测结果，用 AskUserQuestion 向用户展示推荐方案：
 
+**如果探测到 2+ 个模型：**
 ```
-当前子代理配置：全部继承你当前选定的模型。
-"继承" = 子代理用的就是你现在跑的这个模型，最稳定，不会报错。
+你的 API 支持 [N] 个模型，推荐分级配置：
 
-如果你的 API 支持多个模型，可以分级配置省钱：
-  复杂任务（编排/架构）→ 用最强模型
-  常规任务（其余 11 个）→ 用平衡模型
+┌─────────────────────────────────────────┐
+│ 复杂推理（编排总监 + 架构师）→ 最强模型     │
+│ 常规任务（其余 12 个）     → 平衡模型     │
+│                                         │
+│ 预计比全部用最强模型省钱 30-40%            │
+└─────────────────────────────────────────┘
 
-要怎么配？
-  ① 不改（推荐，最稳定）
-  ② 分级配置（告诉我模型名，我自动分配）
-  ③ 全部指定为某个模型
-```
-
-### 4. 根据用户回复处理
-
-- **用户选 ① 或"不用改"** → 直接进入工作流，不需要任何修改
-- **用户选 ② 或"分级"** → 问用户两个模型名（强/弱），自动更新：
-  - orchestrator + architect → 强模型
-  - 其余 11 个 → 弱模型
-- **用户选 ③ 或"全部用 xxx"** → 批量更新所有 .claude/agents/*.md
-- **用户说"去掉 model"** → 移除所有 model 字段（回到纯继承）
-
-更新配置脚本：
-```bash
-# 设置指定 Agent 的模型
-set_model() {
-  local model="$1"
-  shift
-  for name in "$@"; do
-    f="$HOME/.claude/skills/product-lifecycle/.claude/agents/$name.md"
-    if grep -q "^model:" "$f" 2>/dev/null; then
-      sed -i "s/^model:.*/model: \"$model\"/" "$f"
-    else
-      sed -i "/^description:/a model: \"$model\"" "$f"
-    fi
-  done
-}
-
-# 示例：分级配置
-# set_model "最强模型名" orchestrator architect
-# set_model "平衡模型名" developer devops docwriter feedback-analyst iteration-planner market-analyst proactive-scout product-manager qa-manager quality-gatekeeper reviewer
+① 采用推荐方案（自动配置）
+② 全部继承当前模型（最稳定）
+③ 自定义分配
 ```
 
-**重要：不管用户选什么，都要确保模型名是用户的 API 确实支持的。如果不确定，选 ① 最安全。**
+**如果只探测到 1 个模型：**
+```
+你的 API 只有 1 个模型：[模型名]
+推荐全部设为该模型。
+
+① 采用推荐（全部用 [模型名]）
+② 继承当前模型（不改）
+③ 自定义
+```
+
+**如果无法探测：**
+```
+无法自动探测你的 API 支持的模型。
+
+① 继承当前模型（最稳定，推荐）
+② 手动告诉我你的模型名，我帮你配置
+```
+
+### 3. 根据用户回复处理
+
+- **用户选 ① "采用推荐"** → 自动执行推荐方案：
+  ```bash
+  # 分级配置示例（2+ 模型时）
+  set_model() {
+    local model="$1"; shift
+    for name in "$@"; do
+      f="$HOME/.claude/skills/product-lifecycle/.claude/agents/$name.md"
+      if grep -q "^model:" "$f" 2>/dev/null; then
+        sed -i "s/^model:.*/model: \"$model\"/" "$f"
+      else
+        sed -i "/^description:/a model: \"$model\"" "$f"
+      fi
+    done
+  }
+  set_model "最强模型名" orchestrator architect
+  set_model "平衡模型名" developer devops docwriter feedback-analyst iteration-planner market-analyst proactive-scout product-manager qa-manager quality-gatekeeper reviewer dba
+  ```
+
+- **用户选 ② "继承/不改"** → 移除所有 model 字段（或保持不变）
+- **用户选 ③ "自定义"** → 问用户具体分配方式
+- **用户说"去掉 model"** → 移除所有 model 字段
+
+**重要：不管用户选什么，都要确保模型名是用户的 API 确实支持的。**
 
 ---
 
