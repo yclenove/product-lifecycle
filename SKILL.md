@@ -16,18 +16,10 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 **启动任何工作流前，先执行以下配置检查：**
 
-### 1. 探测可用模型 + 读取当前配置
+### 1. 读取当前子代理配置
 
 ```bash
-# 探测 API 支持的模型
-echo "=== 可用模型 ==="
-API_URL="${ANTHROPIC_BASE_URL%/anthropic}/v1/models"
-curl -s --connect-timeout 5 "$API_URL" \
-  -H "Authorization: Bearer $ANTHROPIC_AUTH_TOKEN" 2>/dev/null \
-  | tr ',' '\n' | grep '"id"' | sed 's/.*"id":"\([^"]*\)".*/  - \1/' | grep -vi tts | grep -vi omni
-
-echo ""
-echo "=== 当前子代理配置 ==="
+echo "=== 当前子代理模型配置 ==="
 for f in ~/.claude/skills/product-lifecycle/.claude/agents/*.md; do
   name=$(basename "$f" .md)
   model=$(grep "^model:" "$f" 2>/dev/null | sed 's/model: *//' | tr -d '"')
@@ -35,59 +27,73 @@ for f in ~/.claude/skills/product-lifecycle/.claude/agents/*.md; do
 done
 ```
 
-### 2. 向用户展示并询问
+### 2. 尝试探测 API 可用模型（可选）
 
-把结果整理成表格展示给用户：
-
-```
-你的 API 支持以下模型：
-  - mimo-v2.5-pro（最强）
-  - mimo-v2.5（平衡）
-  - mimo-v2-pro（旧版）
-
-当前子代理模型配置：
-
-| Agent | 角色 | 当前模型 |
-|-------|------|----------|
-| orchestrator | 编排总监 | 继承当前模型 |
-| architect | 架构师 | 继承当前模型 |
-| developer | 开发工程师 | 继承当前模型 |
-| ... | ... | ... |
-
-"继承当前模型" = 子代理使用你当前选定的模型，最稳定。
-
-推荐配置（省钱+稳定）：
-  编排总监/架构师 → mimo-v2.5-pro（复杂推理）
-  其余 11 个 → mimo-v2.5（常规任务）
-
-你要怎么配置？
-  1. 不改（全部继承当前模型，最稳定）
-  2. 用推荐配置（分级省钱）
-  3. 自定义（告诉我具体分配）
-```
-
-### 3. 根据用户回复处理
-
-- **用户选 1 或"不用改"** → 直接进入工作流
-- **用户选 2 或"用推荐配置"** → 自动更新：orchestrator/architect 设为最强模型，其余设为平衡模型
-- **用户选 3 或自定义** → 按用户指定更新
-- **用户说"把 model 字段去掉"** → 移除所有 model 字段（回到纯继承模式）
-
-更新配置的脚本：
 ```bash
-# 批量设置模型
-MODEL="$1"  # 如 mimo-v2.5
-for f in ~/.claude/skills/product-lifecycle/.claude/agents/*.md; do
-  if grep -q "^model:" "$f"; then
-    sed -i "s/^model:.*/model: \"$MODEL\"/" "$f"
-  else
-    sed -i "/^description:/a model: \"$MODEL\"" "$f"
-  fi
-done
-echo "✓ 已设置全部子代理为 $MODEL"
+# 尝试 OpenAI 兼容的 /v1/models 端点
+if [ -n "$ANTHROPIC_BASE_URL" ]; then
+  API_URL="${ANTHROPIC_BASE_URL%/anthropic}/v1/models"
+  TOKEN="${ANTHROPIC_AUTH_TOKEN:-$ANTHROPIC_API_KEY}"
+  echo "=== API 可用模型 ==="
+  curl -s --connect-timeout 5 "$API_URL" \
+    -H "Authorization: Bearer $TOKEN" 2>/dev/null \
+    | tr ',' '\n' | grep '"id"' | sed 's/.*"id":"\([^"]*\)".*/  - \1/' \
+    | grep -vi tts | grep -vi omni || echo "  （无法探测，请手动输入模型名）"
+else
+  echo "=== API 可用模型 ==="
+  echo "  （无法自动探测，请告诉我你的 API 支持哪些模型）"
+fi
 ```
 
-更新后运行 `bash ~/.claude/skills/product-lifecycle/scripts/sync-agents.sh` 同步到项目目录。
+### 3. 向用户展示并询问
+
+把结果整理展示给用户：
+
+```
+当前子代理配置：全部继承你当前选定的模型。
+"继承" = 子代理用的就是你现在跑的这个模型，最稳定，不会报错。
+
+如果你的 API 支持多个模型，可以分级配置省钱：
+  复杂任务（编排/架构）→ 用最强模型
+  常规任务（其余 11 个）→ 用平衡模型
+
+要怎么配？
+  ① 不改（推荐，最稳定）
+  ② 分级配置（告诉我模型名，我自动分配）
+  ③ 全部指定为某个模型
+```
+
+### 4. 根据用户回复处理
+
+- **用户选 ① 或"不用改"** → 直接进入工作流，不需要任何修改
+- **用户选 ② 或"分级"** → 问用户两个模型名（强/弱），自动更新：
+  - orchestrator + architect → 强模型
+  - 其余 11 个 → 弱模型
+- **用户选 ③ 或"全部用 xxx"** → 批量更新所有 .claude/agents/*.md
+- **用户说"去掉 model"** → 移除所有 model 字段（回到纯继承）
+
+更新配置脚本：
+```bash
+# 设置指定 Agent 的模型
+set_model() {
+  local model="$1"
+  shift
+  for name in "$@"; do
+    f="$HOME/.claude/skills/product-lifecycle/.claude/agents/$name.md"
+    if grep -q "^model:" "$f" 2>/dev/null; then
+      sed -i "s/^model:.*/model: \"$model\"/" "$f"
+    else
+      sed -i "/^description:/a model: \"$model\"" "$f"
+    fi
+  done
+}
+
+# 示例：分级配置
+# set_model "最强模型名" orchestrator architect
+# set_model "平衡模型名" developer devops docwriter feedback-analyst iteration-planner market-analyst proactive-scout product-manager qa-manager quality-gatekeeper reviewer
+```
+
+**重要：不管用户选什么，都要确保模型名是用户的 API 确实支持的。如果不确定，选 ① 最安全。**
 
 ## Agent 调用示例（配置完成后执行）
 
