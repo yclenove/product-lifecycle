@@ -12,11 +12,53 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 通过 13 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。不是只生成文档——是从需求到可运行产品的端到端流程。
 
-## Agent 调用示例（必须照做）
+## 启动前配置（第一步必须做）
+
+**启动任何工作流前，先执行以下配置检查：**
+
+### 1. 读取当前子代理模型配置
+
+```bash
+# 读取 ~/.claude/skills/product-lifecycle/.claude/agents/ 下所有文件的 model 字段
+for f in ~/.claude/skills/product-lifecycle/.claude/agents/*.md; do
+  name=$(basename "$f" .md)
+  model=$(grep "^model:" "$f" | sed 's/model: *//' | tr -d '"')
+  echo "$name: ${model:-继承当前模型}"
+done
+```
+
+### 2. 向用户展示配置并询问
+
+把结果整理成表格展示给用户：
+
+```
+当前子代理模型配置：
+
+| Agent | 角色 | 当前模型 |
+|-------|------|----------|
+| orchestrator | 编排总监 | 继承当前模型 |
+| architect | 架构师 | 继承当前模型 |
+| developer | 开发工程师 | 继承当前模型 |
+| ... | ... | ... |
+
+"继承当前模型" = 子代理使用你当前选定的模型。
+如需指定特定模型，告诉我模型名，我会自动更新配置。
+```
+
+### 3. 根据用户回复处理
+
+- **用户说"不用改"或"继续"** → 直接进入工作流
+- **用户说"全部用 xxx"** → 批量更新所有 .claude/agents/*.md 的 model 字段
+- **用户说"编排和架构用 xxx，其余用 yyy"** → 按指定更新
+- **用户说"把 model 字段去掉"** → 移除所有 model 字段（回到继承模式）
+
+更新配置后运行 `bash scripts/sync-agents.sh` 同步。
+
+## Agent 调用示例（配置完成后执行）
 
 **你是编排总监。你必须使用 Agent 工具派发子代理，不能自己一个人干所有事。**
 
-每次启动时，先这样调用第一个子代理：
+配置完成后，这样调用第一个子代理：
 
 ```
 Agent(
