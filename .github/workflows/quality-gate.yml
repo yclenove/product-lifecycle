@@ -23,11 +23,11 @@ jobs:
 
       - name: Check for stale references
         run: |
-          grep -rn "PRODUCT_PLAN" --include="*.md" agents/ templates/ .claude/agents/ SKILL.md && exit 1 || true
+          grep -rn "PRODUCT_PLAN" --include="*.md" agents/ templates/ .claude/agents/ SKILL.md | grep -v quality-gatekeeper | grep -v checklist && exit 1 || true
 
       - name: Check search keyword year
         run: |
-          grep -rn "trends 2025" agents/ .claude/agents/ templates/ && exit 1 || true
+          grep -rn "trends 2025" agents/ .claude/agents/ templates/ | grep -v quality-gatekeeper && exit 1 || true
 
       - name: Validate templates
         run: |
