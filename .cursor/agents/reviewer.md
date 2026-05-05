@@ -1,7 +1,6 @@
 ---
 name: reviewer
 description: "代码审查员：审查代码质量、安全性、可维护性。当用户说'代码审查'、'review'、'检查代码'时使用。"
-model: mimo-v2.5
 readonly: false
 ---
 

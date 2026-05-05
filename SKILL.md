@@ -12,6 +12,24 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 通过 13 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。不是只生成文档——是从需求到可运行产品的端到端流程。
 
+## Agent 调用示例（必须照做）
+
+**你是编排总监。你必须使用 Agent 工具派发子代理，不能自己一个人干所有事。**
+
+每次启动时，先这样调用第一个子代理：
+
+```
+Agent(
+  subagent_type: "",
+  description: "需求侦察兵：产品体检",
+  prompt: "读取 ~/.claude/skills/product-lifecycle/agents/proactive-scout.md，按照里面的指引对当前项目执行产品体检和市场扫描。产出到 docs/SCOUT-xxx-侦察报告.md。"
+)
+```
+
+然后按模式 B 的顺序依次派发：反馈分析师 → 市场分析师 → 产品经理 → 迭代规划师 → 架构师 → 开发工程师 → 测试经理 → 质量门禁。
+
+**子代理模型继承用户当前配置，无需指定。**
+
 ## 各工具用法（分文档）
 
 工具相关安装、命令与执行细节已拆出，便于单独维护；**需要时再 Read 对应文件**。

@@ -1,7 +1,6 @@
 ---
 description: "质量门禁：代码审查、lint配置、质量报告。当用户说'代码审查'、'质量检查'、'lint'时使用。"
 tools: ["Read", "Glob", "Grep", "Write", "Edit", "Bash"]
-model: "mimo-v2.5"
 ---
 
 你是 {{PROJECT_NAME}} 的质量门禁 Agent。

@@ -4,15 +4,15 @@
 
 | 阶段 | Agent | 预估 Input | 预估 Output | 模型 |
 |------|-------|-----------|-------------|------|
-| 编排 | orchestrator | 2000 | 3000 | mimo-v2.5-pro |
-| 调研 | market-analyst | 3000 | 2000 | mimo-v2.5 |
-| 调研 | product-manager | 3000 | 2500 | mimo-v2.5 |
-| 设计 | architect | 4000 | 3000 | mimo-v2.5-pro |
-| 实现 | developer | 5000 | 1500 | mimo-v2.5 |
-| 测试 | qa-manager | 3000 | 1500 | mimo-v2.5 |
-| 部署 | devops | 3000 | 1500 | mimo-v2.5 |
-| 文档 | docwriter | 3000 | 2000 | mimo-v2.5 |
-| 审查 | quality-gatekeeper | 3000 | 1500 | mimo-v2.5 |
+| 编排 | orchestrator | 2000 | 3000 | 继承用户当前模型 |
+| 调研 | market-analyst | 3000 | 2000 | 继承用户当前模型 |
+| 调研 | product-manager | 3000 | 2500 | 继承用户当前模型 |
+| 设计 | architect | 4000 | 3000 | 继承用户当前模型 |
+| 实现 | developer | 5000 | 1500 | 继承用户当前模型 |
+| 测试 | qa-manager | 3000 | 1500 | 继承用户当前模型 |
+| 部署 | devops | 3000 | 1500 | 继承用户当前模型 |
+| 文档 | docwriter | 3000 | 2000 | 继承用户当前模型 |
+| 审查 | quality-gatekeeper | 3000 | 1500 | 继承用户当前模型 |
 | **总计** | | **~32,000** | **~18,500** | |
 
 ## 迭代场景 Token 消耗（模式 B 单轮）

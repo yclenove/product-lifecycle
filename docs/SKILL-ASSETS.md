@@ -107,5 +107,5 @@
 
 | 模型 | 适用场景 | Agent |
 |------|----------|-------|
-| mimo-v2.5-pro | 复杂推理、全局协调 | orchestrator, architect |
-| mimo-v2.5 | 常规任务 | 其余 11 个 Agent |
+| 继承用户当前模型 | 复杂推理、全局协调 | orchestrator, architect |
+| 继承用户当前模型 | 常规任务 | 其余 11 个 Agent |

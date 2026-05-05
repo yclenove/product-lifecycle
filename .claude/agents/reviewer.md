@@ -1,7 +1,6 @@
 ---
 description: "代码审查员：审查代码质量、安全性、可维护性。当用户说'代码审查'、'review'、'检查代码'时使用。"
 tools: ["Read", "Glob", "Grep", "Bash", "Write"]
-model: "mimo-v2.5"
 ---
 
 你是 {{PROJECT_NAME}} 的代码审查员。

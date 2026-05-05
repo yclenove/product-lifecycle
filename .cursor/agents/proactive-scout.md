@@ -1,7 +1,6 @@
 ---
 name: proactive-scout
 description: "需求侦察兵：持续监控市场+产品体检，主动发现机会和威胁。当用户说'侦察市场'、'产品体检'、'市场扫描'时使用。"
-model: mimo-v2.5
 readonly: false
 ---
 
