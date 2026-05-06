@@ -124,6 +124,25 @@ else
   errors=$((errors+1))
 fi
 
+# 10. 检查残留旧 Agent 数字（排除 CHANGELOG 和历史报告）
+echo -n "残留旧 Agent 数字: "
+stale_count=0
+for f in "$ROOT/SKILL.md" "$ROOT/README.md" "$ROOT"/docs/QUICK-START.md "$ROOT"/docs/DECISION-TREE.md "$ROOT"/docs/FAQ.md "$ROOT"/docs/SKILL-ASSETS.md "$ROOT"/docs/SKILL-CURSOR.md "$ROOT"/docs/SKILL-CLAUDE-CODE.md "$ROOT"/.cursor/agents/README.md; do
+  if [ -f "$f" ]; then
+    found=$(grep -nE '(1[1-3])\s*(个|位)?\s*(Agent|角色)' "$f" 2>/dev/null | grep -v '其余' | grep -v 'CHANGELOG' || true)
+    if [ -n "$found" ]; then
+      stale_count=$((stale_count+1))
+      echo -n "$(basename "$f") "
+    fi
+  fi
+done
+if [ $stale_count -eq 0 ]; then
+  echo "✓ 无残留"
+else
+  echo "✗ ($stale_count 个文件有残留)"
+  errors=$((errors+1))
+fi
+
 echo ""
 if [ $errors -eq 0 ]; then
   echo "全部通过 ✓"

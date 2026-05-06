@@ -1,6 +1,6 @@
 ---
 name: product-lifecycle
-description: Use when starting a new product/project and need to orchestrate a full development lifecycle from market analysis through architecture, implementation, testing, deployment, and continuous iteration. 中文触发：产品迭代、全流程开发、产品生命周期、市场分析+开发+测试、13个Agent协作。
+description: Use when starting a new product/project and need to orchestrate a full development lifecycle from market analysis through architecture, implementation, testing, deployment, and continuous iteration. 中文触发：产品迭代、全流程开发、产品生命周期、市场分析+开发+测试、14个Agent协作。
 when_to_use: "new product launch, full lifecycle management, Phase kickoff, product iteration, market analysis needed, PRD creation, architecture design, product upgrade, new feature lifecycle, 产品迭代, 全流程开发, 产品生命周期, 市场分析, 需求分析, 产品规划, PRD编写, 架构设计, 版本迭代, 持续迭代, 多Agent协作, 编排总监, 需求侦察, 反馈分析, 迭代计划, 使用product-lifecycle, 跑一轮迭代, 帮我迭代"
 argument-hint: "[项目名] [一句话描述]"
 allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
@@ -178,7 +178,7 @@ Agent(
 | **OpenCode / Codex / 其他** | `[docs/SKILL-OTHER-TOOLS.md](docs/SKILL-OTHER-TOOLS.md)` — 读 `agents/` 与 `templates/`                                | 使用 Cursor/Claude Code 以外的工具时；只需读取 `agents/` 与 `templates/` 即可                                  |
 
 
-**角色文件与模板清单、12 角色产出表、质量门禁速查**：`[docs/SKILL-ASSETS.md](docs/SKILL-ASSETS.md)`
+**角色文件与模板清单、14 角色产出表、质量门禁速查**：`[docs/SKILL-ASSETS.md](docs/SKILL-ASSETS.md)`
 
 ## 何时使用
 
@@ -318,7 +318,7 @@ Agent(
 - 部署失败 → 运维修复 → 重新部署（可能多轮）
 - 质量门禁不通过 → 开发修复 → 重新测试 + 重新部署
 
-**各角色文件、模板、12 角色产出表、质量门禁表**：`[docs/SKILL-ASSETS.md](docs/SKILL-ASSETS.md)`
+**各角色文件、模板、14 角色产出表、质量门禁表**：`[docs/SKILL-ASSETS.md](docs/SKILL-ASSETS.md)`
 
 **流程图、依赖与编号规则**：`[docs/WORKFLOW_DETAILS.md](docs/WORKFLOW_DETAILS.md)`
 

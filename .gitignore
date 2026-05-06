@@ -1,0 +1,19 @@
+# Claude Code worktrees
+.claude/worktrees/
+
+# Claude Code scheduled tasks
+.claude/scheduled_tasks.json
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Editor temp files
+*.swp
+*.swo
+*~
+
+# Chrome DevTools snapshots
+*.heapsnapshot

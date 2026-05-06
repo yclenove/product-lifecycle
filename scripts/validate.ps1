@@ -15,7 +15,7 @@ if ($firstLine -eq "---") { Write-Host "PASS" } else { Write-Host "FAIL"; $error
 
 Write-Host -NoNewline ".claude/agents/ count: "
 $agentCount = (Get-ChildItem "$Root\.claude\agents\*.md" -ErrorAction SilentlyContinue).Count
-if ($agentCount -eq 13) { Write-Host "PASS ($agentCount)" } else { Write-Host "FAIL ($agentCount/13)"; $errors++ }
+if ($agentCount -eq 14) { Write-Host "PASS ($agentCount)" } else { Write-Host "FAIL ($agentCount/14)"; $errors++ }
 
 Write-Host -NoNewline "PRODUCT_PLAN refs: "
 $stale = Get-ChildItem "$Root\agents\*.md","$Root\templates\*.md","$Root\.claude\agents\*.md","$Root\SKILL.md" -ErrorAction SilentlyContinue | Select-String -Pattern "PRODUCT_PLAN" -Encoding UTF8 | Where-Object { $_.Filename -notmatch "CHANGELOG|quality-gatekeeper" }
@@ -31,7 +31,7 @@ foreach ($f in Get-ChildItem "$Root\agents\*.md") {
     $content = [System.IO.File]::ReadAllText($f.FullName, [System.Text.Encoding]::UTF8)
     if ($content -match "\u4e0a\u4e0b\u6587\u7ba1\u7406") { $ctxCount++ }
 }
-if ($ctxCount -eq 13) { Write-Host "PASS ($ctxCount/13)" } else { Write-Host "FAIL ($ctxCount/13)"; $errors++ }
+if ($ctxCount -eq 14) { Write-Host "PASS ($ctxCount/14)" } else { Write-Host "FAIL ($ctxCount/14)"; $errors++ }
 
 Write-Host -NoNewline "Agent required sections: "
 $miss = 0
@@ -67,7 +67,7 @@ foreach ($f in Get-ChildItem "$Root\agents\*.md") {
     $targetPath = Join-Path $Root (Join-Path '.claude' (Join-Path 'agents' $f.Name))
     if (-not (Test-Path $targetPath)) { Write-Host -NoNewline "$($f.BaseName)(missing) "; $syncMiss++ }
 }
-if ($syncMiss -eq 0) { Write-Host "PASS (13/13)" } else { Write-Host "FAIL ($syncMiss)"; $errors++ }
+if ($syncMiss -eq 0) { Write-Host "PASS (14/14)" } else { Write-Host "FAIL ($syncMiss)"; $errors++ }
 
 Write-Host ""
 if ($errors -eq 0) { Write-Host "All checks passed"; exit 0 }

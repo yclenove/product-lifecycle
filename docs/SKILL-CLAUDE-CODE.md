@@ -37,6 +37,8 @@ git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/pro
 | `.claude/agents/proactive-scout.md`    | 需求侦察兵 | Read, Glob, Grep, WebSearch, WebFetch, Write |
 | `.claude/agents/feedback-analyst.md`   | 反馈分析师 | Read, Glob, Grep, WebSearch, WebFetch, Write |
 | `.claude/agents/iteration-planner.md`  | 迭代规划师 | Read, Glob, Grep, Write, Edit                |
+| `.claude/agents/reviewer.md`           | 代码审查员 | Read, Glob, Grep, Write, Edit                |
+| `.claude/agents/dba.md`               | 数据库管理员 | Read, Glob, Grep, Write, Edit                |
 
 
 用法：在 Claude Code 中说「使用编排总监 agent」或「启动市场分析师 agent」。
