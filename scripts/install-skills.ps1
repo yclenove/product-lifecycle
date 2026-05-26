@@ -112,4 +112,4 @@ if (-not $DryRun) {
     if ($installCursor) { Test-Install (Join-Path $HOME '.cursor\skills') }
 }
 
-Write-Ok '完成。详见 docs/SKILL-INTEGRATION.md'
+Write-Ok '完成。详见 docs/04-reference/SKILL-INTEGRATION.md'

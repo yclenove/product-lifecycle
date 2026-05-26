@@ -4,7 +4,7 @@
 
 ## 通用 Agent Prompts（`agents/`）
 
-适用于任意 AI 工具；用法：读取文件，替换 `{{PROJECT_NAME}}` 与 `{{PROJECT_DESCRIPTION}}`，在会话中作为系统/用户指令使用。**Claude Code** 优先用 `.claude/agents/`（见 `docs/SKILL-CLAUDE-CODE.md`）。**Cursor** 推荐在业务项目 `.cursor/agents/` 中为每角色建薄 Subagent，正文 Read 本表所列 `agents/*.md`；官方亦支持加载项目内 `.claude/agents/`（与 `.cursor/agents/` 同名时以前者优先），详见 `docs/SKILL-CURSOR.md` 与 [Cursor 文档：Subagents](https://cursor.com/docs/subagents)。
+适用于任意 AI 工具；用法：读取文件，替换 `{{PROJECT_NAME}}` 与 `{{PROJECT_DESCRIPTION}}`，在会话中作为系统/用户指令使用。**Claude Code** 优先用 `.claude/agents/`（见 `docs/02-tools/SKILL-CLAUDE-CODE.md`）。**Cursor** 推荐在业务项目 `.cursor/agents/` 中为每角色建薄 Subagent，正文 Read 本表所列 `agents/*.md`；官方亦支持加载项目内 `.claude/agents/`（与 `.cursor/agents/` 同名时以前者优先），详见 `docs/02-tools/SKILL-CURSOR.md` 与 [Cursor 文档：Subagents](https://cursor.com/docs/subagents)。
 
 
 | 文件                                | 角色      | 分层    |
@@ -107,7 +107,7 @@
 | 引用类型 | 语法 | 示例 |
 |----------|------|------|
 | 文件路径 | 反引号包裹 | `agents/orchestrator.md` |
-| 章节引用 | 文件路径 + §符号 | `docs/PRD-*.md §5` |
+| 章节引用 | 文件路径 + §符号 | `docs/iterations/current/product/PRD-*.md §5` |
 | 文档编号 | 编号前缀 | MKT-001、PRD-001 |
 | 模板引用 | templates/ 前缀 | `templates/market_template.md` |
 
@@ -130,4 +130,4 @@
 | 模型 | 适用场景 | Agent |
 |------|----------|-------|
 | 继承用户当前模型 | 复杂推理、全局协调 | orchestrator、architect、project-manager |
-| 继承用户当前模型 | 常规任务 | 其余 17 个 Agent |
+| 继承用户当前模型 | 常规任务 | 其余 17 个 Agent |

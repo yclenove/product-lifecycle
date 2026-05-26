@@ -20,15 +20,60 @@
 | chinese-documentation | 中文项目文档 |
 | chinese-commit-conventions | 工作日志规范 |
 
+
+## Step 0：恢复上下文（长程迭代模式）
+
+> 如果存在 `docs/07-long-running/STATE.md`，本节生效；否则跳过。
+
+**必做：**
+
+1. 读 `docs/07-long-running/STATE.md`，关注「已完成 Agent 清单」「未完成 / 阻塞项」「关键产出索引」
+2. 在开始干活前先向用户复述：「我看到上一轮 X 已完成 / 你卡在 Y / 我准备接着做 Z」
+3. **不要重复**上一轮已经做过的探索（除非用户明确要求重做）
+
+**结束前必做：**
+
+1. 在 `docs/07-long-running/STATE.md`「已完成 Agent 清单」追加本轮记录（含产出文档路径 + ≤3 个关键决策）
+2. 更新「下一步建议」指向下一个 Agent
+3. 阶段里程碑（PRD 定稿 / 架构封闭 / 主线开发完成 / QA 通过）必须调用：
+   ```bash
+   bash scripts/checkpoint.sh <agent-name> "<简短描述>"
+   ```
+4. Session 结束前（用户要下线）调用 `bash scripts/handoff.sh` 生成移交单
+
+**单轮加深（充分利用 token 预算）：**
+
+本项目鼓励 **深度产出 > 表面交付**。遇到关键决策点：
+
+- 列出 2-3 个候选方案，逐一权衡利弊（时间 / 成本 / 风险 / 团队熟悉度）
+- 给出明确推荐 + 选择该方案的理由（不要"看情况"敷衍）
+- 标记不确定项 → 写入 `STATE.md` 阻塞项，等待用户或下一轮解决
+- 重要数据 / 接口 / 流程，配上完整示例或代码片段，**不要只写一行抽象描述**
+
+## 应该画的图
+
+> 文档配图能让结论一眼可读。本角色至少要画下面这些图。详细规范见 `docs/05-advanced/DIAGRAMMING.md`。
+
+| 类别 | 内容 |
+|------|------|
+| **必画** | 甘特图、依赖关系图 |
+| **建议** | 风险矩阵 |
+
+**工具优先级**：
+
+1. **drawio MCP**（首选）—— 仓库已配 `.mcp.json`，直接让 AI 画。例：
+   > 用 drawio 画一张 `project-manager` 阶段所需的关键图，保存为 SVG 到 `docs/iterations/current/<类型>/assets/`。
+2. **Mermaid**（备用 / 嵌入 markdown）—— drawio 不可用或图很简单时使用。
+3. 反模式与视觉规范见 `docs/05-advanced/DIAGRAMMING.md` 第 5-6 节。
 ## 你的任务
 
 ### Step 0: 文档健康检查
 
 | 文档 | 路径 | 缺失时行动 |
 |------|------|-----------|
-| 工作流计划 | docs/WORKFLOW_PLAN.md | 必须有，让编排总监先做 |
-| PRD | docs/PRD-*.md | 必须有 |
-| 迭代计划 | docs/ITER-*.md | 模式 B 时必须有 |
+| 工作流计划 | docs/03-workflow/WORKFLOW_PLAN.md | 必须有，让编排总监先做 |
+| PRD | docs/iterations/current/product/PRD-*.md | 必须有 |
+| 迭代计划 | docs/iterations/current/iteration/ITER-*.md | 模式 B 时必须有 |
 
 ### Step 1: 任务分解（WBS）
 
@@ -195,7 +240,7 @@ git log --since="1 week ago" --format="%cn" 2>/dev/null | sort -u | wc -l | xarg
 echo ""
 echo "=== docs/ PMO 文件 ==="
 ls docs/PMO*.md 2>/dev/null
-ls docs/WORKFLOW_PLAN.md 2>/dev/null
+ls docs/03-workflow/WORKFLOW_PLAN.md 2>/dev/null
 ```
 
 **上下文管理：** 遵循 `agents/project-manager.md` 中的上下文管理指令，控制输出长度。

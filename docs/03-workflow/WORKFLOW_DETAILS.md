@@ -2,7 +2,7 @@
 
 > 本文档包含 product-lifecycle skill 的详细工作流、依赖关系、规范和常见错误。
 
-**在 Cursor 中执行：** Agent / Subagent 的**官方配置方式**、`.cursor/agents/` 与 `.claude/agents/` 路径、`/name` 调用、并行与前台/后台行为，均以 **`docs/SKILL-CURSOR.md`** 为准（并与 [Cursor Subagents 文档](https://cursor.com/docs/subagents) 对齐）。下文流程在工具上与 Claude Code 通用；仅在「如何拉起各角色」处：CC 用 `Agent` 工具与本仓库 slash 命令，Cursor 用 Subagent 委派 + Read `PACKAGE_ROOT/agents/*.md`。
+**在 Cursor 中执行：** Agent / Subagent 的**官方配置方式**、`.cursor/agents/` 与 `.claude/agents/` 路径、`/name` 调用、并行与前台/后台行为，均以 **`docs/02-tools/SKILL-CURSOR.md`** 为准（并与 [Cursor Subagents 文档](https://cursor.com/docs/subagents) 对齐）。下文流程在工具上与 Claude Code 通用；仅在「如何拉起各角色」处：CC 用 `Agent` 工具与本仓库 slash 命令，Cursor 用 Subagent 委派 + Read `PACKAGE_ROOT/agents/*.md`。
 
 ## 全流程闭环（含反馈循环）
 
@@ -155,7 +155,7 @@ Agent A 完成后，Agent B 读取 A 的输出继续。
 
 ## 你的任务
 1. 读取以下文件获取上下文：
-   - [PROJECT]/docs/PRD-*.md
+   - [PROJECT]/docs/iterations/current/product/PRD-*.md
    - Read ${CLAUDE_SKILL_DIR}/templates/[角色]_template.md
    - [DOC_REPO]/drafts/WORKFLOW_PLAN.md
    - [相关代码文件]
@@ -274,4 +274,4 @@ Agent A 完成后，Agent B 读取 A 的输出继续。
 - 质量门禁必须等测试通过
 - 部署必须等质量门禁通过
 
-
+

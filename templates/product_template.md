@@ -8,7 +8,7 @@
 | 作者 | 产品经理 |
 | 日期 | YYYY-MM-DD |
 | 状态 | 草稿 |
-| 关联文档 | docs/PRD-*.md §5-§7, MKT-xxx |
+| 关联文档 | docs/iterations/current/product/PRD-*.md §5-§7, MKT-xxx |
 
 ---
 
@@ -63,7 +63,7 @@
 
 ## 4. 非功能需求 [必填]
 
-> 与 docs/PRD-*.md NFR 章节对齐，表格形式列出：类别、要求、验收标准。
+> 与 docs/iterations/current/product/PRD-*.md NFR 章节对齐，表格形式列出：类别、要求、验收标准。
 
 ## 5. 数据模型 [条件：涉及数据变更]
 
@@ -110,3 +110,20 @@
 - Given 密码少于 8 位，When 点击注册，Then 提示"密码过短"
 
 </details>
+
+## 图示要求 [必填]
+
+> 完整规范见 `docs/05-advanced/DIAGRAMMING.md`。优先用 **drawio MCP** 生成 SVG，放到同级 `assets/` 下。
+
+**本类文档至少包含：**
+
+用户旅程图（必）、主要业务流程图（必）；用例图、信息架构（建议）
+
+**嵌入语法：**
+
+```markdown
+![<图标题>](assets/<文档ID>-<图类型>.svg)
+> 源文件：`assets/<文档ID>-<图类型>.drawio`
+```
+
+**离线 / 简图可降级 Mermaid**（```mermaid 代码块）。

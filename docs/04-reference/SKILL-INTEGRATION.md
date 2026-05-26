@@ -2,6 +2,45 @@
 
 本文档说明如何为 product-lifecycle 的 20 个 Agent 配套**通用方法论 skill**，让每个角色不止有产品流程 prompt，还能调用社区/官方沉淀的最佳实践。
 
+## 一键安装（推荐 · superpowers-zh）
+
+在项目根目录执行（**不要在 `~` 主目录跑**）：
+
+```bash
+npx superpowers-zh
+```
+
+会自动检测 Claude Code / Cursor 等工具，安装 20 个中文方法论 skill（TDD、调试、头脑风暴、代码审查等）+ hooks。
+
+## MCP 集成（绘图能力）
+
+product-lifecycle 还推荐一个 MCP server：**drawio**，提供 AI 画图能力。
+
+- 仓库根目录已配 `.mcp.json` / `.cursor/mcp.json`，本仓库内**自动生效**
+- 跨项目使用：`bash scripts/install-mcp.sh`（详见 [`DIAGRAMMING.md`](../05-advanced/DIAGRAMMING.md)）
+- 让 AI 给文档配图、画架构、画时序、画 ER 都用它
+
+| 能力 | 用途 | 触发例 |
+|------|------|--------|
+| **drawio MCP** | 流程/架构/时序/ER/状态机/部署/威胁等 11 种图 | 「用 drawio 画一张下单时序图」 |
+| **Mermaid** | 简单图、嵌入 markdown 直接版本化 | 「给我画一个 mermaid 流程图」 |
+
+绘图规范、角色×图矩阵、反模式：[`docs/05-advanced/DIAGRAMMING.md`](../05-advanced/DIAGRAMMING.md)
+
+| 参数 | 用途 |
+|------|------|
+| `--tool cursor` | 检测不到时显式指定工具 |
+| `--uninstall` | 按哨兵注释精确卸载，不删用户自写内容 |
+| `--dry-run` | 仅预览 |
+
+与本仓库脚本的关系：
+
+- `npx superpowers-zh` → 装**通用方法论**到 `~/.claude/skills/` 等
+- `bash scripts/install-skills.sh` → 克隆 Git 仓库版（离线 / CI 用）
+- 两者可并存；重复 skill 以**先安装者**为准，冲突时见下文「命名空间」
+
+卸载 superpowers-zh：`npx superpowers-zh@latest --uninstall`
+
 ## 为什么需要外部 skill？
 
 每个 Agent 的 prompt 聚焦「**做什么**」（What），通用 skill 聚焦「**怎么做**」（How）。两者结合后：
@@ -46,7 +85,8 @@
 
 ### 2. Superpowers 中文版（推荐）
 
-- **仓库**：[https://github.com/obra/superpowers](https://github.com/obra/superpowers)（中文版叫 `superpowers-zh`）
+- **仓库**：[https://github.com/jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)（上游 [obra/superpowers](https://github.com/obra/superpowers) 汉化 + 6 个中国特色 skill）
+- **npm**：`npx superpowers-zh`（推荐，含 hooks + bootstrap）
 - **包含**：
   - `brainstorming` — 创造性工作前先探索
   - `writing-plans` — 多步任务的实现计划

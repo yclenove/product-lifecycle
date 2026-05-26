@@ -1,0 +1,9 @@
+{
+  "_comment": "Cursor 项目级 MCP server 配置。详见 docs/05-advanced/DIAGRAMMING.md",
+  "mcpServers": {
+    "drawio": {
+      "command": "npx",
+      "args": ["-y", "@next-ai-drawio/mcp-server@latest"]
+    }
+  }
+}

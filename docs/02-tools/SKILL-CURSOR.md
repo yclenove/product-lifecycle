@@ -15,7 +15,7 @@
 3. 否则在工作区内搜索 `**agents/orchestrator.md**`（嵌套目录如 `.product-lifecycle/`）：命中路径为 `…/agents/orchestrator.md` 时，`PACKAGE_ROOT` = 含 `agents` 目录的那一层上级（与 `agents`、`templates` 同级的那棵树的根）。
 4. 若仍无法确定：向用户询问本仓库在本机的路径，在本对话中沿用为 `PACKAGE_ROOT`。
 
-之后所有 **Read** 使用：`{PACKAGE_ROOT}/agents/…`、`{PACKAGE_ROOT}/templates/…`、`{PACKAGE_ROOT}/docs/…`。**产出物**（如 `docs/MKT-001-…`）默认写在**当前业务工作区**，除非用户另有指定。
+之后所有 **Read** 使用：`{PACKAGE_ROOT}/agents/…`、`{PACKAGE_ROOT}/templates/…`、`{PACKAGE_ROOT}/docs/…`。**产出物**（如 `docs/iterations/current/market/MKT-001-…`）默认写在**当前业务工作区**，除非用户另有指定。
 
 ---
 
@@ -146,14 +146,14 @@ bash "$PRODUCT_LIFECYCLE_ROOT/scripts/install-cursor-subagents.sh" /path/to/new-
 
 ## 在 Cursor 上与 Claude Code（CC）对齐的目标
 
-本技能包在 **Claude Code** 上的体验是：**slash 命令** → **编排** → **多个带工具限制的 Subagent** 按依赖执行（见 `docs/SKILL-CLAUDE-CODE.md`）。
+本技能包在 **Claude Code** 上的体验是：**slash 命令** → **编排** → **多个带工具限制的 Subagent** 按依赖执行（见 `docs/02-tools/SKILL-CLAUDE-CODE.md`）。
 
 在 **Cursor** 上没有同一个 `Agent` 工具与 `/product-lifecycle` 实现，但可通过 **Cursor 原生 Subagent + 本仓库 `agents/*.md` 真源** 达到同一套工作流与隔离执行：
 
 
 | CC 概念                             | Cursor 上的等价做法                                                                                                                                                                              |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `/product-lifecycle` 拉起流程         | 主对话先 **Read** `{PACKAGE_ROOT}/agents/orchestrator.md`，产出 `docs/WORKFLOW_PLAN.md`；或用 **Rules / AGENTS.md** 固定「先编排」                                                                          |
+| `/product-lifecycle` 拉起流程         | 主对话先 **Read** `{PACKAGE_ROOT}/agents/orchestrator.md`，产出 `docs/03-workflow/WORKFLOW_PLAN.md`；或用 **Rules / AGENTS.md** 固定「先编排」                                                                          |
 | Subagent（独立上下文 + 工具策略）            | 在**业务项目** `.cursor/agents/*.md` 建**薄定义**（官方格式），正文要求 **Read** `{PACKAGE_ROOT}/agents/<role>.md` 并遵守模板与 `docs/` 产出；**或**依赖 Cursor 对项目级 `.claude/agents/` 的兼容加载（见上表），但 `.cursor/agents/` 同名优先 |
 | `Agent` 工具「启动某角色」                 | 使用 `**/name`** 或自然语言委派；与官方 *Explicit invocation* 一致                                                                                                                                        |
 | `.claude/agents/*.md`（仓库内为 CC 优化） | CC 直接使用；Cursor 亦可加载（兼容路径）。**推荐**业务仓仍用 `.cursor/agents/` 薄封装指向 `PACKAGE_ROOT`，避免与 CC frontmatter 细节长期分叉                                                                                     |
@@ -179,7 +179,7 @@ bash "$PRODUCT_LIFECYCLE_ROOT/scripts/install-cursor-subagents.sh" /path/to/new-
 ```markdown
 ---
 name: market-analyst
-description: Product-lifecycle market analyst. Use proactively for competitor research, market trends, or docs/MKT-* deliverables.
+description: Product-lifecycle market analyst. Use proactively for competitor research, market trends, or docs/iterations/current/market/MKT-* deliverables.
 model: inherit
 readonly: false
 ---
@@ -188,7 +188,7 @@ You are the market analyst for this workspace.
 
 1. Read `YOUR_PACKAGE_ROOT/agents/market-analyst.md` and follow every step (replace {{PROJECT_NAME}} and {{PROJECT_DESCRIPTION}} with the current project).
 2. For output structure, read `YOUR_PACKAGE_ROOT/templates/market_template.md`.
-3. Write all deliverables under this project's `docs/` (e.g. `docs/MKT-001-市场分析报告.md`).
+3. Write all deliverables under this project's `docs/` (e.g. `docs/iterations/current/market/MKT-001-市场分析报告.md`).
 4. When the source agent requires web research, use available browser / web tools; do not fabricate data.
 ```
 
@@ -201,9 +201,9 @@ You are the market analyst for this workspace.
 
 在**主对话**（或单独的 orchestrator Subagent）中：
 
-1. Read `{PACKAGE_ROOT}/agents/orchestrator.md` → 产出 `docs/WORKFLOW_PLAN.md`。
+1. Read `{PACKAGE_ROOT}/agents/orchestrator.md` → 产出 `docs/03-workflow/WORKFLOW_PLAN.md`。
 2. 按 `WORKFLOW_PLAN` 使用 `**/role-name*`* 或自然语言 **并行 / 串行** 调用各 Subagent（与官方 *Parallel execution* 一致）。
-3. **依赖**：架构师待 PRD 初稿；质量门禁待开发与测试完成（见 `docs/WORKFLOW_DETAILS.md`）。
+3. **依赖**：架构师待 PRD 初稿；质量门禁待开发与测试完成（见 `docs/03-workflow/WORKFLOW_DETAILS.md`）。
 
 ### 4. 与「仅单会话扮演」的关系
 
@@ -279,6 +279,6 @@ Hooks 是确定性后处理机制，可在 Agent 产出后自动执行校验。
 
 ---
 
-**角色与模板清单、门禁速查**：`docs/SKILL-ASSETS.md`。
-**流程依赖与闭环**：`docs/WORKFLOW_DETAILS.md`（文首有 Cursor 指针）。
-**Claude Code / `.claude/agents` 工具表**：`docs/SKILL-CLAUDE-CODE.md`。
+**角色与模板清单、门禁速查**：`docs/04-reference/SKILL-ASSETS.md`。
+**流程依赖与闭环**：`docs/03-workflow/WORKFLOW_DETAILS.md`（文首有 Cursor 指针）。
+**Claude Code / `.claude/agents` 工具表**：`docs/02-tools/SKILL-CLAUDE-CODE.md`。

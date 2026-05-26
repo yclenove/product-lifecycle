@@ -8,7 +8,7 @@
 | 作者 | 市场分析师 |
 | 日期 | YYYY-MM-DD |
 | 状态 | 草稿 |
-| 关联文档 | docs/PRD-*.md §2-§4, §9 |
+| 关联文档 | docs/iterations/current/product/PRD-*.md §2-§4, §9 |
 
 ---
 
@@ -126,4 +126,4 @@
 - 独立开发者李工：需要快速原型，预算有限
 - 技术 Lead 张总：需要团队协作，关注流程标准化
 
-</details>
+</details>

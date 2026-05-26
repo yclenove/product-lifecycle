@@ -20,10 +20,10 @@
 Agent 间传递摘要而非全文：
 
 ```
-Agent A 输出：docs/MKT-001.md（3000 字）
+Agent A 输出：docs/iterations/current/market/MKT-001.md（3000 字）
   → 生成摘要（300 字）写入 WORKFLOW_PLAN.md
 Agent B 输入：只读 WORKFLOW_PLAN.md 中的摘要（300 字）
-  → 按需读取 docs/MKT-001.md 的相关章节
+  → 按需读取 docs/iterations/current/market/MKT-001.md 的相关章节
 ```
 
 ### 3. 输出预算

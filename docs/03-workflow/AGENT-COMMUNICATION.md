@@ -17,17 +17,17 @@ Agent 间通过文件系统通信，不直接交互。
 | 文件 | 写入者 | 读取者 | 用途 |
 |------|--------|--------|------|
 | WORKFLOW_PLAN.md | 编排总监 | 所有 Agent | 全局状态和任务分配 |
-| docs/MKT-xxx.md | 市场分析师 | 产品经理、编排总监 | 市场分析结果 |
-| docs/PRD-xxx.md | 产品经理 | 架构师、开发、测试 | 产品需求 |
-| docs/ARCH-xxx.md | 架构师 | 开发、测试、运维 | 架构设计 |
-| docs/DEV-xxx.md | 开发工程师 | 测试、质量门禁 | 开发任务清单 |
-| docs/QA-xxx.md | 测试经理 | 质量门禁、开发 | 测试结果 |
-| docs/QG-xxx.md | 质量门禁 | 编排总监 | 质量审查结果 |
+| docs/iterations/current/market/MKT-xxx.md | 市场分析师 | 产品经理、编排总监 | 市场分析结果 |
+| docs/iterations/current/product/PRD-xxx.md | 产品经理 | 架构师、开发、测试 | 产品需求 |
+| docs/iterations/current/architecture/ARCH-xxx.md | 架构师 | 开发、测试、运维 | 架构设计 |
+| docs/iterations/current/dev/DEV-xxx.md | 开发工程师 | 测试、质量门禁 | 开发任务清单 |
+| docs/iterations/current/qa/QA-xxx.md | 测试经理 | 质量门禁、开发 | 测试结果 |
+| docs/iterations/current/quality-gate/QG-xxx.md | 质量门禁 | 编排总监 | 质量审查结果 |
 | docs/OPS-xxx.md | 运维工程师 | 编排总监 | 部署报告 |
 | docs/DOC-xxx.md | 技术文档师 | 编排总监 | 文档更新记录 |
-| docs/SCOUT-xxx.md | 需求侦察兵 | 编排总监、市场分析师 | 侦察报告 |
+| docs/iterations/current/scout/SCOUT-xxx.md | 需求侦察兵 | 编排总监、市场分析师 | 侦察报告 |
 | docs/FB-xxx.md | 反馈分析师 | 编排总监、产品经理 | 反馈分析 |
-| docs/ITER-xxx.md | 迭代规划师 | 编排总监 | 迭代计划 |
+| docs/iterations/current/iteration/ITER-xxx.md | 迭代规划师 | 编排总监 | 迭代计划 |
 
 ## 2. 信息传递格式
 
@@ -52,7 +52,7 @@ Agent 间通过文件系统通信，不直接交互。
   - 目标用户：25-35 岁一线城市专业人士
   - 核心竞品：产品 A、产品 B
   - 市场机会：效率工具赛道增长 20%
-- 产出物：docs/MKT-001-市场分析报告.md
+- 产出物：docs/iterations/current/market/MKT-001-市场分析报告.md
 - 下游依赖：产品经理、编排总监
 ```
 
@@ -70,7 +70,7 @@ Agent 间通过文件系统通信，不直接交互。
 
 ### 3.2 编号规范
 
-遵循 `docs/WORKFLOW_DETAILS.md` 中的编号规则：
+遵循 `docs/03-workflow/WORKFLOW_DETAILS.md` 中的编号规则：
 
 | Agent | 前缀 | 示例 |
 |-------|------|------|
@@ -178,7 +178,7 @@ Agent A 继续任务
 |------|----------|
 | Agent 直接修改其他 Agent 的文件 | 只写入自己的产出物 |
 | 未更新 WORKFLOW_PLAN.md 摘要 | 完成后必须更新摘要 |
-| 文件命名不符合编号规范 | 遵循 `docs/WORKFLOW_DETAILS.md` 规范 |
+| 文件命名不符合编号规范 | 遵循 `docs/03-workflow/WORKFLOW_DETAILS.md` 规范 |
 | 未标记阻塞状态 | 遇到阻塞立即更新状态 |
 | 读取全文而非按需读取 | 先读摘要，按需读取细节 |
 
@@ -213,7 +213,7 @@ docs/
 ### 7.3 版本管理
 
 - 每次重大更新递增版本号
-- 保留历史版本（归档到 `docs/archive/`）
+- 保留历史版本（归档到 `docs/iterations/_legacy-by-role/`）
 - 文件名包含版本号便于追溯
 
 ## 8. 工具支持
@@ -234,7 +234,7 @@ Read WORKFLOW_PLAN.md
 Grep "关键决策" docs/
 
 # 3. 按需读取细节
-Read docs/PRD-001.md --offset 100 --limit 50
+Read docs/iterations/current/product/PRD-001.md --offset 100 --limit 50
 
 # 4. 输出时使用结构化格式
 # 参考模板输出，避免自由文本

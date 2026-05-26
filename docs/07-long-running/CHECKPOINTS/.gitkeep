@@ -1,0 +1,11 @@
+# Checkpoints 目录
+
+每个 Agent 完成关键阶段时调用 `scripts/checkpoint.sh` 生成 `CKP-<date>-<phase>-done.md`。
+
+例：
+
+- `CKP-20260527-market-done.md`
+- `CKP-20260528-prd-done.md`
+- `CKP-20260530-arch-done.md`
+
+详见 `docs/long-running/README.md`。

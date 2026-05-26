@@ -141,3 +141,20 @@ curl http://localhost:3000/health
 | App | v1.0.0 | 3000 | running |
 
 </details>
+
+## 图示要求 [必填]
+
+> 完整规范见 `docs/05-advanced/DIAGRAMMING.md`。优先用 **drawio MCP** 生成 SVG，放到同级 `assets/` 下。
+
+**本类文档至少包含：**
+
+部署架构图（必）、CI/CD 流水线图（必）；网络拓扑（建议）
+
+**嵌入语法：**
+
+```markdown
+![<图标题>](assets/<文档ID>-<图类型>.svg)
+> 源文件：`assets/<文档ID>-<图类型>.drawio`
+```
+
+**离线 / 简图可降级 Mermaid**（```mermaid 代码块）。

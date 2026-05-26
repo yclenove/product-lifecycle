@@ -1,0 +1,8 @@
+# 进行中迭代的产出目录
+
+Agent 默认把 MKT/PRD/ARCH 等写到各子目录，例如：
+
+- market/MKT-001-市场分析报告.md
+- product/PRD-001-产品需求.md
+
+初始化：`bash scripts/init-iteration.sh <id> "<目标>"`

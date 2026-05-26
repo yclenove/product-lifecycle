@@ -100,14 +100,14 @@ bash scripts/sync-agents.sh orchestrator
 | `SKILL.md` 概述段 | `通过 XX 个专业 Agent` | 20 |
 | `README.md` 顶部段 | `通过 XX 个专业 Agent` | 20 |
 | `README.md` 角色表标题 | `## XX 个 Agent 角色` | 20 |
-| `docs/SKILL-ASSETS.md` 速览表标题 | `## XX Agent 角色与产出` | 20 |
-| `docs/SKILL-CURSOR.md` Best practices | `固定 XX 个角色` | 20 |
-| `docs/DECISION-TREE.md` | `全部 XX 个` | 20 |
-| `docs/QUICK-START.md` | `全部 XX 个` | 20 |
-| `docs/FAQ.md` Q: 小项目 | `XX 个 Agent` | 20 |
-| `docs/DOC-MAP.md` | `agents/*.md（XX 个）` | 20 |
+| `docs/04-reference/SKILL-ASSETS.md` 速览表标题 | `## XX Agent 角色与产出` | 20 |
+| `docs/02-tools/SKILL-CURSOR.md` Best practices | `固定 XX 个角色` | 20 |
+| `docs/01-getting-started/DECISION-TREE.md` | `全部 XX 个` | 20 |
+| `docs/01-getting-started/QUICK-START.md` | `全部 XX 个` | 20 |
+| `docs/01-getting-started/FAQ.md` Q: 小项目 | `XX 个 Agent` | 20 |
+| `docs/04-reference/DOC-MAP.md` | `agents/*.md（XX 个）` | 20 |
 | `templates/workflow_plan_template.md` | `XX 个专业 Agent` | 20 |
 | `agents/orchestrator.md` | `全部 XX 个` | 20 |
 | `.claude/agents/orchestrator.md` | `全部 XX 个` | 20 |
 
-运行 `bash scripts/check-docs-health.sh` 自动检查。
+运行 `bash scripts/check-docs-health.sh` 自动检查。

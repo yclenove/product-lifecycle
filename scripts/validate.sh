@@ -127,7 +127,7 @@ fi
 # 10. 检查残留旧 Agent 数字（排除 CHANGELOG 和历史报告）
 echo -n "残留旧 Agent 数字: "
 stale_count=0
-for f in "$ROOT/SKILL.md" "$ROOT/README.md" "$ROOT"/docs/QUICK-START.md "$ROOT"/docs/DECISION-TREE.md "$ROOT"/docs/FAQ.md "$ROOT"/docs/SKILL-ASSETS.md "$ROOT"/docs/SKILL-CURSOR.md "$ROOT"/docs/SKILL-CLAUDE-CODE.md "$ROOT"/.cursor/agents/README.md; do
+for f in "$ROOT/SKILL.md" "$ROOT/README.md" "$ROOT"/docs/01-getting-started/QUICK-START.md "$ROOT"/docs/01-getting-started/DECISION-TREE.md "$ROOT"/docs/01-getting-started/FAQ.md "$ROOT"/docs/04-reference/SKILL-ASSETS.md "$ROOT"/docs/02-tools/SKILL-CURSOR.md "$ROOT"/docs/02-tools/SKILL-CLAUDE-CODE.md "$ROOT"/.cursor/agents/README.md; do
   if [ -f "$f" ]; then
     found=$(grep -nE '(1[1-3])\s*(个|位)?\s*(Agent|角色)' "$f" 2>/dev/null | grep -v '其余' | grep -v 'CHANGELOG' || true)
     if [ -n "$found" ]; then
@@ -150,4 +150,4 @@ if [ $errors -eq 0 ]; then
 else
   echo "$errors 项失败 ✗"
   exit 1
-fi
+fi

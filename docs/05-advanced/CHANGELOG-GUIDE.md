@@ -17,7 +17,7 @@
 ### Added — 新增功能
 - 使用完整句子
 - 包含文件路径
-- 示例：`docs/FAQ.md：常见问题（22 个问答）`
+- 示例：`docs/01-getting-started/FAQ.md：常见问题（22 个问答）`
 
 ### Changed — 变更
 - 说明变更内容和原因

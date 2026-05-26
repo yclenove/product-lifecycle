@@ -77,7 +77,7 @@ git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/pro
 
 ## 你的任务
 1. 读取以下文件获取上下文：
-   - [PROJECT]/docs/PRD-*.md
+   - [PROJECT]/docs/iterations/current/product/PRD-*.md
    - Read templates/[角色]_template.md
    - [相关代码文件]
 
@@ -93,7 +93,7 @@ git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/pro
 - 遵循双仓规范
 ```
 
-详细的工作规范、编号规则、常见错误见 `docs/WORKFLOW_DETAILS.md`。
+详细的工作规范、编号规则、常见错误见 `docs/03-workflow/WORKFLOW_DETAILS.md`。
 
 ## 项目检测脚本
 
@@ -132,4 +132,4 @@ bash ${CLAUDE_SKILL_DIR}/scripts/detect.sh [项目路径]
 
 ## 与通用 prompt 的关系
 
-通用文本 prompt 仍位于 `agents/`（见 `docs/SKILL-ASSETS.md`）。在 Claude Code 中优先使用 `.claude/agents/` 的 subagent 定义；其他场景读取 `agents/*.md`，替换 `{{PROJECT_NAME}}` 与 `{{PROJECT_DESCRIPTION}}` 后使用。
+通用文本 prompt 仍位于 `agents/`（见 `docs/04-reference/SKILL-ASSETS.md`）。在 Claude Code 中优先使用 `.claude/agents/` 的 subagent 定义；其他场景读取 `agents/*.md`，替换 `{{PROJECT_NAME}}` 与 `{{PROJECT_DESCRIPTION}}` 后使用。

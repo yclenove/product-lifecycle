@@ -35,7 +35,7 @@ bash scripts/configure-models.sh
 .\scripts\configure-models.ps1
 ```
 
-脚本会自动探测可用模型、显示当前配置、给出推荐方案，然后等你选择。详见 [docs/MODEL-CONFIG.md](docs/MODEL-CONFIG.md)。
+脚本会自动探测可用模型、显示当前配置、给出推荐方案，然后等你选择。详见 [docs/04-reference/MODEL-CONFIG.md](docs/04-reference/MODEL-CONFIG.md)。
 
 ---
 
@@ -49,7 +49,7 @@ bash scripts/configure-models.sh
 Agent(
   subagent_type: "",
   description: "需求侦察兵：产品体检",
-  prompt: "读取 ~/.claude/skills/product-lifecycle/agents/proactive-scout.md，按照里面的指引对当前项目执行产品体检和市场扫描。产出到 docs/SCOUT-xxx-侦察报告.md。"
+  prompt: "读取 ~/.claude/skills/product-lifecycle/agents/proactive-scout.md，按照里面的指引对当前项目执行产品体检和市场扫描。产出到 docs/iterations/current/scout/SCOUT-xxx-侦察报告.md。"
 )
 ```
 
@@ -64,12 +64,12 @@ Agent(
 
 | 工具                        | 文档                                                                                                                   | 何时读取                                                                                          |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| **Cursor**                | `[docs/SKILL-CURSOR.md](docs/SKILL-CURSOR.md)` — PACKAGE_ROOT、`**/create-subagent` 与 CC 对齐的多角色编排**、全局安装、与业务工作区并用、Skill vs Subagent 辨析、Hooks 集成     | 在 Cursor 中首次使用本技能包时；需要理解 Skill/Subagent 关系或配置 Hooks 时                                     |
-| **Claude Code**           | `[docs/SKILL-CLAUDE-CODE.md](docs/SKILL-CLAUDE-CODE.md)` — `/product-lifecycle`、Subagent、Agent 工具原则、启动模板、`detect.sh` | 在 Claude Code 中首次使用时；需要了解 slash 命令或 Agent 工具策略时                                            |
-| **OpenCode / Codex / 其他** | `[docs/SKILL-OTHER-TOOLS.md](docs/SKILL-OTHER-TOOLS.md)` — 读 `agents/` 与 `templates/`                                | 使用 Cursor/Claude Code 以外的工具时；只需读取 `agents/` 与 `templates/` 即可                                  |
+| **Cursor**                | `[docs/02-tools/SKILL-CURSOR.md](docs/02-tools/SKILL-CURSOR.md)` — PACKAGE_ROOT、`**/create-subagent` 与 CC 对齐的多角色编排**、全局安装、与业务工作区并用、Skill vs Subagent 辨析、Hooks 集成     | 在 Cursor 中首次使用本技能包时；需要理解 Skill/Subagent 关系或配置 Hooks 时                                     |
+| **Claude Code**           | `[docs/02-tools/SKILL-CLAUDE-CODE.md](docs/02-tools/SKILL-CLAUDE-CODE.md)` — `/product-lifecycle`、Subagent、Agent 工具原则、启动模板、`detect.sh` | 在 Claude Code 中首次使用时；需要了解 slash 命令或 Agent 工具策略时                                            |
+| **OpenCode / Codex / 其他** | `[docs/02-tools/SKILL-OTHER-TOOLS.md](docs/02-tools/SKILL-OTHER-TOOLS.md)` — 读 `agents/` 与 `templates/`                                | 使用 Cursor/Claude Code 以外的工具时；只需读取 `agents/` 与 `templates/` 即可                                  |
 
 
-**角色文件与模板清单、20 角色产出表、质量门禁速查**：`[docs/SKILL-ASSETS.md](docs/SKILL-ASSETS.md)`
+**角色文件与模板清单、20 角色产出表、质量门禁速查**：`[docs/04-reference/SKILL-ASSETS.md](docs/04-reference/SKILL-ASSETS.md)`
 
 ## 何时使用
 
@@ -199,7 +199,7 @@ Agent(
 - **中型项目**（1-2 月）→ 核心 4 个 + 市场 + 产品 + UI 设计师 + 架构师（8 个）
 - **大型项目**（3 月+）→ 全部 20 个 Agent；developer 拆分为 frontend + backend，加上 项目经理 + 安全工程师 + 数据分析师
 
-**启动命令与精简模式**（Claude Code）：见 `[docs/SKILL-CLAUDE-CODE.md](docs/SKILL-CLAUDE-CODE.md)`。
+**启动命令与精简模式**（Claude Code）：见 `[docs/02-tools/SKILL-CLAUDE-CODE.md](docs/02-tools/SKILL-CLAUDE-CODE.md)`。
 
 ## 核心模式与闭环
 
@@ -209,9 +209,9 @@ Agent(
 - 部署失败 → 运维修复 → 重新部署（可能多轮）
 - 质量门禁不通过 → 开发修复 → 重新测试 + 重新部署
 
-**各角色文件、模板、14 角色产出表、质量门禁表**：`[docs/SKILL-ASSETS.md](docs/SKILL-ASSETS.md)`
+**各角色文件、模板、14 角色产出表、质量门禁表**：`[docs/04-reference/SKILL-ASSETS.md](docs/04-reference/SKILL-ASSETS.md)`
 
-**流程图、依赖与编号规则**：`[docs/WORKFLOW_DETAILS.md](docs/WORKFLOW_DETAILS.md)`
+**流程图、依赖与编号规则**：`[docs/03-workflow/WORKFLOW_DETAILS.md](docs/03-workflow/WORKFLOW_DETAILS.md)`
 
 **安全指南**：`[docs/SECURITY.md](docs/SECURITY.md)` — 安全检查工具集成、Agent 输出安全审查、最佳实践
 
@@ -226,12 +226,12 @@ Agent(
 
 ## 进阶资源
 
-- `[docs/DECISION-TREE.md](docs/DECISION-TREE.md)` — Agent 选择决策树，帮你快速选择合适的 Agent 组合
-- `[docs/FAQ.md](docs/FAQ.md)` — 常见问题解答，覆盖使用、技术、工作流、集成等场景
-- `[docs/QUICK-START.md](docs/QUICK-START.md)` — 快速入门指南，包含进阶用法（自定义 Agent、CI/CD 集成、多项目管理）
+- `[docs/01-getting-started/DECISION-TREE.md](docs/01-getting-started/DECISION-TREE.md)` — Agent 选择决策树，帮你快速选择合适的 Agent 组合
+- `[docs/01-getting-started/FAQ.md](docs/01-getting-started/FAQ.md)` — 常见问题解答，覆盖使用、技术、工作流、集成等场景
+- `[docs/01-getting-started/QUICK-START.md](docs/01-getting-started/QUICK-START.md)` — 快速入门指南，包含进阶用法（自定义 Agent、CI/CD 集成、多项目管理）
 - `[docs/CONTEXT-MANAGEMENT.md](docs/CONTEXT-MANAGEMENT.md)` — 上下文管理策略，解决 Agent 输出过多/过少问题
-- `[docs/DOC-MAP.md](docs/DOC-MAP.md)` — 文档导航地图，帮你快速找到需要的文档
+- `[docs/04-reference/DOC-MAP.md](docs/04-reference/DOC-MAP.md)` — 文档导航地图，帮你快速找到需要的文档
 
 ## 快速入门
 
-首次使用？请阅读 `docs/QUICK-START.md` — 30 秒理解框架，5 分钟完成首次体验。
+首次使用？请阅读 `docs/01-getting-started/QUICK-START.md` — 30 秒理解框架，5 分钟完成首次体验。

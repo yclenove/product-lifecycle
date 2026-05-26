@@ -60,12 +60,12 @@ check_count_in "$ROOT_DIR/SKILL.md" "[0-9]+个Agent" "frontmatter description"
 check_count_in "$ROOT_DIR/SKILL.md" "通过 [0-9]+ 个专业" "概述段"
 check_count_in "$ROOT_DIR/README.md" "通过 \\*\\*[0-9]+ 个" "顶部段"
 check_count_in "$ROOT_DIR/README.md" "## [0-9]+ 个 Agent 角色" "角色表标题"
-check_count_in "$ROOT_DIR/docs/SKILL-ASSETS.md" "## [0-9]+ Agent 角色与产出" "速览表标题"
-check_count_in "$ROOT_DIR/docs/SKILL-CURSOR.md" "固定 \\*\\*[0-9]+ 个角色" "Best practices"
-check_count_in "$ROOT_DIR/docs/DECISION-TREE.md" "企业级 → 全部 [0-9]+ 个" "决策树企业级"
-check_count_in "$ROOT_DIR/docs/QUICK-START.md" "不需要一次用全部 [0-9]+ 个" "QUICK-START 提示"
-check_count_in "$ROOT_DIR/docs/FAQ.md" "小项目也需要 [0-9]+ 个" "FAQ"
-check_count_in "$ROOT_DIR/docs/DOC-MAP.md" "agents/\\*\\.md（[0-9]+ 个）" "DOC-MAP"
+check_count_in "$ROOT_DIR/docs/04-reference/SKILL-ASSETS.md" "## [0-9]+ Agent 角色与产出" "速览表标题"
+check_count_in "$ROOT_DIR/docs/02-tools/SKILL-CURSOR.md" "固定 \\*\\*[0-9]+ 个角色" "Best practices"
+check_count_in "$ROOT_DIR/docs/01-getting-started/DECISION-TREE.md" "企业级 → 全部 [0-9]+ 个" "决策树企业级"
+check_count_in "$ROOT_DIR/docs/01-getting-started/QUICK-START.md" "不需要一次用全部 [0-9]+ 个" "QUICK-START 提示"
+check_count_in "$ROOT_DIR/docs/01-getting-started/FAQ.md" "小项目也需要 [0-9]+ 个" "FAQ"
+check_count_in "$ROOT_DIR/docs/04-reference/DOC-MAP.md" "agents/\\*\\.md（[0-9]+ 个）" "DOC-MAP"
 check_count_in "$ROOT_DIR/templates/workflow_plan_template.md" "本文档定义 [0-9]+ 个专业" "workflow_plan_template"
 
 # ───────────────────────────────────────────
@@ -135,14 +135,21 @@ log_ok "覆盖：$WITH_SKILL / $((WITH_SKILL+WITHOUT_SKILL))"
 echo ""
 echo "=== docs/ 根目录健康度 ==="
 
-ROOT_MD_COUNT=$(ls "$ROOT_DIR"/docs/*.md 2>/dev/null | wc -l | xargs)
-ARCHIVE_COUNT=$(find "$ROOT_DIR"/docs/archive -name "*.md" 2>/dev/null | wc -l | xargs)
+ROOT_MD_COUNT=$(find "$ROOT_DIR"/docs -maxdepth 1 -name '*.md' 2>/dev/null | wc -l | xargs)
+LEGACY_COUNT=$(find "$ROOT_DIR"/docs/iterations/_legacy-by-role -name "*.md" 2>/dev/null | wc -l | xargs)
+CURRENT_EXISTS=false
+[ -d "$ROOT_DIR/docs/iterations/current" ] && CURRENT_EXISTS=true
 
-echo "  docs/*.md（活文档）: $ROOT_MD_COUNT"
-echo "  docs/archive/**/*.md（归档）: $ARCHIVE_COUNT"
+echo "  docs/*.md（根导航）: $ROOT_MD_COUNT"
+echo "  docs/iterations/_legacy-by-role（历史）: $LEGACY_COUNT 个 md"
+echo "  docs/iterations/current（进行中）: $CURRENT_EXISTS"
 
-if [ "$ROOT_MD_COUNT" -gt 40 ]; then
-  log_warn "docs/ 根目录文件过多（$ROOT_MD_COUNT > 40），考虑归档历史产物"
+if [ "$ROOT_MD_COUNT" -gt 5 ]; then
+  log_warn "docs/ 根目录 md 过多（$ROOT_MD_COUNT > 5），指南应放在 01-07 子目录"
+fi
+
+if [ ! -f "$ROOT_DIR/docs/iterations/README.md" ]; then
+  log_warn "缺少 docs/iterations/README.md"
 fi
 
 # ───────────────────────────────────────────

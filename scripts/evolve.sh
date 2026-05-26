@@ -109,7 +109,7 @@ cat <<'PROMPT'
 
 1. **重新加载 skill**：读取以下文件获取最新指令：
    - $ROOT/SKILL.md
-   - $ROOT/docs/CONSISTENCY-CHECKLIST.md（迭代工作流）
+   - $ROOT/docs/04-reference/CONSISTENCY-CHECKLIST.md（迭代工作流）
 
 2. **执行迭代**：
    - 侦察 + 反馈分析（识别改进点）
@@ -141,4 +141,4 @@ echo -e "${GREEN}✓${NC} Checkpoint 已写入: 第 ${next_iteration} 轮"
 echo ""
 echo "用法："
 echo "  告诉 Claude：'开始自进化迭代，目标 N 轮'"
-echo "  Claude 会自动读取最新 SKILL.md 并执行迭代"
+echo "  Claude 会自动读取最新 SKILL.md 并执行迭代"

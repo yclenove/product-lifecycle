@@ -130,6 +130,6 @@
 
 ## 下一步
 
-- **新手：** 从 4 个核心 Agent 开始，参考 `docs/QUICK-START.md`
+- **新手：** 从 4 个核心 Agent 开始，参考 `docs/01-getting-started/QUICK-START.md`
 - **进阶：** 根据项目规模选择合适的 Agent 组合
-- **高级：** 自定义 Agent，参考 `docs/FAQ.md`
+- **高级：** 自定义 Agent，参考 `docs/01-getting-started/FAQ.md`

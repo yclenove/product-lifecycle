@@ -19,7 +19,7 @@
 |--------|------|
 | CHANGELOG | `[1.7.0]` 已存在；`[Unreleased]` 持续累积 |
 | F002 | **已推进**：`templates/workflow_plan_template.md` 新增 **§6 错误处理与检查点** |
-| F001 | **已修复**：`.claude/agents` model 字段已移除，自动继承用户全局配置；见 `docs/SKILL-ASSETS.md` |
+| F001 | **已修复**：`.claude/agents` model 字段已移除，自动继承用户全局配置；见 `docs/04-reference/SKILL-ASSETS.md` |
 | `git tag v1.7.0` | 需在 **commit** 后由维护者执行（若尚未） |
 
 ---
@@ -51,4 +51,4 @@
 
 ---
 
-*编排总监 · `agents/orchestrator.md`*
+*编排总监 · `agents/orchestrator.md`*

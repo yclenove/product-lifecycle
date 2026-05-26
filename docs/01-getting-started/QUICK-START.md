@@ -2,9 +2,14 @@
 
 ## 30 秒理解
 
-product-lifecycle 是一个 14 Agent 产品开发全流程框架。它不是一个代码生成器——它是一套方法论，通过专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代。
+product-lifecycle 是一个 20 Agent 产品开发全流程框架。它不是一个代码生成器——它是一套方法论，通过专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代。
 
 **核心价值：** 不再手动协调调研、设计、开发、测试、部署——Agent 自动编排。
+
+**配套能力：**
+- 📚 方法论 skill（TDD/调试/审查/头脑风暴）：`npx superpowers-zh`
+- 🎨 AI 画图（流程/架构/时序/ER…）：仓库内 `.mcp.json` 已配 drawio MCP，规范见 [`docs/05-advanced/DIAGRAMMING.md`](../05-advanced/DIAGRAMMING.md)
+- 🕒 长程跨 session：`bash scripts/resume.sh`
 
 ## 5 分钟体验
 
@@ -109,7 +114,7 @@ A: 直接启动编排总监，它会检测项目状态。如果有代码，自�
 | 完整项目 | 全部 20 个 | 4-8 小时 |
 | 持续迭代 | 侦察 + 反馈 + 规划 + 核心 4 个 | 每轮 1-2 小时 |
 
-详细的决策树请参考 `docs/DECISION-TREE.md`。
+详细的决策树请参考 `docs/01-getting-started/DECISION-TREE.md`。
 
 ### 上下文管理优化
 
@@ -117,4 +122,4 @@ A: 直接启动编排总监，它会检测项目状态。如果有代码，自�
 
 1. 在 agent prompt 中修改"控制在 XXX 字以内"
 2. 使用摘要传递机制减少上下文消耗
-3. 参考 `docs/CONTEXT-MANAGEMENT.md` 了解详细策略
+3. 参考 `docs/CONTEXT-MANAGEMENT.md` 了解详细策略

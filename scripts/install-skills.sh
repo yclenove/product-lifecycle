@@ -6,20 +6,25 @@
 #   bash scripts/install-skills.sh --claude    # 只装到 Claude Code
 #   bash scripts/install-skills.sh --cursor    # 只装到 Cursor
 #   bash scripts/install-skills.sh --dry-run   # 只显示会做什么，不实际克隆
+#   bash scripts/install-skills.sh --uninstall # 删除本脚本安装的 skill 目录
+#
+# 推荐优先：npx superpowers-zh（含 hooks，见 docs/04-reference/SKILL-INTEGRATION.md）
 
 set -euo pipefail
 
 TARGET_CLAUDE=true
 TARGET_CURSOR=true
 DRY_RUN=false
+UNINSTALL=false
 
 for arg in "$@"; do
   case "$arg" in
     --claude) TARGET_CURSOR=false ;;
     --cursor) TARGET_CLAUDE=false ;;
     --dry-run) DRY_RUN=true ;;
+    --uninstall) UNINSTALL=true ;;
     -h|--help)
-      head -10 "$0" | grep -E '^#'
+      head -15 "$0" | grep -E '^#'
       exit 0
       ;;
   esac
@@ -27,7 +32,7 @@ done
 
 # 推荐 skill 仓库清单
 declare -A REPOS=(
-  ["superpowers-zh"]="https://github.com/obra/superpowers.git"
+  ["superpowers-zh"]="https://github.com/jnMetaCode/superpowers-zh.git"
   ["anthropics-skills"]="https://github.com/anthropics/skills.git"
 )
 
@@ -84,6 +89,30 @@ install_to() {
   echo ""
 }
 
+uninstall_from() {
+  local target_root="$1"
+  local platform="$2"
+  log_info "卸载 $platform → $target_root"
+  for name in "${!REPOS[@]}"; do
+    local dest="$target_root/$name"
+    if [ -d "$dest" ]; then
+      if [ "$DRY_RUN" = true ]; then
+        echo "  [dry-run] rm -rf $dest"
+      else
+        rm -rf "$dest"
+        log_ok "已删除 $name"
+      fi
+    fi
+  done
+}
+
+if [ "$UNINSTALL" = true ]; then
+  [ "$TARGET_CLAUDE" = true ] && uninstall_from "$HOME/.claude/skills" "Claude Code"
+  [ "$TARGET_CURSOR" = true ] && uninstall_from "$HOME/.cursor/skills" "Cursor"
+  log_ok "卸载完成（CLAUDE.md 中 <!-- product-lifecycle:* --> 段需手工检查）"
+  exit 0
+fi
+
 if [ "$TARGET_CLAUDE" = true ]; then
   install_to "$HOME/.claude/skills" "Claude Code"
 fi
@@ -107,4 +136,4 @@ if [ "$DRY_RUN" = false ]; then
   [ "$TARGET_CURSOR" = true ] && verify "$HOME/.cursor/skills"
 fi
 
-log_ok "完成。详见 docs/SKILL-INTEGRATION.md"
+log_ok "完成。详见 docs/04-reference/SKILL-INTEGRATION.md"

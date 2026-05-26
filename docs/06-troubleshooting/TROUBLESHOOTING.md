@@ -51,7 +51,7 @@ bash scripts/iterate.sh
 
 **症状：** 模板引用不存在的文件
 
-**解决：** 替换为 `docs/PRD-*.md`
+**解决：** 替换为 `docs/iterations/current/product/PRD-*.md`
 
 ### 7. 搜索关键词年份过时
 

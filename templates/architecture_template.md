@@ -8,7 +8,7 @@
 | 作者 | 架构师 |
 | 日期 | YYYY-MM-DD |
 | 状态 | 草稿 |
-| 关联文档 | PRD-xxx, docs/PRD-*.md §5, §8 |
+| 关联文档 | PRD-xxx, docs/iterations/current/product/PRD-*.md §5, §8 |
 
 
 ---
@@ -25,7 +25,7 @@
 
 ### 1.3 技术约束 [必填]
 
-> 引用 docs/PRD-*.md 中的技术栈约束。
+> 引用 docs/iterations/current/product/PRD-*.md 中的技术栈约束。
 
 ## 2. 架构总览 [必填]
 
@@ -141,3 +141,20 @@
 | POST | /api/auth/login | 登录 |
 
 </details>
+
+## 图示要求 [必填]
+
+> 完整规范见 `docs/05-advanced/DIAGRAMMING.md`。优先用 **drawio MCP** 生成 SVG，放到同级 `assets/` 下。
+
+**本类文档至少包含：**
+
+系统上下文 C4-L1（必）、容器图 C4-L2（必）、关键时序图（必）；组件图、部署架构（建议）
+
+**嵌入语法：**
+
+```markdown
+![<图标题>](assets/<文档ID>-<图类型>.svg)
+> 源文件：`assets/<文档ID>-<图类型>.drawio`
+```
+
+**离线 / 简图可降级 Mermaid**（```mermaid 代码块）。

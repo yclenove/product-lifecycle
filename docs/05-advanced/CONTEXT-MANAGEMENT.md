@@ -142,8 +142,8 @@ Agent 间传递完整文档会导致：
 ### 已完成产出
 | 产出物 | 版本 | 路径 | 状态 |
 |--------|------|------|------|
-| 市场分析报告 | v1.0 | docs/MKT-001-*.md | 已评审 |
-| PRD | v0.9 | docs/PRD-001-*.md | 待评审 |
+| 市场分析报告 | v1.0 | docs/iterations/current/market/MKT-001-*.md | 已评审 |
+| PRD | v0.9 | docs/iterations/current/product/PRD-001-*.md | 待评审 |
 
 ### 关键决策记录
 | 决策 | 日期 | 原因 | 影响 |
@@ -303,7 +303,7 @@ Read WORKFLOW_PLAN.md
 Grep "关键决策" docs/
 
 # 3. 只读相关段落
-Read docs/PRD-001.md --offset 100 --limit 50
+Read docs/iterations/current/product/PRD-001.md --offset 100 --limit 50
 
 # 4. 输出时使用结构化格式
 # 参考模板输出，避免自由文本
@@ -338,7 +338,7 @@ Read docs/PRD-001.md --offset 100 --limit 50
 
 **策略：**
 - 编排总监：输出 WORKFLOW_PLAN.md（~500 字），作为后续 Agent 的唯一上下文入口
-- 市场分析师：输出摘要（~300 字）到 WORKFLOW_PLAN.md，全文写入 docs/MKT-xxx.md
+- 市场分析师：输出摘要（~300 字）到 WORKFLOW_PLAN.md，全文写入 docs/iterations/current/market/MKT-xxx.md
 - 产品经理：只读市场分析师的摘要，不读全文
 - 架构师：只读 PRD 的功能清单和验收标准，不读用户画像
 
@@ -378,8 +378,8 @@ Read docs/PRD-001.md --offset 100 --limit 50
 ### 产出物清单
 | 文件 | 路径 | 状态 |
 |------|------|------|
-| 市场分析报告 | docs/MKT-001-*.md | 完成 |
-| 竞品对比表 | docs/MKT-001-*.md#竞品 | 完成 |
+| 市场分析报告 | docs/iterations/current/market/MKT-001-*.md | 完成 |
+| 竞品对比表 | docs/iterations/current/market/MKT-001-*.md#竞品 | 完成 |
 
 ### 下游依赖
 - 产品经理：需要读取目标用户画像和竞品分析
@@ -444,7 +444,7 @@ Read docs/PRD-001.md --offset 100 --limit 50
 - 竞品短板：用户体验差
 - 切入点：效率工具
 
-详见：docs/MKT-001-市场分析报告.md
+详见：docs/iterations/current/market/MKT-001-市场分析报告.md
 ```
 
 ### 9.4 交接检查清单
@@ -489,4 +489,4 @@ Read docs/PRD-001.md --offset 100 --limit 50
 3. **合并相似章节**，使用表格替代多个段落
 4. **移除注释和说明**，只保留核心内容
 
-优先级：保留 > 当前任务上下文 > 历史上下文 > 格式美化
+优先级：保留 > 当前任务上下文 > 历史上下文 > 格式美化

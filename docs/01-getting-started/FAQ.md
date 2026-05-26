@@ -15,7 +15,7 @@ A: 直接启动编排总监，它会检测项目状态。如果有代码，自�
 A: 每人一个 Agent 角色，通过 WORKFLOW_PLAN.md 协调。编排总监负责分配任务，各 Agent 独立执行自己的部分。
 
 ### Q: 小项目也需要 20 个 Agent 吗？
-A: 不需要。用 4 个核心 Agent 就够了（编排总监、开发工程师、测试经理、质量门禁）。详见 `docs/DECISION-TREE.md`。
+A: 不需要。用 4 个核心 Agent 就够了（编排总监、开发工程师、测试经理、质量门禁）。详见 `docs/01-getting-started/DECISION-TREE.md`。
 
 ### Q: Agent 执行太慢怎么办？
 A: 使用渐进式采用——只启动必要的 Agent。编排总监会自动判断需要哪些 Agent，跳过不必要的步骤。
@@ -32,10 +32,10 @@ A:
 A: 编辑 `scripts/sync-agents.sh` 中的 MODELS 关联数组，为每个 Agent 指定不同的模型。
 
 ### Q: 如何在 Cursor 中使用？
-A: 参见 `docs/SKILL-CURSOR.md`，或运行 `scripts/install-cursor-subagents.sh` 自动安装。
+A: 参见 `docs/02-tools/SKILL-CURSOR.md`，或运行 `scripts/install-cursor-subagents.sh` 自动安装。
 
 ### Q: 脚本执行报错怎么办？
-A: 参见 `docs/TROUBLESHOOTING.md`，或检查：
+A: 参见 `docs/06-troubleshooting/TROUBLESHOOTING.md`，或检查：
 - 脚本是否有执行权限（`chmod +x scripts/*.sh`）
 - 是否在项目根目录执行
 - Node.js 和 npm 是否正确安装
@@ -105,4 +105,4 @@ A: 使用 git 管理版本。每个迭代完成后会自动创建 tag，可以�
 
 - **详细文档：** 查看 `docs/` 目录下的各文档
 - **示例项目：** 参考 `examples/` 目录下的完整示例
-- **问题反馈：** 在 GitHub 仓库提交 issue
+- **问题反馈：** 在 GitHub 仓库提交 issue

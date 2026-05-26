@@ -31,17 +31,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 
 ### Fixed
 - README.md：修复两个损坏的 markdown 表格（GitHub 渲染异常）
-- docs/SKILL-ASSETS.md：删除矛盾的旧模型策略表，统一为 mimo 配置
-- docs/SKILL-CLAUDE-CODE.md：更新模型描述为 mimo-v2.5-pro / mimo-v2.5
+- docs/04-reference/SKILL-ASSETS.md：删除矛盾的旧模型策略表，统一为 mimo 配置
+- docs/02-tools/SKILL-CLAUDE-CODE.md：更新模型描述为 mimo-v2.5-pro / mimo-v2.5
 - docs/PERFORMANCE-BASELINE.md：替换 9 处旧模型名（opus/sonnet/haiku → mimo）
-- docs/TROUBLESHOOTING.md：更新模型名
+- docs/06-troubleshooting/TROUBLESHOOTING.md：更新模型名
 - docs/TOKEN-EFFICIENCY.md：更新模型定价表
-- docs/WORKFLOW_PLAN.md：更新模型配置描述
+- docs/03-workflow/WORKFLOW_PLAN.md：更新模型配置描述
 
 ### Added
 - templates/reviewer_template.md：代码审查报告模板（模板覆盖 14/14）
 - scripts/validate.sh：新增 .claude/agents/ 同步检查（第 9 项）
-- docs/SKILL-ASSETS.md：Agent 表补全 reviewer 角色（13/13）
+- docs/04-reference/SKILL-ASSETS.md：Agent 表补全 reviewer 角色（13/13）
 
 ### Added
 - templates/reviewer_template.md：代码审查报告模板（模板覆盖 14/14）
@@ -68,13 +68,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 
 ### Added
 - `agents/reviewer.md`：代码审查员 Agent
-- `docs/DOC-MAP.md`：文档导航地图
+- `docs/04-reference/DOC-MAP.md`：文档导航地图
 - `docs/CHANGELOG-GUIDE.md`：CHANGELOG 维护指南
 - `docs/LINT-RULES.md`：Lint 规则
 - `docs/QUALITY-METRICS.md`：质量指标
-- `docs/AGENT-COMMUNICATION.md`：Agent 通信协议
-- `docs/WINDSURF-GUIDE.md`：Windsurf 集成指南
-- `docs/CURSOR-RULES-INTEGRATION.md`：Cursor Rules 集成指南
+- `docs/03-workflow/AGENT-COMMUNICATION.md`：Agent 通信协议
+- `docs/02-tools/WINDSURF-GUIDE.md`：Windsurf 集成指南
+- `docs/02-tools/CURSOR-RULES-INTEGRATION.md`：Cursor Rules 集成指南
 - `scripts/gen-changelog.sh`：CHANGELOG 自动生成
 - `scripts/bump-version.sh`：版本号管理
 - `scripts/validate-templates.sh`：模板验证
@@ -93,21 +93,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 - `agents/feedback-analyst.md`：添加反馈去重规则
 - `agents/proactive-scout.md`：添加侦察策略增强
 - `scripts/validate.sh`：新增 Agent 必需章节和模板元数据检查
-- `docs/WORKFLOW_DETAILS.md`：添加 Agent 交互模式
+- `docs/03-workflow/WORKFLOW_DETAILS.md`：添加 Agent 交互模式
 - `docs/CONTEXT-MANAGEMENT.md`：添加 Agent 间信息交接规范
-- `docs/SKILL-CLAUDE-CODE.md`：添加高级用法
+- `docs/02-tools/SKILL-CLAUDE-CODE.md`：添加高级用法
 - `SKILL.md`：添加 DOC-MAP 引用
 - `README.md`：更新目录结构
 
 ## [2.1.0] - 2026-05-05
 
 ### Added
-- `docs/TROUBLESHOOTING.md`：排障指南（10 个常见问题）
+- `docs/06-troubleshooting/TROUBLESHOOTING.md`：排障指南（10 个常见问题）
 - `docs/SECURITY.md`：安全指南
 - `docs/TOKEN-EFFICIENCY.md`：Token 效率指南
 - `docs/PERFORMANCE-BASELINE.md`：性能基准
-- `docs/DECISION-TREE.md`：Agent 选择决策树
-- `docs/FAQ.md`：常见问题（22 个问答）
+- `docs/01-getting-started/DECISION-TREE.md`：Agent 选择决策树
+- `docs/01-getting-started/FAQ.md`：常见问题（22 个问答）
 - `docs/INTERNATIONALIZATION.md`：国际化指南
 - `docs/ACCESSIBILITY.md`：可访问性指南
 - `templates/adr_template.md`：架构决策记录模板
@@ -125,21 +125,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 - `agents/quality-gatekeeper.md`：添加安全检查、自动化检查清单
 - `agents/developer.md`：添加安全编码规范
 - `docs/CONTEXT-MANAGEMENT.md`：添加实战案例
-- `docs/WORKFLOW_DETAILS.md`：添加并行策略详解
-- `docs/QUICK-START.md`：添加进阶用法
+- `docs/03-workflow/WORKFLOW_DETAILS.md`：添加并行策略详解
+- `docs/01-getting-started/QUICK-START.md`：添加进阶用法
 - `SKILL.md`：添加进阶资源章节、安全门禁
 - `README.md`：更新目录结构、Agent 表、CI 说明
 
 ## [2.0.0] - 2026-05-05
 
 ### Added
-- `docs/QUICK-START.md`：快速入门指南（30 秒理解 + 5 分钟体验 + 最小可用集 + FAQ）
-- `docs/CONSISTENCY-CHECKLIST.md`：agents/ vs .claude/agents/ vs .cursor/agents/ 一致性检查清单
+- `docs/01-getting-started/QUICK-START.md`：快速入门指南（30 秒理解 + 5 分钟体验 + 最小可用集 + FAQ）
+- `docs/04-reference/CONSISTENCY-CHECKLIST.md`：agents/ vs .claude/agents/ vs .cursor/agents/ 一致性检查清单
 - `examples/saas-iteration.md`：SaaS 产品持续迭代示例（模式 B）
 - `examples/cli-tool.md`：CLI 工具渐进式采用示例（4 核心 Agent）
-- `docs/SKILL-CURSOR.md`：Skill vs Subagent 概念辨析章节
-- `docs/SKILL-CURSOR.md`：Hooks 集成指南
-- `docs/SKILL-ASSETS.md`：引用语法规范 + 模型选择策略
+- `docs/02-tools/SKILL-CURSOR.md`：Skill vs Subagent 概念辨析章节
+- `docs/02-tools/SKILL-CURSOR.md`：Hooks 集成指南
+- `docs/04-reference/SKILL-ASSETS.md`：引用语法规范 + 模型选择策略
 - `templates/*.md`：3 个核心模板新增使用示例折叠区块
 - `agents/*.md`：全部 12 个 Agent 嵌入上下文管理指令（含输出预算）
 - `agents/feedback-analyst.md`：增强 prompt（69→126 行，含收集策略、分类规则、优先级公式）
@@ -165,7 +165,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 
 ### Changed
 - .cursor/agents/ model 字段同步：orchestrator/architect → opus，docwriter/quality-gatekeeper → haiku，其余 inherit
-- docs/SKILL-CLAUDE-CODE.md 模型描述更新为 opus/sonnet/haiku 三级策略
+- docs/02-tools/SKILL-CLAUDE-CODE.md 模型描述更新为 opus/sonnet/haiku 三级策略
 - agents/orchestrator.md 和 .claude/agents/orchestrator.md 健康检查表同步为 4 列
 
 ## [1.8.0] - 2026-05-04
@@ -179,24 +179,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 - .claude/agents/ model 字段三级分布：opus（orchestrator, architect）/ sonnet（8 个）/ haiku（docwriter, quality-gatekeeper）
 - SKILL.md 文档健康检查表新增"质量不达标时"列
 - SKILL.md 直接引用 docs/CONTEXT-MANAGEMENT.md
-- docs/SKILL-ASSETS.md 新增模型选择策略说明
+- docs/04-reference/SKILL-ASSETS.md 新增模型选择策略说明
 
 ## [1.7.0] - 2026-05-04
 
 ### Added
 - `scripts/install-cursor-subagents.ps1`、`scripts/install-cursor-subagents.sh`：向新业务项目一键安装 `.cursor/agents/` 并写入技能包绝对路径（因 Cursor 无法自动注入）。
 - `.cursor/agents/`：12 个 Cursor Subagent 薄封装（YAML frontmatter + Read `agents/<role>.md`），含 `README.md`；可在 Agent 中用 `/orchestrator`、`/market-analyst` 等显式调用。
-- 规划迭代（2026-05-05）：`docs/ITER-003-迭代计划-v1.8.md`、`docs/ROLE-RUN-LOG-2026-05-05.md`、`docs/WORKFLOW_PLAN.md`（更新）；分角色过程稿 SCOUT-004、FEEDBACK-004、MKT-003、PRD-003、ARCH-002、DEV-002、QA-003、QG-002。
-- `docs/SKILL-CURSOR.md`：在 Cursor 上用 `/create-subagent` 与 `agents/*.md` 对齐 Claude Code 的编排与多 Subagent 体验；含能力对照表、系统提示词模板、并行与依赖说明。
+- 规划迭代（2026-05-05）：`docs/iterations/current/iteration/ITER-003-迭代计划-v1.8.md`、`docs/ROLE-RUN-LOG-2026-05-05.md`、`docs/03-workflow/WORKFLOW_PLAN.md`（更新）；分角色过程稿 SCOUT-004、FEEDBACK-004、MKT-003、PRD-003、ARCH-002、DEV-002、QA-003、QG-002。
+- `docs/02-tools/SKILL-CURSOR.md`：在 Cursor 上用 `/create-subagent` 与 `agents/*.md` 对齐 Claude Code 的编排与多 Subagent 体验；含能力对照表、系统提示词模板、并行与依赖说明。
 - `README.md`：Cursor 小节增加「与 Claude Code 对齐」用法（第 3 条）。
 
 ### Changed
-- `docs/SKILL-OTHER-TOOLS.md`：文首增加 Cursor 安装与 Subagent 指向 `SKILL-CURSOR.md` 的说明。
+- `docs/02-tools/SKILL-OTHER-TOOLS.md`：文首增加 Cursor 安装与 Subagent 指向 `SKILL-CURSOR.md` 的说明。
 - `SKILL.md`：工具表中 Cursor 条目指向上述 CC 对齐说明。
 - `.cursor/skills/product-lifecycle/SKILL.md`：明确 Subagent 路径与 `SKILL-CURSOR.md` 权威展开。
-- `docs/SKILL-CURSOR.md`：按 [Cursor 官方 Subagents 文档](https://cursor.com/docs/subagents) 扩充——内置 Explore/Bash/Browser、`.cursor/agents/` / `.claude/agents/` 路径与优先级、`frontmatter` 字段、`/name` 与并行/恢复、Skills/Hooks 链接、成本提示；推荐改为「薄封装 `.md` + Read `agents/` 真源」；修正早期稿中错误 markdown（如 `**/create-subagent**`）。
-- `docs/WORKFLOW_DETAILS.md`：文首增加 Cursor 执行指针与官方文档链接。
-- `docs/SKILL-ASSETS.md`：通用 Agent 表处补充 Cursor Subagent 与官方文档引用。
+- `docs/02-tools/SKILL-CURSOR.md`：按 [Cursor 官方 Subagents 文档](https://cursor.com/docs/subagents) 扩充——内置 Explore/Bash/Browser、`.cursor/agents/` / `.claude/agents/` 路径与优先级、`frontmatter` 字段、`/name` 与并行/恢复、Skills/Hooks 链接、成本提示；推荐改为「薄封装 `.md` + Read `agents/` 真源」；修正早期稿中错误 markdown（如 `**/create-subagent**`）。
+- `docs/03-workflow/WORKFLOW_DETAILS.md`：文首增加 Cursor 执行指针与官方文档链接。
+- `docs/04-reference/SKILL-ASSETS.md`：通用 Agent 表处补充 Cursor Subagent 与官方文档引用。
 - `README.md`：Cursor 段补充官方 Subagents 文档链接。
 
 ## [1.6.0] - 2026-05-03
@@ -229,7 +229,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 ## [1.3.0] - 2026-05-03
 
 ### Changed
-- SKILL.md: 445 → 233 行，详细内容移到 docs/WORKFLOW_DETAILS.md
+- SKILL.md: 445 → 233 行，详细内容移到 docs/03-workflow/WORKFLOW_DETAILS.md
 - 保持 SKILL.md 精简，支撑文件承载详细信息
 
 ### Fixed
@@ -361,4 +361,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0
 - 初始版本：8 Agent 角色定义
 - 7 个文档模板（market, product, architecture, developer, qa, devops, docwriter）
 - workflow_plan_template
-- SKILL.md 主文档
+- SKILL.md 主文档

@@ -23,13 +23,19 @@ bash ~/.claude/skills/product-lifecycle/scripts/install-skills.sh
 
 或者用 Cursor / OpenCode / Codex —— 详见下文「多工具使用」。
 
-**第一次用？** 看 [docs/QUICK-START.md](docs/QUICK-START.md)（30 秒理解框架，5 分钟跑通）。
+**第一次用？** 看 [docs/01-getting-started/QUICK-START.md](docs/01-getting-started/QUICK-START.md)。
 
-**选哪些角色？** 看 [docs/DECISION-TREE.md](docs/DECISION-TREE.md)（按项目规模选 Agent 子集）。
+**选哪些角色？** 看 [docs/01-getting-started/DECISION-TREE.md](docs/01-getting-started/DECISION-TREE.md)。
 
-**给角色配方法论？** 看 [docs/SKILL-INTEGRATION.md](docs/SKILL-INTEGRATION.md)（每个角色推荐 skill 矩阵）。
+**迭代产物放哪？** 看 [docs/iterations/README.md](docs/iterations/README.md)（**按迭代归档，推荐**）。
 
-**模型分级配置省钱？** 看 [docs/MODEL-CONFIG.md](docs/MODEL-CONFIG.md)（一键脚本，省 30-40%）。
+**长程跨天续做？** 看 [docs/07-long-running/README.md](docs/07-long-running/README.md) · `bash scripts/resume.sh`。
+
+**方法论 skill？** `npx superpowers-zh` 或 [docs/04-reference/SKILL-INTEGRATION.md](docs/04-reference/SKILL-INTEGRATION.md)。
+
+**AI 画图（流程/架构/时序/ER…）？** 仓库已配 drawio MCP，开箱即用，规范见 [docs/05-advanced/DIAGRAMMING.md](docs/05-advanced/DIAGRAMMING.md)。
+
+**模型省钱？** [docs/04-reference/MODEL-CONFIG.md](docs/04-reference/MODEL-CONFIG.md)。
 
 ---
 
@@ -49,7 +55,7 @@ SKILL.md 作为入口，自动加载 Agent prompt 和模板。
 
 ### Cursor
 
-本仓库**整个就是技能包**：根目录 `SKILL.md` 为总入口（含各工具文档索引）。**Cursor 与 PACKAGE_ROOT**、**Subagents（`.cursor/agents/`、与 CC 对齐）** 的完整说明见 `docs/SKILL-CURSOR.md`（已与 [Cursor 官方：Subagents](https://cursor.com/docs/subagents) 校对）；在**任意业务工作区**也可通过环境变量、嵌套 clone 或询问路径解析技能包根目录，产出仍写在业务项目的 `docs/`。
+本仓库**整个就是技能包**：根目录 `SKILL.md` 为总入口（含各工具文档索引）。**Cursor 与 PACKAGE_ROOT**、**Subagents（`.cursor/agents/`、与 CC 对齐）** 的完整说明见 `docs/02-tools/SKILL-CURSOR.md`（已与 [Cursor 官方：Subagents](https://cursor.com/docs/subagents) 校对）；在**任意业务工作区**也可通过环境变量、嵌套 clone 或询问路径解析技能包根目录，产出仍写在业务项目的 `docs/`。
 
 **两种用法：**
 
@@ -67,11 +73,11 @@ SKILL.md 作为入口，自动加载 Agent prompt 和模板。
    建议设置环境变量 **`PRODUCT_LIFECYCLE_ROOT`** 为上述路径，避免解析歧义。之后在别的项目里打开工作区，技能仍可按描述加载，并按 `SKILL.md` / `docs/SKILL-*.md` 从该路径 **Read** prompt 与分文档说明。
 
 2. **仅随本仓库**  
-   以本仓库为工作区时，另有 `.cursor/skills/product-lifecycle/SKILL.md`（与 `docs/SKILL-CURSOR.md` 的 PACKAGE_ROOT 规则一致，自动加载）。适合在本仓库内开发技能本身。
+   以本仓库为工作区时，另有 `.cursor/skills/product-lifecycle/SKILL.md`（与 `docs/02-tools/SKILL-CURSOR.md` 的 PACKAGE_ROOT 规则一致，自动加载）。适合在本仓库内开发技能本身。
 
 3. **与 Claude Code 对齐（推荐）**  
    本仓库已含 **`.cursor/agents/`**（14 角色薄封装）。**以本仓库为工作区**时可直接用 **`/orchestrator`** 等。  
-   **在新业务项目里**：Cursor 不会自动写入 Subagent；请设置 `PRODUCT_LIFECYCLE_ROOT` 后运行 **`scripts/install-cursor-subagents.ps1`**（Windows）或 **`scripts/install-cursor-subagents.sh`**（Unix），一键生成该项目下的 `.cursor/agents/` 并嵌入技能包绝对路径（详见 `docs/SKILL-CURSOR.md`「新业务项目」节）。亦可使用 **`/create-subagent`** 手动创建并按 `docs/SKILL-CURSOR.md` 自行配置。
+   **在新业务项目里**：Cursor 不会自动写入 Subagent；请设置 `PRODUCT_LIFECYCLE_ROOT` 后运行 **`scripts/install-cursor-subagents.ps1`**（Windows）或 **`scripts/install-cursor-subagents.sh`**（Unix），一键生成该项目下的 `.cursor/agents/` 并嵌入技能包绝对路径（详见 `docs/02-tools/SKILL-CURSOR.md`「新业务项目」节）。亦可使用 **`/create-subagent`** 手动创建并按 `docs/02-tools/SKILL-CURSOR.md` 自行配置。
 
 若作为子目录嵌入其他项目：
 
@@ -95,7 +101,7 @@ git clone https://github.com/yclenove/product-lifecycle.git .product-lifecycle
 
 ```
 读取 .product-lifecycle/agents/market-analyst.md，按照里面的指引做市场分析。
-输出到 docs/MKT-001-市场分析报告.md，格式参考 .product-lifecycle/templates/market_template.md。
+输出到 docs/iterations/current/market/MKT-001-市场分析报告.md，格式参考 .product-lifecycle/templates/market_template.md。
 ```
 
 ### OpenCode / Codex / 其他 AI 工具
@@ -305,7 +311,7 @@ product-lifecycle/
 
 ## 快速入门
 
-首次使用？请阅读 [docs/QUICK-START.md](docs/QUICK-START.md) — 30 秒理解框架，5 分钟完成首次体验。
+首次使用？请阅读 [docs/01-getting-started/QUICK-START.md](docs/01-getting-started/QUICK-START.md) — 30 秒理解框架，5 分钟完成首次体验。
 
 ## 贡献指南
 

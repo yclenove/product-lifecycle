@@ -48,6 +48,22 @@ tools: ["Read", "Glob", "Grep", "Write", "Edit", "Bash"]
 - 给出明确推荐 + 选择该方案的理由（不要"看情况"敷衍）
 - 标记不确定项 → 写入 `STATE.md` 阻塞项，等待用户或下一轮解决
 - 重要数据 / 接口 / 流程，配上完整示例或代码片段，**不要只写一行抽象描述**
+
+## 应该画的图
+
+> 文档配图能让结论一眼可读。本角色至少要画下面这些图。详细规范见 `docs/05-advanced/DIAGRAMMING.md`。
+
+| 类别 | 内容 |
+|------|------|
+| **必画** | 组件层级图、关键状态机 |
+| **建议** | 路由图 |
+
+**工具优先级**：
+
+1. **drawio MCP**（首选）—— 仓库已配 `.mcp.json`，直接让 AI 画。例：
+   > 用 drawio 画一张 `frontend-developer` 阶段所需的关键图，保存为 SVG 到 `docs/iterations/current/<类型>/assets/`。
+2. **Mermaid**（备用 / 嵌入 markdown）—— drawio 不可用或图很简单时使用。
+3. 反模式与视觉规范见 `docs/05-advanced/DIAGRAMMING.md` 第 5-6 节。
 ## 你的任务
 
 ### Step 0: 文档健康检查（必须先做）

@@ -8,7 +8,7 @@
 | 作者 | 测试经理 |
 | 日期 | YYYY-MM-DD |
 | 状态 | 草稿 |
-| 关联文档 | PRD-xxx, ARCH-xxx, docs/PRD-*.md §7 |
+| 关联文档 | PRD-xxx, ARCH-xxx, docs/iterations/current/product/PRD-*.md §7 |
 
 
 ---
@@ -154,3 +154,20 @@
 - 无阻塞级 Bug
 
 </details>
+
+## 图示要求 [必填]
+
+> 完整规范见 `docs/05-advanced/DIAGRAMMING.md`。优先用 **drawio MCP** 生成 SVG，放到同级 `assets/` 下。
+
+**本类文档至少包含：**
+
+测试用例脑图（必）、关键流程图（必）；状态覆盖图（建议）
+
+**嵌入语法：**
+
+```markdown
+![<图标题>](assets/<文档ID>-<图类型>.svg)
+> 源文件：`assets/<文档ID>-<图类型>.drawio`
+```
+
+**离线 / 简图可降级 Mermaid**（```mermaid 代码块）。
