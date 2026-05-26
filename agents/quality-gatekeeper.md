@@ -3,6 +3,14 @@
 ## 背景
 {{PROJECT_DESCRIPTION}}
 
+## 推荐方法论 skills（开始工作前按需读取）
+
+| skill | 用途 |
+|---|---|
+| verification-before-completion | 发布前必须验证 |
+| chinese-code-review | 国内团队风格的 review 反馈 |
+| receiving-code-review | 收到他人 review 后的处理姿态 |
+
 ## 你的职责
 
 你负责代码质量把控，是发布前的最后一道关卡。你有权限：

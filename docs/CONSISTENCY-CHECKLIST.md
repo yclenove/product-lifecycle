@@ -65,19 +65,49 @@ bash scripts/sync-agents.sh orchestrator
 | model 字段不一致 | grep 对比 | 统一值 |
 | 缺少上下文管理章节 | grep 检查 | 补充 |
 
-## 12 Agent 一致性状态
+## 20 Agent 一致性状态
 
-| Agent | agents/ | .claude/agents/ | .cursor/agents/ | 状态 |
-|-------|---------|-----------------|-----------------|------|
-| orchestrator | 有 | 有 | 有 | OK |
-| architect | 有 | 有 | 有 | OK |
-| developer | 有 | 有 | 有 | OK |
-| qa-manager | 有 | 有 | 有 | OK |
-| devops | 有 | 有 | 有 | OK |
-| docwriter | 有 | 有 | 有 | OK |
-| quality-gatekeeper | 有 | 有 | 有 | OK |
-| proactive-scout | 有 | 有 | 有 | OK |
-| market-analyst | 有 | 有 | 有 | OK |
-| product-manager | 有 | 有 | 有 | OK |
-| feedback-analyst | 有 | 有 | 有 | OK |
-| iteration-planner | 有 | 有 | 有 | OK |
+| Agent | agents/ | .claude/agents/ | .cursor/agents/ | 模板 | 状态 |
+|-------|---------|-----------------|-----------------|------|------|
+| orchestrator | 有 | 有 | 有 | workflow_plan | OK |
+| project-manager | 有 | 有 | 有 | pmo | OK |
+| proactive-scout | 有 | 有 | 有 | scout | OK |
+| market-analyst | 有 | 有 | 有 | market | OK |
+| product-manager | 有 | 有 | 有 | product | OK |
+| ui-designer | 有 | 有 | 有 | ui_design | OK |
+| architect | 有 | 有 | 有 | architecture | OK |
+| dba | 有 | 有 | 有 | （ADR） | OK |
+| developer | 有 | 有 | 有 | developer | OK |
+| frontend-developer | 有 | 有 | 有 | frontend | OK |
+| backend-developer | 有 | 有 | 有 | backend | OK |
+| qa-manager | 有 | 有 | 有 | qa | OK |
+| devops | 有 | 有 | 有 | devops | OK |
+| security-engineer | 有 | 有 | 有 | security | OK |
+| docwriter | 有 | 有 | 有 | docwriter | OK |
+| data-analyst | 有 | 有 | 有 | data | OK |
+| feedback-analyst | 有 | 有 | 有 | feedback | OK |
+| iteration-planner | 有 | 有 | 有 | iteration | OK |
+| reviewer | 有 | 有 | 有 | reviewer | OK |
+| quality-gatekeeper | 有 | 有 | 有 | quality_report | OK |
+
+## 角色数量口径检查（自动化）
+
+每次新增/移除角色后，必须同步以下位置：
+
+| 位置 | 关键词 | 当前值 |
+|------|--------|--------|
+| `SKILL.md` frontmatter description | `XX个Agent` | 20 |
+| `SKILL.md` 概述段 | `通过 XX 个专业 Agent` | 20 |
+| `README.md` 顶部段 | `通过 XX 个专业 Agent` | 20 |
+| `README.md` 角色表标题 | `## XX 个 Agent 角色` | 20 |
+| `docs/SKILL-ASSETS.md` 速览表标题 | `## XX Agent 角色与产出` | 20 |
+| `docs/SKILL-CURSOR.md` Best practices | `固定 XX 个角色` | 20 |
+| `docs/DECISION-TREE.md` | `全部 XX 个` | 20 |
+| `docs/QUICK-START.md` | `全部 XX 个` | 20 |
+| `docs/FAQ.md` Q: 小项目 | `XX 个 Agent` | 20 |
+| `docs/DOC-MAP.md` | `agents/*.md（XX 个）` | 20 |
+| `templates/workflow_plan_template.md` | `XX 个专业 Agent` | 20 |
+| `agents/orchestrator.md` | `全部 XX 个` | 20 |
+| `.claude/agents/orchestrator.md` | `全部 XX 个` | 20 |
+
+运行 `bash scripts/check-docs-health.sh` 自动检查。

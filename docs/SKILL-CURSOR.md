@@ -63,7 +63,7 @@ bash "$PRODUCT_LIFECYCLE_ROOT/scripts/install-cursor-subagents.sh" /path/to/new-
 
 若仅以本仓库为工作区开发：可使用 `.cursor/skills/product-lifecycle/SKILL.md`（与根 `SKILL.md` 共享同一套 `PACKAGE_ROOT` 规则；执行指引见本文件）。
 
-**本仓库已自带参考实现：** 根目录下 **`.cursor/agents/*.md`**（14 个角色 + `README.md`）。以本仓库为工作区打开时，可在 Agent 输入框使用 **`/orchestrator`**、**`/market-analyst`** 等调用（与 [官方说明：Explicit invocation](https://cursor.com/docs/subagents) 一致）。与 `.claude/agents/` 同名时，Cursor **优先**加载 `.cursor/agents/`。
+**本仓库已自带参考实现：** 根目录下 **`.cursor/agents/*.md`**（20 个角色 + `README.md`）。以本仓库为工作区打开时，可在 Agent 输入框使用 **`/orchestrator`**、**`/market-analyst`** 等调用（与 [官方说明：Explicit invocation](https://cursor.com/docs/subagents) 一致）。与 `.claude/agents/` 同名时，Cursor **优先**加载 `.cursor/agents/`。
 
 ---
 
@@ -211,7 +211,7 @@ You are the market analyst for this workspace.
 
 ### 5. 官方建议与本项目规模的匹配
 
-官方 **Best practices** 提醒：避免几十个含混 Subagent；本技能包固定 **14 个角色**，属于「数量可控、职责清晰」——请为每个 Subagent 写**高质量 `description`**，否则主 Agent 难以稳定自动委派（见官方 *Invest in descriptions*）。
+官方 **Best practices** 提醒：避免几十个含混 Subagent；本技能包固定 **20 个角色**（核心 4 个 + 17 个扩展），属于「数量可控、职责清晰」——请为每个 Subagent 写**高质量 `description`**，否则主 Agent 难以稳定自动委派（见官方 *Invest in descriptions*）。
 
 ---
 
@@ -244,12 +244,12 @@ You are the market analyst for this workspace.
 | **定义** | SKILL.md 入口文件，提供方法论和流程指引 | .cursor/agents/*.md 或 .claude/agents/*.md 定义的独立 Agent |
 | **调用方式** | `/product-lifecycle` | `/orchestrator`、`/market-analyst` 等 |
 | **职责** | 协调全局流程、选择模式、分配任务 | 执行具体角色任务（调研、开发、测试等） |
-| **数量** | 1 个 | 13 个 |
+| **数量** | 1 个 | 20 个 |
 | **关系** | Skill 是「入口」，负责启动和协调 | Subagent 是「执行者」，负责具体工作 |
 
 **使用场景：**
 
-1. **完整流程**：先用 `/product-lifecycle` 启动 Skill，它会自动编排 13 个 Subagent 协作
+1. **完整流程**：先用 `/product-lifecycle` 启动 Skill，它会自动编排 20 个 Subagent 协作
 2. **单独执行**：直接用 `/orchestrator` 或 `/market-analyst` 执行单个角色任务
 3. **混合使用**：用 Skill 启动流程，中途用 Subagent 执行特定任务
 

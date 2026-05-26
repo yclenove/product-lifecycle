@@ -1,5 +1,7 @@
 # [ITER-编号] 迭代计划标题
 
+> 💡 推荐先读 skill：`writing-plans`、`brainstorming`
+
 | 字段 | 值 |
 |------|-----|
 | 版本 | v0.1（初稿） |

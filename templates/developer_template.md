@@ -1,5 +1,7 @@
 # [DEV-编号] 开发任务标题
 
+> 💡 推荐先读 skill：`test-driven-development`、`systematic-debugging`、`chinese-commit-conventions`、`using-git-worktrees`
+
 | 字段 | 值 |
 |------|-----|
 | 版本 | v0.1（初稿） |

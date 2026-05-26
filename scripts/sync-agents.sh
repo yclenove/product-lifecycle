@@ -23,36 +23,48 @@ CLAUDE_DIR="$ROOT_DIR/.claude/agents"
 # ──────────────────────────────────────────────
 declare -A DESCRIPTIONS=(
   [orchestrator]="编排总监：制定工作流框架、协调各 Agent、质量把关。当用户说'启动编排总监'或'制定工作流计划'时使用。"
+  [project-manager]="项目经理（PMO）：把工作流落地为可执行计划、拆任务、排期、跟踪进度、识别风险、跨角色协调。当用户说'项目计划'、'排期'、'进度'、'里程碑'、'风险'时使用。"
+  [proactive-scout]="需求侦察兵：持续监控市场+产品体检，主动发现机会和威胁。当用户说'侦察市场'、'产品体检'、'市场扫描'时使用。"
   [market-analyst]="市场分析师：主动搜索竞品动态、用户痛点、市场趋势。当用户说'分析市场'、'看看竞品'、'市场调研'时使用。"
   [product-manager]="产品经理：主动发现需求、定义PRD、用户故事。当用户说'写PRD'、'定义需求'、'产品规划'时使用。"
+  [ui-designer]="UI/UX 设计师：用户旅程、信息架构、低/高保真原型、设计令牌、组件规范、可访问性。当用户说'设计交互'、'画原型'、'设计稿'、'设计系统'、'UI/UX'时使用。"
   [architect]="架构师：技术设计、API设计、数据模型。当用户说'架构设计'、'技术方案'、'API设计'时使用。"
+  [dba]="数据库管理员：数据库架构、SQL优化、数据迁移、性能调优。当用户说'数据库'、'建表'、'SQL'、'迁移'、'DBA'时使用。需配置 mysql-mcp-server 或 polyglot-db-mcp-server。"
   [developer]="开发工程师：代码实现、单元测试、代码质量。当用户说'写代码'、'实现功能'、'开发'时使用。"
+  [frontend-developer]="前端工程师：组件实现、状态管理、性能优化、可访问性、与后端 API 对接。当用户说'前端开发'、'写组件'、'实现界面'、'前端 bug'时使用。"
+  [backend-developer]="后端工程师：API 实现、领域逻辑、数据访问、缓存、异步处理、外部服务集成。当用户说'后端开发'、'写接口'、'实现服务'、'后端 bug'时使用。"
   [qa-manager]="测试经理：测试策略、测试用例、质量验证。当用户说'写测试'、'测试计划'、'验证'时使用。"
   [devops]="运维工程师：环境搭建、容器化、部署验证。当用户说'部署'、'搭建环境'、'Docker'时使用。"
+  [security-engineer]="安全工程师：威胁建模（STRIDE）、安全审计、SAST/依赖/Secret 扫描、OWASP、合规检查。当用户说'安全审计'、'威胁建模'、'漏洞扫描'、'合规'时使用。"
   [docwriter]="技术文档师：编写README、API文档、CHANGELOG。当用户说'写文档'、'更新README'、'API文档'时使用。"
-  [quality-gatekeeper]="质量门禁：代码审查、lint配置、质量报告。当用户说'代码审查'、'质量检查'、'lint'时使用。"
-  [proactive-scout]="需求侦察兵：持续监控市场+产品体检，主动发现机会和威胁。当用户说'侦察市场'、'产品体检'、'市场扫描'时使用。"
+  [data-analyst]="数据分析师：北极星指标、AARRR/HEART、埋点方案、漏斗分析、AB 实验、数据洞察。当用户说'数据分析'、'看数据'、'指标体系'、'AB 实验'、'埋点'时使用。"
   [feedback-analyst]="反馈分析师：收集用户反馈、bug报告，分类量化分析。当用户说'分析反馈'、'用户反馈'、'bug分析'时使用。"
   [iteration-planner]="迭代规划师：影响分析、制定迭代计划、版本策略。当用户说'迭代计划'、'版本规划'、'下个迭代'时使用。"
   [reviewer]="代码审查员：审查代码质量、安全性、可维护性。当用户说'代码审查'、'review'、'检查代码'时使用。"
-  [dba]="数据库管理员：数据库架构、SQL优化、数据迁移、性能调优。当用户说'数据库'、'建表'、'SQL'、'迁移'、'DBA'时使用。需配置 mysql-mcp-server 或 polyglot-db-mcp-server。"
+  [quality-gatekeeper]="质量门禁：代码审查、lint配置、质量报告。当用户说'代码审查'、'质量检查'、'lint'时使用。"
 )
 
 declare -A TOOLS=(
   [orchestrator]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
+  [project-manager]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
+  [proactive-scout]='["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write"]'
   [market-analyst]='["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write"]'
   [product-manager]='["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write"]'
+  [ui-designer]='["Read", "Glob", "Grep", "Write", "Edit"]'
   [architect]='["Read", "Glob", "Grep", "Write", "Edit"]'
+  [dba]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
   [developer]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
+  [frontend-developer]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
+  [backend-developer]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
   [qa-manager]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
   [devops]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
+  [security-engineer]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
   [docwriter]='["Read", "Glob", "Grep", "Write", "Edit"]'
-  [quality-gatekeeper]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
-  [proactive-scout]='["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write"]'
+  [data-analyst]='["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write", "Edit", "Bash"]'
   [feedback-analyst]='["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write"]'
   [iteration-planner]='["Read", "Glob", "Grep", "Write", "Edit"]'
   [reviewer]='["Read", "Glob", "Grep", "Bash", "Write"]'
-  [dba]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
+  [quality-gatekeeper]='["Read", "Glob", "Grep", "Write", "Edit", "Bash"]'
 )
 
 
@@ -105,12 +117,14 @@ derive_agent() {
     { print }
   ' "$src" | sed '/^[[:space:]]*$/{ N; /^[[:space:]]*\n[[:space:]]*$/d; }')
 
-  # 生成 .claude/agents/ 文件
+  # 生成 .claude/agents/ 文件（带 auto-generated marker）
   cat > "$dst" <<EOF
 ---
 description: "${DESCRIPTIONS[$name]}"
 tools: ${TOOLS[$name]}
 ---
+
+<!-- AUTO-GENERATED from agents/${name}.md by scripts/sync-agents.sh. DO NOT EDIT MANUALLY. -->
 
 ${core_content}
 

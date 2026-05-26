@@ -1,6 +1,8 @@
 # [项目名] 文档编排工作流
 
-> 本文档定义 12 个专业 Agent 的职责边界、产出物、依赖关系与质量标准。
+> 💡 推荐先读 skill：`writing-plans`、`dispatching-parallel-agents`、`brainstorming`
+
+> 本文档定义 20 个专业 Agent 的职责边界、产出物、依赖关系与质量标准。
 
 ---
 

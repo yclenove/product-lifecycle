@@ -1,5 +1,7 @@
 # [DOC-编号] 文档任务标题
 
+> 💡 推荐先读 skill：`chinese-documentation`、`chinese-commit-conventions`
+
 | 字段 | 值 |
 |------|-----|
 | 版本 | v0.1（初稿） |

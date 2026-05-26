@@ -16,24 +16,59 @@ jobs:
         run: |
           head -1 SKILL.md | grep -q "^---" || (echo "Missing frontmatter" && exit 1)
 
-      - name: Check .claude/agents/ completeness
+      - name: Check .claude/agents/ completeness (20 agents)
         run: |
           count=$(ls .claude/agents/*.md | wc -l)
-          [ "$count" -eq 14 ] || (echo "Expected 14 agents, got $count" && exit 1)
+          if [ "$count" -ne 20 ]; then
+            echo "Expected 20 agents, got $count"
+            ls .claude/agents/
+            exit 1
+          fi
+
+      - name: Check .cursor/agents/ completeness (20 agents)
+        run: |
+          count=$(ls .cursor/agents/*.md | grep -v README | wc -l)
+          if [ "$count" -ne 20 ]; then
+            echo "Expected 20 cursor agents, got $count"
+            exit 1
+          fi
+
+      - name: Check agents/ (truth source) completeness
+        run: |
+          count=$(ls agents/*.md | wc -l)
+          if [ "$count" -ne 20 ]; then
+            echo "Expected 20 source agents, got $count"
+            exit 1
+          fi
 
       - name: Check for stale references
         run: |
-          grep -rn "PRODUCT_PLAN" --include="*.md" agents/ templates/ .claude/agents/ SKILL.md | grep -v quality-gatekeeper | grep -v checklist && exit 1 || true
+          grep -rn "PRODUCT_PLAN" --include="*.md" agents/ templates/ .claude/agents/ SKILL.md \
+            | grep -v quality-gatekeeper \
+            | grep -v checklist && exit 1 || true
 
-      - name: Check search keyword year
+      - name: Check search keyword year (no hardcoded 2025)
         run: |
-          grep -rn "trends 2025" agents/ .claude/agents/ templates/ | grep -v quality-gatekeeper && exit 1 || true
+          grep -rn "trends 2025\|trends 2024" agents/ .claude/agents/ templates/ \
+            | grep -v quality-gatekeeper && exit 1 || true
 
-      - name: Validate templates
+      - name: Validate templates have 修订记录
         run: |
           for f in templates/*.md; do
             grep -q "修订记录" "$f" || echo "WARNING: $f missing 修订记录"
           done
 
+      - name: Lint prompts (agents/*.md structure)
+        run: bash scripts/lint-prompts.sh
+
+      - name: Check docs health (count consistency)
+        run: bash scripts/check-docs-health.sh
+
       - name: Run validation script
         run: bash scripts/validate.sh
+
+      - name: Run agent tests
+        run: bash scripts/test-agents.sh || true
+
+      - name: Run template tests
+        run: bash scripts/test-templates.sh || true

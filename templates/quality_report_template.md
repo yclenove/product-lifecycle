@@ -1,5 +1,7 @@
 # [QG-编号] 质量报告标题
 
+> 💡 推荐先读 skill：`verification-before-completion`、`chinese-code-review`、`receiving-code-review`
+
 | 字段 | 值 |
 |------|-----|
 | 版本 | v0.1（初稿） |

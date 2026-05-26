@@ -46,7 +46,7 @@ git clone https://github.com/yclenove/product-lifecycle.git
 
 ## 最小可用集（4 个核心 Agent）
 
-不需要一次用全部 14 个 Agent。从这 4 个开始：
+不需要一次用全部 20 个 Agent。从这 4 个开始：
 
 | Agent | 职责 | 何时用 |
 |-------|------|--------|
@@ -59,7 +59,7 @@ git clone https://github.com/yclenove/product-lifecycle.git
 
 ## 常见问题
 
-**Q: 我的小项目也需要 14 个 Agent 吗？**
+**Q: 我的小项目也需要 20 个 Agent 吗？**
 A: 不需要。用 4 个核心 Agent 就够了。详见上面的「最小可用集」。
 
 **Q: 我用的是 Windsurf / OpenCode / 其他工具，能用吗？**
@@ -106,7 +106,7 @@ A: 直接启动编排总监，它会检测项目状态。如果有代码，自�
 | 快速原型 | 编排 + 开发 | 30 分钟 |
 | MVP | 编排 + 开发 + 测试 | 1 小时 |
 | 正式发布 | 核心 4 个 | 2 小时 |
-| 完整项目 | 全部 14 个 | 4-8 小时 |
+| 完整项目 | 全部 20 个 | 4-8 小时 |
 | 持续迭代 | 侦察 + 反馈 + 规划 + 核心 4 个 | 每轮 1-2 小时 |
 
 详细的决策树请参考 `docs/DECISION-TREE.md`。

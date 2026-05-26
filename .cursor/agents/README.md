@@ -5,7 +5,7 @@
 ## 为什么说「已经创建了」但你看不到？
 
 1. **Subagent = 磁盘上的 `.cursor/agents/*.md`**。本仓库路径应为：  
-   **`{本仓库根}/.cursor/agents/orchestrator.md`** 等（共 14 个角色 + 本 README）。  
+   **`{本仓库根}/.cursor/agents/orchestrator.md`** 等（共 20 个角色 + 本 README）。  
    若你当前 Cursor **打开的工作区根**不是本仓库（例如打开了别的项目），那个项目下**没有**这些文件，自然**不会出现** `/orchestrator`。
 
 2. **必须重载 Cursor 窗口**（或重启）后，Agent 才会重新扫描 `.cursor/agents/`。

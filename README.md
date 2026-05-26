@@ -2,9 +2,36 @@
 
 [![Quality Gate](https://github.com/yclenove/product-lifecycle/actions/workflows/quality-gate.yml/badge.svg)](https://github.com/yclenove/product-lifecycle/actions/workflows/quality-gate.yml)
 
-通过 14 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。
+通过 **20 个专业 Agent** 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。
 
 **工具无关** — 核心价值（Agent prompt + 文档模板 + 方法论）可在任何 AI 编码工具中使用。
+
+---
+
+## 3 分钟上手
+
+```bash
+# 1. 装到 Claude Code
+git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/product-lifecycle
+
+# 2.（可选）一键安装推荐的方法论 skill（TDD、调试、review 等）
+bash ~/.claude/skills/product-lifecycle/scripts/install-skills.sh
+
+# 3. 在 Claude Code 中跑
+/product-lifecycle myapp "SaaS 协作平台"
+```
+
+或者用 Cursor / OpenCode / Codex —— 详见下文「多工具使用」。
+
+**第一次用？** 看 [docs/QUICK-START.md](docs/QUICK-START.md)（30 秒理解框架，5 分钟跑通）。
+
+**选哪些角色？** 看 [docs/DECISION-TREE.md](docs/DECISION-TREE.md)（按项目规模选 Agent 子集）。
+
+**给角色配方法论？** 看 [docs/SKILL-INTEGRATION.md](docs/SKILL-INTEGRATION.md)（每个角色推荐 skill 矩阵）。
+
+**模型分级配置省钱？** 看 [docs/MODEL-CONFIG.md](docs/MODEL-CONFIG.md)（一键脚本，省 30-40%）。
+
+---
 
 ## 多工具使用
 
@@ -103,7 +130,14 @@ git clone https://github.com/yclenove/product-lifecycle.git
 6. **部署循环** — 部署失败 → 运维修复 → 重新部署
 7. **发布** — 质量门禁通过后发布
 
-## 14 个 Agent 角色
+## 20 个 Agent 角色
+
+### 协调层
+
+| Agent | 职责 | 产出物 |
+| ----- | ------ | ----- |
+| 编排总监 | 制定框架、协调各 Agent | WORKFLOW_PLAN.md |
+| 项目经理 | 任务分解、排期、风险、跨角色协调 | 项目计划 + 进度跟踪 |
 
 ### 自驱动层（不需要输入）
 
@@ -113,21 +147,40 @@ git clone https://github.com/yclenove/product-lifecycle.git
 | 市场分析师 | 竞品、用户画像、定价 | 市场分析报告 |
 | 产品经理 | PRD、用户故事、验收标准 | PRD |
 
-### 执行层（需要输入）
+### 设计层
 
 | Agent | 职责 | 产出物 |
 | ----- | ------ | ----- |
-| 编排总监 | 制定框架、协调各 Agent | WORKFLOW_PLAN.md |
+| UI/UX 设计师 | 用户旅程、信息架构、低/高保真原型、设计令牌 | 交互稿 + 视觉规范 |
 | 架构师 | 技术设计、API、数据模型 | 技术设计文档 |
-| 开发工程师 | 代码实现、单元测试 | 代码 + 测试 |
+| 数据库管理员 | 数据库架构、SQL 优化、数据迁移、性能调优 | 数据库架构文档 |
+
+### 执行层
+
+| Agent | 职责 | 产出物 |
+| ----- | ------ | ----- |
+| 开发工程师（通用） | 代码实现、单元测试（小项目单角色） | 代码 + 测试 |
+| 前端工程师 | 前端实现、组件、状态、性能、可访问性 | 前端代码 + 测试 |
+| 后端工程师 | API、领域逻辑、数据访问、缓存、异步 | 后端代码 + 测试 |
 | 测试经理 | 测试策略、用例、质量门禁 | 测试计划 |
 | 运维工程师 | 环境搭建、部署、监控 | 可运行环境 |
 | 技术文档师 | 用户文档、API 文档 | 用户文档 |
-| 质量门禁 | 代码审查、lint、MCP | 质量报告 |
-| 代码审查员 | 代码质量、安全性、可维护性审查 | 代码审查报告 |
-| 数据库管理员 | 数据库架构、SQL优化、数据迁移、性能调优 | 数据库架构文档 |
+
+### 反馈层（持续迭代）
+
+| Agent | 职责 | 产出物 |
+| ----- | ------ | ----- |
+| 数据分析师 | 北极星指标、AARRR/HEART、AB 实验、数据洞察 | 数据洞察报告 |
 | 反馈分析师 | 收集用户反馈、bug 报告 | 反馈分析报告 |
 | 迭代规划师 | 影响分析、迭代计划 | 迭代计划 |
+
+### 质量层
+
+| Agent | 职责 | 产出物 |
+| ----- | ------ | ----- |
+| 安全工程师 | 威胁建模、安全审计、合规检查 | 安全审计报告 |
+| 代码审查员 | 代码质量、安全性、可维护性审查 | 代码审查报告 |
+| 质量门禁 | 代码审查、lint、MCP | 质量报告 |
 
 
 ## 工作流（含反馈循环）
@@ -158,35 +211,47 @@ product-lifecycle/
 ├── .claude/agents/       # Claude Code Subagent 定义（14 角色，含动态上下文注入）
 ├── CHANGELOG.md          # 版本记录
 ├── README.md             # 本文件
-├── agents/               # 14 个 Agent 的通用 prompt（真源）
+├── agents/               # 20 个 Agent 的通用 prompt（真源）
 │   ├── orchestrator.md   # 编排总监
+│   ├── project-manager.md # 项目经理（PMO）
+│   ├── proactive-scout.md # 需求侦察兵
 │   ├── market-analyst.md # 市场分析师
 │   ├── product-manager.md # 产品经理
+│   ├── ui-designer.md    # UI/UX 设计师
 │   ├── architect.md      # 架构师
-│   ├── developer.md      # 开发工程师
+│   ├── dba.md            # 数据库管理员
+│   ├── developer.md      # 开发工程师（通用）
+│   ├── frontend-developer.md # 前端工程师
+│   ├── backend-developer.md # 后端工程师
 │   ├── qa-manager.md     # 测试经理
 │   ├── devops.md         # 运维工程师
+│   ├── security-engineer.md # 安全工程师
 │   ├── docwriter.md      # 技术文档师
-│   ├── quality-gatekeeper.md # 质量门禁
-│   ├── proactive-scout.md # 需求侦察兵
+│   ├── data-analyst.md   # 数据分析师
 │   ├── feedback-analyst.md # 反馈分析师
 │   ├── iteration-planner.md # 迭代规划师
 │   ├── reviewer.md       # 代码审查员
-│   └── dba.md            # 数据库管理员
+│   └── quality-gatekeeper.md # 质量门禁
 ├── templates/            # 文档模板
 │   ├── workflow_plan_template.md
+│   ├── pmo_template.md
+│   ├── scout_template.md
 │   ├── market_template.md
 │   ├── product_template.md
+│   ├── ui_design_template.md
 │   ├── architecture_template.md
 │   ├── developer_template.md
+│   ├── frontend_template.md
+│   ├── backend_template.md
 │   ├── qa_template.md
 │   ├── devops_template.md
+│   ├── security_template.md
 │   ├── docwriter_template.md
+│   ├── data_template.md
 │   ├── feedback_template.md
 │   ├── iteration_template.md
-│   ├── scout_template.md          # 侦察报告模板
-│   ├── quality_report_template.md # 质量报告模板
-│   ├── reviewer_template.md       # 代码审查报告模板
+│   ├── reviewer_template.md
+│   ├── quality_report_template.md
 │   └── adr_template.md            # 架构决策记录模板
 ├── docs/                 # 项目文档
 │   ├── QUICK-START.md    # 快速入门指南

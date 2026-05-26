@@ -1,5 +1,7 @@
 # [QA-编号] 测试计划文档标题
 
+> 💡 推荐先读 skill：`test-driven-development`、`verification-before-completion`、`systematic-debugging`
+
 | 字段 | 值 |
 |------|-----|
 | 版本 | v0.1（初稿） |

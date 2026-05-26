@@ -23,22 +23,28 @@ git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/pro
 `.claude/agents/` 目录包含正式的 subagent 定义：
 
 
-| 文件                                     | 角色    | 工具限制                                         |
-| -------------------------------------- | ----- | -------------------------------------------- |
-| `.claude/agents/orchestrator.md`       | 编排总监  | Read, Glob, Grep, Write, Edit, Bash          |
-| `.claude/agents/market-analyst.md`     | 市场分析师 | Read, Glob, Grep, WebSearch, WebFetch, Write |
-| `.claude/agents/product-manager.md`    | 产品经理  | Read, Glob, Grep, WebSearch, WebFetch, Write |
-| `.claude/agents/architect.md`          | 架构师   | Read, Glob, Grep, Write, Edit                |
-| `.claude/agents/developer.md`          | 开发工程师 | Read, Glob, Grep, Write, Edit, Bash          |
-| `.claude/agents/qa-manager.md`         | 测试经理  | Read, Glob, Grep, Write, Edit, Bash          |
-| `.claude/agents/devops.md`             | 运维工程师 | Read, Glob, Grep, Write, Edit, Bash          |
-| `.claude/agents/docwriter.md`          | 技术文档师 | Read, Glob, Grep, Write, Edit                |
-| `.claude/agents/quality-gatekeeper.md` | 质量门禁  | Read, Glob, Grep, Write, Edit, Bash          |
-| `.claude/agents/proactive-scout.md`    | 需求侦察兵 | Read, Glob, Grep, WebSearch, WebFetch, Write |
-| `.claude/agents/feedback-analyst.md`   | 反馈分析师 | Read, Glob, Grep, WebSearch, WebFetch, Write |
-| `.claude/agents/iteration-planner.md`  | 迭代规划师 | Read, Glob, Grep, Write, Edit                |
-| `.claude/agents/reviewer.md`           | 代码审查员 | Read, Glob, Grep, Write, Edit                |
-| `.claude/agents/dba.md`               | 数据库管理员 | Read, Glob, Grep, Write, Edit                |
+| 文件                                       | 角色          | 工具限制                                         |
+| ---------------------------------------- | ----------- | -------------------------------------------- |
+| `.claude/agents/orchestrator.md`         | 编排总监        | Read, Glob, Grep, Write, Edit, Bash          |
+| `.claude/agents/project-manager.md`      | 项目经理（PMO）   | Read, Glob, Grep, Write, Edit, Bash          |
+| `.claude/agents/proactive-scout.md`      | 需求侦察兵       | Read, Glob, Grep, WebSearch, WebFetch, Write |
+| `.claude/agents/market-analyst.md`       | 市场分析师       | Read, Glob, Grep, WebSearch, WebFetch, Write |
+| `.claude/agents/product-manager.md`      | 产品经理        | Read, Glob, Grep, WebSearch, WebFetch, Write |
+| `.claude/agents/ui-designer.md`          | UI/UX 设计师   | Read, Glob, Grep, Write, Edit                |
+| `.claude/agents/architect.md`            | 架构师         | Read, Glob, Grep, Write, Edit                |
+| `.claude/agents/dba.md`                  | 数据库管理员      | Read, Glob, Grep, Write, Edit                |
+| `.claude/agents/developer.md`            | 开发工程师（通用）   | Read, Glob, Grep, Write, Edit, Bash          |
+| `.claude/agents/frontend-developer.md`   | 前端工程师       | Read, Glob, Grep, Write, Edit, Bash          |
+| `.claude/agents/backend-developer.md`    | 后端工程师       | Read, Glob, Grep, Write, Edit, Bash          |
+| `.claude/agents/qa-manager.md`           | 测试经理        | Read, Glob, Grep, Write, Edit, Bash          |
+| `.claude/agents/devops.md`               | 运维工程师       | Read, Glob, Grep, Write, Edit, Bash          |
+| `.claude/agents/security-engineer.md`    | 安全工程师       | Read, Glob, Grep, Write, Edit, Bash          |
+| `.claude/agents/docwriter.md`            | 技术文档师       | Read, Glob, Grep, Write, Edit                |
+| `.claude/agents/data-analyst.md`         | 数据分析师       | Read, Glob, Grep, WebSearch, WebFetch, Write, Edit, Bash |
+| `.claude/agents/feedback-analyst.md`     | 反馈分析师       | Read, Glob, Grep, WebSearch, WebFetch, Write |
+| `.claude/agents/iteration-planner.md`    | 迭代规划师       | Read, Glob, Grep, Write, Edit                |
+| `.claude/agents/reviewer.md`             | 代码审查员       | Read, Glob, Grep, Write, Edit                |
+| `.claude/agents/quality-gatekeeper.md`   | 质量门禁        | Read, Glob, Grep, Write, Edit, Bash          |
 
 
 用法：在 Claude Code 中说「使用编排总监 agent」或「启动市场分析师 agent」。

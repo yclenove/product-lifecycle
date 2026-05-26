@@ -1,5 +1,7 @@
 # [OPS-编号] 运维任务标题
 
+> 💡 推荐先读 skill：`verification-before-completion`、`systematic-debugging`、`writing-plans`
+
 | 字段 | 值 |
 |------|-----|
 | 版本 | v0.1（初稿） |

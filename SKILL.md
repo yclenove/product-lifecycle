@@ -1,6 +1,6 @@
 ---
 name: product-lifecycle
-description: Use when starting a new product/project and need to orchestrate a full development lifecycle from market analysis through architecture, implementation, testing, deployment, and continuous iteration. 中文触发：产品迭代、全流程开发、产品生命周期、市场分析+开发+测试、14个Agent协作。
+description: Use when starting a new product/project and need to orchestrate a full development lifecycle from market analysis through architecture, implementation, testing, deployment, and continuous iteration. 中文触发：产品迭代、全流程开发、产品生命周期、市场分析+开发+测试、20个Agent协作。
 when_to_use: "new product launch, full lifecycle management, Phase kickoff, product iteration, market analysis needed, PRD creation, architecture design, product upgrade, new feature lifecycle, 产品迭代, 全流程开发, 产品生命周期, 市场分析, 需求分析, 产品规划, PRD编写, 架构设计, 版本迭代, 持续迭代, 多Agent协作, 编排总监, 需求侦察, 反馈分析, 迭代计划, 使用product-lifecycle, 跑一轮迭代, 帮我迭代"
 argument-hint: "[项目名] [一句话描述]"
 allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
@@ -10,145 +10,36 @@ allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 
 ## 概述
 
-通过 14 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。不是只生成文档——是从需求到可运行产品的端到端流程。
+通过 20 个专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代的完整闭环。不是只生成文档——是从需求到可运行产品的端到端流程。
 
-## ⚠️ 启动前配置（禁止跳过，必须等用户回复）
+**角色分层：**
 
-**你必须执行以下步骤，然后等用户回复后才能继续。绝对不能自动跳过、不能自己判断"配置没问题就继续"。**
+- **协调层（2）**：编排总监、项目经理
+- **自驱动层（3）**：需求侦察兵、市场分析师、产品经理
+- **设计层（3）**：UI/UX 设计师、架构师、数据库管理员
+- **执行层（6）**：开发工程师（通用）、前端工程师、后端工程师、测试经理、运维工程师、技术文档师
+- **反馈层（3）**：数据分析师、反馈分析师、迭代规划师
+- **质量层（3）**：安全工程师、代码审查员、质量门禁
 
-### 1. 一键探测 + 生成推荐方案
+## 启动前可选：模型分级配置
 
-运行以下脚本，自动完成：探测可用模型 → 读取当前配置 → 生成推荐方案：
+**默认无需配置**：所有 Agent 自动继承用户当前模型，最稳定。
+
+如果你想按角色复杂度分级配置（用最强模型给 orchestrator/project-manager/architect，平衡模型给其余 17 个角色，预计省钱 30-40%），运行：
 
 ```bash
-# 探测 API 可用模型
-echo "=== 可用模型 ==="
-if [ -n "$ANTHROPIC_BASE_URL" ]; then
-  API_URL="${ANTHROPIC_BASE_URL%/anthropic}/v1/models"
-  TOKEN="${ANTHROPIC_AUTH_TOKEN:-$ANTHROPIC_API_KEY}"
-  MODELS=$(curl -s --connect-timeout 5 "$API_URL" \
-    -H "Authorization: Bearer $TOKEN" 2>/dev/null \
-    | tr ',' '\n' | grep '"id"' | sed 's/.*"id":"\([^"]*\)".*/\1/' \
-    | grep -vi tts | grep -vi omni)
-  if [ -z "$MODELS" ]; then
-    echo "  （无法探测）"
-    MODEL_COUNT=0
-  else
-    echo "$MODELS" | sed 's/^/  - /'
-    MODEL_COUNT=$(echo "$MODELS" | wc -l)
-  fi
-else
-  echo "  （无法自动探测）"
-  MODEL_COUNT=0
-fi
+# macOS / Linux
+bash scripts/configure-models.sh
 
-echo ""
-echo "=== 当前配置 ==="
-for f in ~/.claude/skills/product-lifecycle/.claude/agents/*.md; do
-  name=$(basename "$f" .md)
-  model=$(grep "^model:" "$f" 2>/dev/null | sed 's/model: *//' | tr -d '"')
-  echo "  $name: ${model:-继承当前模型}"
-done
-
-echo ""
-echo "=== 推荐方案 ==="
-if [ "$MODEL_COUNT" -eq 0 ]; then
-  echo "  无法自动推荐（未探测到模型）"
-  echo "  建议：保持全部继承当前模型"
-elif [ "$MODEL_COUNT" -eq 1 ]; then
-  ONLY=$(echo "$MODELS" | head -1)
-  echo "  只有 1 个模型：$ONLY"
-  echo "  推荐：全部设为 $ONLY"
-elif [ "$MODEL_COUNT" -eq 2 ]; then
-  STRONG=$(echo "$MODELS" | head -1)
-  BALANCED=$(echo "$MODELS" | tail -1)
-  echo "  推荐分级配置："
-  echo "    复杂推理（编排总监 + 架构师）→ $STRONG"
-  echo "    常规任务（其余 12 个）→ $BALANCED"
-  echo "  预计省钱：~30-40%"
-elif [ "$MODEL_COUNT" -ge 3 ]; then
-  STRONG=$(echo "$MODELS" | head -1)
-  BALANCED=$(echo "$MODELS" | sed -n '2p')
-  echo "  推荐分级配置："
-  echo "    复杂推理（编排总监 + 架构师）→ $STRONG"
-  echo "    常规任务（其余 12 个）→ $BALANCED"
-  echo "  预计省钱：~30-40%"
-fi
+# Windows PowerShell
+.\scripts\configure-models.ps1
 ```
 
-### 2. 向用户展示推荐方案并等待确认
-
-**⚠️ 执行到这里必须停下来，等用户回复后才能继续。不能自己决定跳过。**
-
-根据探测结果，用 AskUserQuestion 向用户展示推荐方案：
-
-**如果探测到 2+ 个模型：**
-```
-你的 API 支持 [N] 个模型，推荐分级配置：
-
-┌─────────────────────────────────────────┐
-│ 复杂推理（编排总监 + 架构师）→ 最强模型     │
-│ 常规任务（其余 12 个）     → 平衡模型     │
-│                                         │
-│ 预计比全部用最强模型省钱 30-40%            │
-└─────────────────────────────────────────┘
-
-① 采用推荐方案（自动配置）
-② 全部继承当前模型（最稳定）
-③ 自定义分配
-```
-
-**如果只探测到 1 个模型：**
-```
-你的 API 只有 1 个模型：[模型名]
-推荐全部设为该模型。
-
-① 采用推荐（全部用 [模型名]）
-② 继承当前模型（不改）
-③ 自定义
-```
-
-**如果无法探测：**
-```
-无法自动探测你的 API 支持的模型。
-
-① 继承当前模型（最稳定，推荐）
-② 手动告诉我你的模型名，我帮你配置
-```
-
-### 3. 根据用户回复处理
-
-- **用户选 ① "采用推荐"** → 自动执行推荐方案：
-  ```bash
-  # 分级配置示例（2+ 模型时）
-  set_model() {
-    local model="$1"; shift
-    for name in "$@"; do
-      f="$HOME/.claude/skills/product-lifecycle/.claude/agents/$name.md"
-      if grep -q "^model:" "$f" 2>/dev/null; then
-        sed -i "s/^model:.*/model: \"$model\"/" "$f"
-      else
-        sed -i "/^description:/a model: \"$model\"" "$f"
-      fi
-    done
-  }
-  set_model "最强模型名" orchestrator architect
-  set_model "平衡模型名" developer devops docwriter feedback-analyst iteration-planner market-analyst proactive-scout product-manager qa-manager quality-gatekeeper reviewer dba
-  ```
-
-- **用户选 ② "继承/不改"** → 移除所有 model 字段（或保持不变）
-- **用户选 ③ "自定义"** → 问用户具体分配方式
-- **用户说"去掉 model"** → 移除所有 model 字段
-
-**重要：不管用户选什么，都要确保模型名是用户的 API 确实支持的。**
+脚本会自动探测可用模型、显示当前配置、给出推荐方案，然后等你选择。详见 [docs/MODEL-CONFIG.md](docs/MODEL-CONFIG.md)。
 
 ---
 
-## ⛔ 配置检查到此为止。上面的步骤必须全部执行并等用户回复后，才能继续下面的 Agent 调用。
-
----
-
-## Agent 调用示例（配置完成后执行）
+## Agent 调用示例
 
 **你是编排总监。你必须使用 Agent 工具派发子代理，不能自己一个人干所有事。**
 
@@ -178,7 +69,7 @@ Agent(
 | **OpenCode / Codex / 其他** | `[docs/SKILL-OTHER-TOOLS.md](docs/SKILL-OTHER-TOOLS.md)` — 读 `agents/` 与 `templates/`                                | 使用 Cursor/Claude Code 以外的工具时；只需读取 `agents/` 与 `templates/` 即可                                  |
 
 
-**角色文件与模板清单、14 角色产出表、质量门禁速查**：`[docs/SKILL-ASSETS.md](docs/SKILL-ASSETS.md)`
+**角色文件与模板清单、20 角色产出表、质量门禁速查**：`[docs/SKILL-ASSETS.md](docs/SKILL-ASSETS.md)`
 
 ## 何时使用
 
@@ -262,7 +153,7 @@ Agent(
 
 ## 渐进式采用
 
-不需要一次使用全部 14 个 Agent。根据项目规模选择合适的子集：
+不需要一次使用全部 20 个 Agent。根据项目规模选择合适的子集：
 
 ### 核心 Agent（最小可用集）
 
@@ -303,10 +194,10 @@ Agent(
 
 根据项目规模选择 Agent 子集：
 
-- **原型/MVP**（1-2 天）→ 编排总监 + 开发 + 测试（3 个）
-- **小型项目**（1-2 周）→ 核心 4 个 + 架构师（5 个）
-- **中型项目**（1-2 月）→ 核心 4 个 + 市场 + 产品 + 架构师（7 个）
-- **大型项目**（3 月+）→ 全部 14 个 Agent
+- **原型/MVP**（1-2 天）→ 编排总监 + 开发（通用） + 测试（3 个）
+- **小型项目**（1-2 周）→ 核心 4 个 + 架构师 + UI 设计师（6 个）
+- **中型项目**（1-2 月）→ 核心 4 个 + 市场 + 产品 + UI 设计师 + 架构师（8 个）
+- **大型项目**（3 月+）→ 全部 20 个 Agent；developer 拆分为 frontend + backend，加上 项目经理 + 安全工程师 + 数据分析师
 
 **启动命令与精简模式**（Claude Code）：见 `[docs/SKILL-CLAUDE-CODE.md](docs/SKILL-CLAUDE-CODE.md)`。
 

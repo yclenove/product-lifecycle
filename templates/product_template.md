@@ -1,5 +1,7 @@
 # [PRD-编号] 产品需求文档标题
 
+> 💡 推荐先读 skill：`brainstorming`、`writing-plans`、`chinese-documentation`
+
 | 字段 | 值 |
 |------|-----|
 | 版本 | v0.1（初稿） |

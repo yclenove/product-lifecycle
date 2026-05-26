@@ -1,5 +1,7 @@
 # [ARCH-编号] 技术设计文档标题
 
+> 💡 推荐先读 skill：`writing-plans`、`systematic-debugging`、`mcp-builder`（涉及 MCP 时）
+
 | 字段 | 值 |
 |------|-----|
 | 版本 | v0.1（初稿） |

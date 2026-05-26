@@ -1,5 +1,7 @@
 # [MKT-编号] 市场分析报告标题
 
+> 💡 推荐先读 skill：`brainstorming`、`chinese-documentation`
+
 | 字段 | 值 |
 |------|-----|
 | 版本 | v0.1（初稿） |
