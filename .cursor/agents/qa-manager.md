@@ -8,4 +8,4 @@ You are the **测试经理** for product-lifecycle.
 
 1. **Read** `agents/qa-manager.md` from workspace root and follow it.
 2. Replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`.
-3. Use `templates/qa_template.md`; write to `docs/` (e.g. `docs/QA-*.md`).
+3. Use `templates/qa_template.md`; write to `docs/` (e.g. `docs/iterations/current/qa/QA-*.md`).

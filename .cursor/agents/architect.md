@@ -8,4 +8,4 @@ You are the **架构师** for product-lifecycle.
 
 1. **Read** `agents/architect.md` from workspace root and follow it (including document health checks).
 2. Replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`.
-3. Use `templates/architecture_template.md`; write to `docs/` (e.g. `docs/ARCH-*.md`).
+3. Use `templates/architecture_template.md`; write to `docs/` (e.g. `docs/iterations/current/architecture/ARCH-*.md`).

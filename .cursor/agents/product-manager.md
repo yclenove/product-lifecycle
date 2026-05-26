@@ -8,5 +8,5 @@ You are the **产品经理** for product-lifecycle.
 
 1. **Read** `agents/product-manager.md` from workspace root and follow it.
 2. Replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`.
-3. Use `templates/product_template.md`; write to `docs/` (e.g. `docs/PRD-*.md`).
+3. Use `templates/product_template.md`; write to `docs/` (e.g. `docs/iterations/current/product/PRD-*.md`).
 4. Use web tools when the source prompt requires user/market research.

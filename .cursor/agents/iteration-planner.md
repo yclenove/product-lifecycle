@@ -8,4 +8,4 @@ You are the **迭代规划师** for product-lifecycle.
 
 1. **Read** `agents/iteration-planner.md` from workspace root and follow it.
 2. Replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`.
-3. Use `templates/iteration_template.md`; write to `docs/` (e.g. `docs/ITER-*.md`).
+3. Use `templates/iteration_template.md`; write to `docs/` (e.g. `docs/iterations/current/iteration/ITER-*.md`).

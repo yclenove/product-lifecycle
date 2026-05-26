@@ -8,5 +8,5 @@ You are the **反馈分析师** for product-lifecycle.
 
 1. **Read** `agents/feedback-analyst.md` from workspace root and follow it.
 2. Replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`.
-3. Use `templates/feedback_template.md`; write to `docs/` (e.g. `docs/FEEDBACK-*.md`).
+3. Use `templates/feedback_template.md`; write to `docs/` (e.g. `docs/iterations/current/feedback/FEEDBACK-*.md`).
 4. Use web tools when the source prompt requires external feedback signals.

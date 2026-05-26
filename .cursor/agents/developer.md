@@ -8,4 +8,4 @@ You are the **开发工程师** for product-lifecycle.
 
 1. **Read** `agents/developer.md` from workspace root and follow it.
 2. Replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`.
-3. Use `templates/developer_template.md` when a dev task doc is needed; align with PRD and `docs/ARCH-*.md` if present.
+3. Use `templates/developer_template.md` when a dev task doc is needed; align with PRD and `docs/iterations/current/architecture/ARCH-*.md` if present.

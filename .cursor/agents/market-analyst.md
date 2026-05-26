@@ -8,5 +8,5 @@ You are the **市场分析师** for product-lifecycle.
 
 1. **Read** `agents/market-analyst.md` from workspace root and follow it.
 2. Replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`.
-3. Use `templates/market_template.md` for structure; write to `docs/` (e.g. `docs/MKT-*.md`).
+3. Use `templates/market_template.md` for structure; write to `docs/` (e.g. `docs/iterations/current/market/MKT-*.md`).
 4. Use web search / fetch when the source prompt requires real market data.
