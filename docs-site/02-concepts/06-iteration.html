@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2.6 迭代与长程模式 · product-lifecycle</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/nav-data.js"></script>
+  <script src="../assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/02-concepts/06-iteration.html">
+<main class="pl-content">
+
+  <h1>2.6 迭代与长程模式</h1>
+  <p class="pl-lead">一轮迭代 = 从需求到可交付的一圈；长程模式 = 多天/多 session 不丢上下文。</p>
+
+  <h2>目录约定</h2>
+  <ul>
+    <li><code>docs/iterations/current/</code> — 当前迭代产出（PRD、ARCH、图…）</li>
+    <li><code>docs/iterations/&lt;ID&gt;/</code> — 归档后的历史迭代</li>
+    <li><code>docs/07-long-running/STATE.md</code> — 跨 session 状态</li>
+    <li><code>docs/07-long-running/HANDOFF.md</code> — 下线前的移交单</li>
+  </ul>
+
+  <h2>常用脚本</h2>
+  <pre><code>bash scripts/init-iteration.sh myapp-v1.1
+bash scripts/checkpoint.sh product-manager "PRD 定稿"
+bash scripts/handoff.sh
+bash scripts/resume.sh</code></pre>
+
+  <h2>每个 Agent 的 Step 0</h2>
+  <p>启动时先读 <code>STATE.md</code>，结束前更新「已完成 Agent」与「下一步」。这样换天、换电脑也能接着干。</p>
+
+  <p>完整说明：<code>docs/07-long-running/README.md</code></p>
+
+</main>
+</body>
+</html>

@@ -86,7 +86,7 @@ bash "$PRODUCT_LIFECYCLE_ROOT/scripts/install-cursor-subagents.sh" /path/to/new-
 | **Browser** | 通过 MCP 控制浏览器；隔离 DOM/截图噪声 |
 
 
-编排多角色时，仍可让主 Agent 自动使用上述能力；**产品生命周期 14 角色**用下文**自定义** Subagent 承载。
+编排多角色时，仍可让主 Agent 自动使用上述能力；**产品生命周期 20 角色**用下文**自定义** Subagent 承载。
 
 ### 自定义 Subagent 的存放位置（官方）
 
@@ -134,7 +134,7 @@ bash "$PRODUCT_LIFECYCLE_ROOT/scripts/install-cursor-subagents.sh" /path/to/new-
 
 ### 与 Skills、Hooks 的关系（官方）
 
-- **Subagent vs Skill**：多步、要隔离上下文 → Subagent；单目的、一步完成、不必新开窗口 → 官方 [Skill](https://cursor.com/docs/skills.md)。本仓库 **product-lifecycle** 根 `SKILL.md` 是「全流程方法论」入口，在 Cursor 里可**同时**加载该 Skill + 为 14 角色配置 Subagent，二者互补。
+- **Subagent vs Skill**：多步、要隔离上下文 → Subagent；单目的、一步完成、不必新开窗口 → 官方 [Skill](https://cursor.com/docs/skills.md)。本仓库 **product-lifecycle** 根 `SKILL.md` 是「全流程方法论」入口，在 Cursor 里可**同时**加载该 Skill + 为 20 角色配置 Subagent，二者互补。
 - **Hooks**：若需对 Subagent 产出做**确定性**后处理，官方建议见 [Hooks](https://cursor.com/docs/hooks.md)。
 
 ### 成本与行为（官方摘要）
@@ -170,7 +170,7 @@ bash "$PRODUCT_LIFECYCLE_ROOT/scripts/install-cursor-subagents.sh" /path/to/new-
 2. 在**业务工作区**确保有 `docs/`。
 3. 在业务工作区创建 `**.cursor/agents/`**（若尚无）。
 
-### 2. 为 14 角色各建一个「薄」Subagent（官方格式）
+### 2. 为 20 角色各建一个「薄」Subagent（官方格式）
 
 对每个 `agents/*.md` 角色，新建 `**.cursor/agents/<role-kebab>.md**`（文件名小写连字符，与官方 `name` 习惯一致），**frontmatter** 务必写好 `**description`**（决定自动委派质量），正文保持简短，**强制 Read 真源**：
 

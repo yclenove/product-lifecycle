@@ -2,6 +2,8 @@
 
 > product-lifecycle 文档分门别类索引。新人从「入门」开始，进阶看「参考」和「高级」。
 
+**给人看的 HTML 教程站**：[`docs-site/`](../docs-site/) · 本地预览 `bash scripts/serve-docs.sh`
+
 ## 01-getting-started — 入门
 
 | 文档 | 适合谁 |

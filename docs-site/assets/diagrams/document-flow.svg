@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" font-family="system-ui,sans-serif" font-size="12">
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#1f7a8c"/></marker></defs>
+  <rect width="720" height="200" fill="#fff"/>
+  <g fill="#e7f1f3" stroke="#1f7a8c">
+    <rect x="20" y="70" width="90" height="50" rx="4"/><text x="65" y="100" text-anchor="middle">MKT</text>
+    <rect x="130" y="70" width="90" height="50" rx="4"/><text x="175" y="100" text-anchor="middle">PRD</text>
+    <rect x="240" y="70" width="90" height="50" rx="4"/><text x="285" y="100" text-anchor="middle">UI</text>
+    <rect x="350" y="70" width="90" height="50" rx="4"/><text x="395" y="100" text-anchor="middle">ARCH</text>
+    <rect x="460" y="70" width="90" height="50" rx="4"/><text x="505" y="100" text-anchor="middle">CODE</text>
+    <rect x="570" y="70" width="90" height="50" rx="4"/><text x="615" y="100" text-anchor="middle">QA</text>
+  </g>
+  <path d="M110 95 H130 M220 95 H240 M330 95 H350 M440 95 H460 M550 95 H570" stroke="#1f7a8c" marker-end="url(#a)"/>
+  <text x="360" y="40" text-anchor="middle" fill="#6b7280">docs/iterations/current/ 	{‹Rc</text>
+</svg>

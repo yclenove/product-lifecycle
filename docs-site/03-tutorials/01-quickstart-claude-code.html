@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3.1 Claude Code 5 分钟 · product-lifecycle</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/nav-data.js"></script>
+  <script src="../assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/03-tutorials/01-quickstart-claude-code.html">
+<main class="pl-content">
+
+  <h1>3.1 Claude Code 5 分钟</h1>
+  <p class="pl-lead">装技能包 → 可选装方法论 skill → 一条命令启动编排。</p>
+
+  <h2>1. 安装技能包</h2>
+  <pre><code>git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/product-lifecycle</code></pre>
+
+  <h2>2.（推荐）方法论 + MCP</h2>
+  <pre><code>npx superpowers-zh
+bash ~/.claude/skills/product-lifecycle/scripts/install-mcp.sh</code></pre>
+
+  <h2>3. 在业务项目里启动</h2>
+  <pre><code>cd /path/to/your-app
+claude
+&gt; /product-lifecycle myapp "一句话描述你的产品"</code></pre>
+
+  <div class="pl-info"><strong>Harness</strong> Claude Code 是一等宿主；详见仓库 <code>docs/02-tools/HARNESS.md</code>。</div>
+
+  <p>更多：<code>docs/02-tools/SKILL-CLAUDE-CODE.md</code></p>
+
+</main>
+</body>
+</html>

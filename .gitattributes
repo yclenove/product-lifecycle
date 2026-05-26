@@ -1,0 +1,5 @@
+# Shell 脚本在 CI（Linux）必须用 LF，避免 set -o pipefail 等报错
+*.sh text eol=lf
+
+# 文档站与静态资源
+docs-site/** text eol=lf

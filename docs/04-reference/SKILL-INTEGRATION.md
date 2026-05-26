@@ -41,6 +41,15 @@ product-lifecycle 还推荐一个 MCP server：**drawio**，提供 AI 画图能�
 
 卸载 superpowers-zh：`npx superpowers-zh@latest --uninstall`
 
+## Harness（宿主环境）与 skill 的关系
+
+- **Harness**：运行本技能包的 IDE/CLI（Claude Code、Cursor、OpenCode 等）。详见 [`docs/02-tools/HARNESS.md`](../02-tools/HARNESS.md)。
+- **product-lifecycle**：20 个**产品角色** prompt + 模板（本仓库）。
+- **superpowers-zh**：**通用方法论** skill（TDD、调试、计划…），通过 `npx superpowers-zh` 安装。
+
+三者关系：**Harness 提供执行环境 → product-lifecycle 提供角色与流程 → superpowers-zh 提供怎么做**。  
+不必再单独写一个名为 `harness` 的 skill；在文档里标明各 Harness 的安装与验收即可。
+
 ## 为什么需要外部 skill？
 
 每个 Agent 的 prompt 聚焦「**做什么**」（What），通用 skill 聚焦「**怎么做**」（How）。两者结合后：

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>为什么要 20 个 Agent · product-lifecycle</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/nav-data.js"></script>
+  <script src="../assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/01-introduction/02-why-multi-agent.html">
+<main class="pl-content">
+
+  <h1>为什么要 20 个 Agent</h1>
+  <p class="pl-lead">
+    很多人第一反应是："弄这么多角色不复杂吗？一个 AI 一个 prompt 不行吗？"
+    本文用最直白的方式说清「分角色」相比「单 prompt 包打天下」好在哪。
+  </p>
+
+  <h2>先看反例：单 prompt 包打天下</h2>
+  <p>假设你跟 Claude 说：</p>
+  <blockquote>
+    "你是一个全能的产品研发专家。请帮我做一个团队任务管理工具，包含市场分析、产品需求、架构设计、前后端代码、测试用例、部署方案。"
+  </blockquote>
+  <p>会发生什么？</p>
+  <ol>
+    <li>它会一口气吐出几千字，但<strong>每一段都比较敷衍</strong>，因为 AI 在试图覆盖太多领域</li>
+    <li>市场分析会很泛（"市场需求广阔，竞品有 A、B、C"），没有具体数据</li>
+    <li>架构会写得像教科书（"采用 MVC 分层"），但跟你的业务不贴合</li>
+    <li>前后端代码会写一半，剩下的写"// TODO"</li>
+    <li>它<strong>不会主动质疑你的需求</strong>，因为没有"产品经理 vs 工程师"的角色对立</li>
+  </ol>
+  <p>本质问题：<strong>AI 的注意力是有限的。一次承担太多职责，每个都做不深。</strong></p>
+
+  <h2>分角色 = 分注意力</h2>
+  <p>
+    人类公司为什么分部门？因为一个人当不了产品经理同时又当架构师同时又当 QA。
+    AI 也一样：每次只让它做一件事，做深、做透。
+  </p>
+  <p>当你说"调用产品经理 Agent"时，AI 的注意力被聚焦到：</p>
+  <ul>
+    <li>关心用户故事，不关心技术细节</li>
+    <li>关心需求优先级，不关心怎么实现</li>
+    <li>关心 PRD 模板的每个章节是否填全</li>
+    <li>关心要不要去搜竞品（产品经理 prompt 里明确要求 WebSearch）</li>
+  </ul>
+  <p>它脑子里只装这些事，自然做得好。</p>
+
+  <h2>第二个好处：可追溯的产出物</h2>
+  <p>
+    分角色还有一个工程上的好处：每个角色的产出是<strong>具体的文件</strong>，不是聊天记录。
+  </p>
+  <ul>
+    <li>市场分析师 → <code>MKT-001-市场分析报告.md</code></li>
+    <li>产品经理 → <code>PRD-001-产品需求.md</code></li>
+    <li>架构师 → <code>ARCH-001-技术设计.md</code></li>
+    <li>测试经理 → <code>QA-001-测试计划.md</code></li>
+  </ul>
+  <p>好处：</p>
+  <ul>
+    <li>可以人工 review，发现问题让 AI 重做</li>
+    <li>可以 git 版本管理，看变化</li>
+    <li>下次迭代时，新的 Agent 能读到上一轮的产出</li>
+    <li>团队成员可以查阅，不只是 AI 自己知道</li>
+  </ul>
+
+  <h2>第三个好处：质量门禁</h2>
+  <p>每个角色的产出物都有"验收标准"。例如 PRD 的门禁：</p>
+  <ul>
+    <li>✅ 是否有用户故事</li>
+    <li>✅ 是否有功能优先级（P0/P1/P2）</li>
+    <li>✅ 是否有用户旅程图</li>
+    <li>✅ 是否有验收标准</li>
+  </ul>
+  <p>
+    单 prompt 包打天下做不到这个 —— 它哪有空检查自己。
+    本项目有"<a href="../04-roles/quality-gatekeeper.html">质量门禁 Agent</a>"专门做检查。
+  </p>
+
+  <h2>为什么具体是 20 个？</h2>
+  <p>不是拍脑袋，是按照实际研发链路拆出来的：</p>
+
+  <h3>规划层（4 个）</h3>
+  <table>
+    <thead><tr><th>角色</th><th>职责</th></tr></thead>
+    <tbody>
+      <tr><td>编排总监</td><td>总调度</td></tr>
+      <tr><td>项目经理（PMO）</td><td>排期、风险</td></tr>
+      <tr><td>需求侦察兵</td><td>主动扫描市场和体检产品</td></tr>
+      <tr><td>迭代规划师</td><td>把需求切成版本</td></tr>
+    </tbody>
+  </table>
+
+  <h3>研究层（4 个）</h3>
+  <table>
+    <thead><tr><th>角色</th><th>职责</th></tr></thead>
+    <tbody>
+      <tr><td>市场分析师</td><td>竞品、用户痛点</td></tr>
+      <tr><td>反馈分析师</td><td>用户反馈收集分类</td></tr>
+      <tr><td>数据分析师</td><td>指标、AB 实验</td></tr>
+      <tr><td>产品经理</td><td>PRD、用户故事</td></tr>
+    </tbody>
+  </table>
+
+  <h3>设计层（3 个）</h3>
+  <table>
+    <thead><tr><th>角色</th><th>职责</th></tr></thead>
+    <tbody>
+      <tr><td>UI/UX 设计师</td><td>用户旅程、线框、设计系统</td></tr>
+      <tr><td>架构师</td><td>系统设计</td></tr>
+      <tr><td>DBA</td><td>数据库设计</td></tr>
+    </tbody>
+  </table>
+
+  <h3>开发层（3 个）</h3>
+  <table>
+    <thead><tr><th>角色</th><th>职责</th></tr></thead>
+    <tbody>
+      <tr><td>开发工程师（通用）</td><td>小项目用</td></tr>
+      <tr><td>前端工程师</td><td>组件、状态、性能</td></tr>
+      <tr><td>后端工程师</td><td>API、领域、数据访问</td></tr>
+    </tbody>
+  </table>
+
+  <h3>质量层（4 个）</h3>
+  <table>
+    <thead><tr><th>角色</th><th>职责</th></tr></thead>
+    <tbody>
+      <tr><td>测试经理</td><td>测试计划、用例</td></tr>
+      <tr><td>代码审查员</td><td>代码 review</td></tr>
+      <tr><td>安全工程师</td><td>威胁建模、安全审计</td></tr>
+      <tr><td>质量门禁</td><td>最后把关</td></tr>
+    </tbody>
+  </table>
+
+  <h3>运维 + 文档（2 个）</h3>
+  <table>
+    <thead><tr><th>角色</th><th>职责</th></tr></thead>
+    <tbody>
+      <tr><td>运维工程师</td><td>部署、CI/CD</td></tr>
+      <tr><td>技术文档师</td><td>README、CHANGELOG、API doc</td></tr>
+    </tbody>
+  </table>
+
+  <p>4+4+3+3+4+2 = 20。覆盖一个产品从想法到上线的完整闭环。</p>
+
+  <h2>"我做小项目，用得着 20 个吗？"</h2>
+  <p>不用。本项目支持"按需挑选"：</p>
+  <table>
+    <thead><tr><th>场景</th><th>推荐角色组合</th></tr></thead>
+    <tbody>
+      <tr><td>1 天小项目</td><td>编排 + 开发（2 个）</td></tr>
+      <tr><td>1 周小工具</td><td>编排 + 产品 + 开发 + 测试（4 个）</td></tr>
+      <tr><td>1 个月正经产品</td><td>核心 8 个</td></tr>
+      <tr><td>大型企业项目</td><td>全部 20 个 + 项目经理</td></tr>
+    </tbody>
+  </table>
+  <p>详见 <a href="../../docs/01-getting-started/DECISION-TREE.md">决策树</a>。</p>
+
+  <h2>真的多角色就好吗？也有代价</h2>
+  <div class="pl-warning">
+    <strong>⚠️ 多角色的代价</strong>
+    <ul>
+      <li><strong>慢</strong>：跑完 20 个角色比单 prompt 慢 5-10 倍</li>
+      <li><strong>贵</strong>：每个角色都消耗 token，总 token 量大</li>
+      <li><strong>需要管理</strong>：产出文档变多，要会 git、会归档</li>
+      <li><strong>不适合即兴</strong>：玩 demo 不该用这个</li>
+    </ul>
+  </div>
+  <p>所以本项目强调：<strong>按项目规模选角色子集</strong>。不是说必须 20 个一起上。</p>
+
+  <h2>更深的设计哲学</h2>
+  <div class="pl-deep">
+    <strong>⚡ 进阶：Agent 设计的两个流派</strong>
+    <p>当前 Agent 体系有两大思路：</p>
+    <ol>
+      <li><strong>Autonomy 派</strong>（AutoGPT、BabyAGI）：让一个 AI 自由规划+执行，最少人工介入。优点是省事，缺点是经常跑偏</li>
+      <li><strong>Structured 派</strong>（本项目、LangChain 的 chains）：用流程、模板、检查点把 AI 约束在合理路径上</li>
+    </ol>
+    <p>
+      本项目属于 Structured 派 —— 我们认为<strong>当前阶段</strong>的 AI 还不够稳定，给定结构反而能产出更好结果。
+      随着模型能力提升，这两派会逐渐融合。
+    </p>
+    <p>
+      想深入这个话题，读 Anthropic 的
+      <a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener">Building effective agents</a>。
+    </p>
+  </div>
+
+  <h2>延伸阅读</h2>
+  <ul>
+    <li><a href="../05-deep-dive/01-why-ai-needs-process.html">5.1 为什么 AI 需要流程</a> — 更深层的原因</li>
+    <li><a href="../02-concepts/05-workflow.html">2.5 工作流编排</a> — 怎么调度 20 个角色</li>
+    <li><a href="../../docs/01-getting-started/DECISION-TREE.md">主文档：决策树</a> — 选角色子集</li>
+  </ul>
+
+</main>
+</body>
+</html>

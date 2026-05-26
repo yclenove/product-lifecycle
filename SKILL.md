@@ -64,6 +64,7 @@ Agent(
 
 | 工具                        | 文档                                                                                                                   | 何时读取                                                                                          |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **Harness 总览**          | `[docs/02-tools/HARNESS.md](docs/02-tools/HARNESS.md)` — 什么是 Harness、Claude Code/Cursor/其他 IDE 支持级别、完整体验要装什么 | 换 IDE、问「skill 要不要加 harness」、评估环境是否配齐时 |
 | **Cursor**                | `[docs/02-tools/SKILL-CURSOR.md](docs/02-tools/SKILL-CURSOR.md)` — PACKAGE_ROOT、`**/create-subagent` 与 CC 对齐的多角色编排**、全局安装、与业务工作区并用、Skill vs Subagent 辨析、Hooks 集成     | 在 Cursor 中首次使用本技能包时；需要理解 Skill/Subagent 关系或配置 Hooks 时                                     |
 | **Claude Code**           | `[docs/02-tools/SKILL-CLAUDE-CODE.md](docs/02-tools/SKILL-CLAUDE-CODE.md)` — `/product-lifecycle`、Subagent、Agent 工具原则、启动模板、`detect.sh` | 在 Claude Code 中首次使用时；需要了解 slash 命令或 Agent 工具策略时                                            |
 | **OpenCode / Codex / 其他** | `[docs/02-tools/SKILL-OTHER-TOOLS.md](docs/02-tools/SKILL-OTHER-TOOLS.md)` — 读 `agents/` 与 `templates/`                                | 使用 Cursor/Claude Code 以外的工具时；只需读取 `agents/` 与 `templates/` 即可                                  |
@@ -209,7 +210,7 @@ Agent(
 - 部署失败 → 运维修复 → 重新部署（可能多轮）
 - 质量门禁不通过 → 开发修复 → 重新测试 + 重新部署
 
-**各角色文件、模板、14 角色产出表、质量门禁表**：`[docs/04-reference/SKILL-ASSETS.md](docs/04-reference/SKILL-ASSETS.md)`
+**各角色文件、模板、20 角色产出表、质量门禁表**：`[docs/04-reference/SKILL-ASSETS.md](docs/04-reference/SKILL-ASSETS.md)`
 
 **流程图、依赖与编号规则**：`[docs/03-workflow/WORKFLOW_DETAILS.md](docs/03-workflow/WORKFLOW_DETAILS.md)`
 

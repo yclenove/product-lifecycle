@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2.2 Prompt 与模板 · product-lifecycle</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/nav-data.js"></script>
+  <script src="../assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/02-concepts/02-prompt-template.html">
+<main class="pl-content">
+
+  <h1>2.2 Prompt 与模板</h1>
+  <p class="pl-lead">
+    Agent 是 "灵魂"，模板是 "骨架"。本文讲两者关系、为什么本项目两个都要、怎么自己写一个好 prompt。
+  </p>
+
+  <h2>Prompt 是什么</h2>
+  <p>
+    Prompt = 你跟 AI 说的话。但"专业 prompt"跟"日常对话"差别巨大。
+  </p>
+
+  <h3>糟糕的 prompt</h3>
+  <pre><code>帮我写个登录功能</code></pre>
+  <p>AI 给你的：随便写一段 React + Express 代码，可能用 JWT，可能用 Session，可能没考虑安全，可能漏了忘记密码。</p>
+
+  <h3>专业的 prompt</h3>
+  <pre><code>你是一个后端工程师。请基于下面的 PRD 实现登录接口。
+
+要求：
+1. 使用我们项目已有的 PostgreSQL + Node.js + Express
+2. 密码必须 bcrypt 加盐哈希
+3. 登录返回 JWT，过期时间 7 天
+4. 错误码遵循 RFC 7807 格式
+5. 必须写 Jest 单测，覆盖率不低于 80%
+6. 接口文档用 OpenAPI 3.0 格式输出
+
+参考资料：
+- 我们的项目结构：[贴 tree]
+- 现有的用户表：[贴 SQL]
+- 错误处理中间件：[贴代码]
+
+请按以下步骤工作：
+1. 先列出实现计划（不写代码）
+2. 等我确认后再开始
+3. 完成后给我自测清单</code></pre>
+  <p>AI 给你的：结构清晰、规范、可用的代码，附自测清单。</p>
+
+  <h2>专业 prompt 的 7 要素</h2>
+  <table>
+    <thead><tr><th>要素</th><th>作用</th><th>示例</th></tr></thead>
+    <tbody>
+      <tr><td>① 身份设定</td><td>切换 AI 思维模式</td><td>"你是后端工程师"</td></tr>
+      <tr><td>② 任务目标</td><td>明确干什么</td><td>"实现登录接口"</td></tr>
+      <tr><td>③ 上下文</td><td>背景信息</td><td>项目结构、现有代码</td></tr>
+      <tr><td>④ 约束条件</td><td>必须遵守的规则</td><td>用 bcrypt、JWT 7 天</td></tr>
+      <tr><td>⑤ 工作步骤</td><td>分阶段指引</td><td>"先列计划，等确认"</td></tr>
+      <tr><td>⑥ 产出格式</td><td>要交付什么</td><td>代码 + OpenAPI + 自测清单</td></tr>
+      <tr><td>⑦ 异常处理</td><td>遇到不确定怎么办</td><td>"不清楚的地方先问我"</td></tr>
+    </tbody>
+  </table>
+
+  <p>本项目的每个 Agent prompt 都是按这 7 要素写的。</p>
+
+  <h2>什么是模板</h2>
+  <p>
+    Prompt 是给 AI 看的"操作说明"。模板是给 AI 看的"产出格式"。
+  </p>
+
+  <p>本项目 <code>templates/</code> 目录下有 20+ 个模板。打开 <code>templates/product_template.md</code>：</p>
+
+  <pre><code># PRD-{编号}-{产品名}-{版本}
+
+## 图示要求
+[本类型文档必须包含的图]
+
+## 1. 背景与目标
+- 业务背景：
+- 北极星指标：
+- 成功标准：
+
+## 2. 用户画像
+| 画像 | 描述 | 关键诉求 |
+|------|------|---------|
+| ...  | ...  | ...     |
+
+## 3. 用户故事
+- US-001：作为 [X]，我想 [Y]，以便 [Z]
+- US-002：...
+
+## 4. 功能列表
+| ID | 功能 | 优先级 | 验收标准 |
+|----|------|--------|---------|
+| F-01 | ... | P0     | ...     |
+
+## 5. 用户旅程图
+[用 drawio MCP 或 Mermaid 画]
+
+## 6. 非功能需求
+- 性能：
+- 安全：
+- 可访问性：
+
+## 7. 验收清单
+- [ ] 所有 P0 功能都有验收标准
+- [ ] 关键路径有用户旅程图
+- [ ] 与上版 PRD 的 diff 已说明
+</code></pre>
+
+  <p>这就是 PRD 模板。产品经理 Agent 看到它就知道"PRD 该长这样"，按节填即可。</p>
+
+  <h2>Prompt + 模板的协同</h2>
+
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/prompt-template.svg" alt="Prompt 与模板协同">
+    <figcaption>图：Prompt 决定怎么思考，模板决定怎么输出</figcaption>
+  </figure>
+
+  <p>具体流程：</p>
+  <ol>
+    <li>编排总监说"调用产品经理 Agent"</li>
+    <li>Claude 读取 <code>agents/product-manager.md</code>（这是 prompt）</li>
+    <li>Prompt 告诉它"写 PRD 时按 <code>templates/product_template.md</code>"</li>
+    <li>Claude 读取模板，看到所有章节、表格、必含内容</li>
+    <li>Claude 填空式产出，存到 <code>docs/iterations/current/PRD-001.md</code></li>
+  </ol>
+
+  <h2>为什么不把模板直接塞进 prompt？</h2>
+  <p>可以，但分开有好处：</p>
+  <ul>
+    <li><strong>可复用</strong>：一个模板可被多个 Agent 引用（QA 角色也会引用 PRD 模板做对照）</li>
+    <li><strong>可独立演进</strong>：模板改了不用动 prompt，反之亦然</li>
+    <li><strong>可被人编辑</strong>：模板是"半成品"，人可以直接拿去填</li>
+    <li><strong>可被工具校验</strong>：CI 脚本可以检查"是否所有章节都填了"</li>
+  </ul>
+
+  <h2>本项目 prompt 的特色设计</h2>
+
+  <h3>① 强制 Step 0：恢复上下文</h3>
+  <p>每个 Agent 第一步是检查 <code>docs/07-long-running/STATE.md</code>。
+  没有就跳过；有就先复盘上次干到哪了。</p>
+  <pre><code>## Step 0：恢复上下文（长程迭代模式）
+1. 检查 docs/07-long-running/STATE.md 是否存在
+2. 如果存在，读取并复述：
+   - 当前迭代 ID
+   - 上次完成到哪一步
+   - 待办事项
+   - 已知阻塞
+3. 如果不存在，跳过此步</code></pre>
+
+  <h3>② 强制画图要求</h3>
+  <p>每个 Agent 都明确"你必须画哪些图"。比如产品经理：</p>
+  <pre><code>## 应该画的图
+- 用户旅程图（mandatory）
+- 用户故事地图（recommended）
+- 信息架构图（recommended）
+
+优先使用 drawio MCP；如不可用，退回 Mermaid。
+图存放路径：docs/iterations/current/diagrams/</code></pre>
+
+  <h3>③ 推荐 skills</h3>
+  <p>每个角色推荐方法论 skill，AI 会读 skill 文件，获取该方法论的细节。</p>
+  <pre><code>## 推荐方法论 skills
+- brainstorming：写 PRD 前用它探索用户意图
+- chinese-documentation：保证文档排版规范</code></pre>
+
+  <h3>④ 产出契约</h3>
+  <p>所有 Agent 都明确"我做完会输出哪个文件"，方便编排总监知道下一个角色能读什么。</p>
+  <pre><code>## 产出物
+- 路径：docs/iterations/current/PRD-XXX-{产品名}-{版本}.md
+- 必含章节：背景 / 用户故事 / 功能列表 / 用户旅程图 / 验收清单</code></pre>
+
+  <h2>自己写一个好 prompt 的清单</h2>
+  <div class="pl-tip">
+    <strong>✅ 检查清单</strong>
+    <ol>
+      <li>有没有清晰的身份设定？</li>
+      <li>任务目标是不是一句话能说清？</li>
+      <li>给了足够上下文吗？（项目结构、现有代码）</li>
+      <li>约束条件具体吗？（技术栈、规范、性能要求）</li>
+      <li>有分步骤吗？（避免一口气吐 5000 字）</li>
+      <li>产出格式约定了吗？（markdown / 代码 / OpenAPI…）</li>
+      <li>失败兜底说了吗？（不会的时候是问你还是猜？）</li>
+    </ol>
+  </div>
+
+  <h2>常见错误</h2>
+  <div class="pl-warning">
+    <strong>❌ 错误 1：让 AI "自由发挥"</strong>
+    <p>"你帮我设计一个用户体验" — AI 会按自己理解的"通用最佳实践"做，跟你业务无关。<br>
+    应改为："基于以下用户画像和功能列表，设计登录流程的 UI。要考虑 [具体场景]。"</p>
+  </div>
+  <div class="pl-warning">
+    <strong>❌ 错误 2：一口气给 10 个任务</strong>
+    <p>"帮我做需求 + 架构 + 代码 + 测试 + 部署" — AI 会每个都浅尝辄止。<br>
+    应改为：分 5 次调用 5 个角色。或者只让它做一件事，做深。</p>
+  </div>
+  <div class="pl-warning">
+    <strong>❌ 错误 3：没给上下文就让它继续</strong>
+    <p>"在我的项目里加 OAuth 登录" — 你的项目用什么语言、什么框架它根本不知道。<br>
+    应改为：先 <code>cat package.json</code> 让 AI 看一遍，或者贴关键文件。</p>
+  </div>
+
+  <h2>延伸阅读</h2>
+  <ul>
+    <li><a href="../05-deep-dive/02-prompt-engineering.html">5.2 Prompt 工程基础</a> — 深入</li>
+    <li><a href="../06-advanced/02-add-new-role.html">6.2 怎么新增一个 Agent</a> — 自己写一个</li>
+    <li><a href="https://www.promptingguide.ai/zh" target="_blank" rel="noopener">Prompt Engineering Guide 中文版</a></li>
+    <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">Anthropic Prompt 指南</a></li>
+  </ul>
+
+</main>
+</body>
+</html>

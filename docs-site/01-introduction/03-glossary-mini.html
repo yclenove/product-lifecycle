@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>关键名词速查 · product-lifecycle</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/nav-data.js"></script>
+  <script src="../assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/01-introduction/03-glossary-mini.html">
+<main class="pl-content">
+
+  <h1>关键名词速查（30 个）</h1>
+  <p class="pl-lead">
+    本页只挑 30 个最高频的词解释，每个 100 字以内。完整版（150+ 词）见
+    <a href="../08-glossary.html">大词典</a>。
+  </p>
+
+  <h2>AI / 模型相关</h2>
+
+  <div class="pl-glossary-card">
+    <h4>LLM（大语言模型）</h4>
+    <p>Large Language Model 的缩写。GPT、Claude、Gemini 都是。简单理解：吃了海量文本训练出来、能跟人对话的 AI。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>Token（令牌）</h4>
+    <p>AI 处理文字的最小单位。约等于"一个字"（中文）或"一小段单词"（英文）。AI 用量计费按 token 算。本项目说"token 经济学"指的是"怎么省 token"。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>Context（上下文）</h4>
+    <p>AI 当前对话能"记住"的内容。每个模型有上限（Claude 3.5 大约 20 万 token）。超出就会丢失。本项目用"长程迭代"机制解决跨 session 失忆问题。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>Prompt（提示词）</h4>
+    <p>你给 AI 的指令。可以是一句话，也可以是 2000 字带格式的"任务说明书"。本项目的 20 个角色 = 20 份精心设计的 prompt。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>Hallucination（幻觉）</h4>
+    <p>AI 一本正经地编造不存在的事实。比如说某个不存在的库的某个不存在的 API。本项目通过角色约束、模板、引用真实文件，降低幻觉概率。</p>
+  </div>
+
+  <h2>本项目核心概念</h2>
+
+  <div class="pl-glossary-card">
+    <h4>Agent（智能体 / 角色）</h4>
+    <p>"AI + 一份专用 prompt" 的组合。本项目 20 个 Agent 各扮演一个产品研发角色。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>Skill（技能 / 方法论）</h4>
+    <p>沉淀的工作方法。比如"TDD（测试驱动开发）"是一个 skill。可以被任何角色"引用"。本项目从 superpowers-zh 集成了 20+ 个通用 skill。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>MCP（Model Context Protocol）</h4>
+    <p>Anthropic 推出的"AI 调外部工具"协议。本项目集成 drawio MCP，让 AI 能画 draw.io 流程图。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>编排（Orchestration）</h4>
+    <p>决定谁先干、谁后干、能不能并行。<a href="../04-roles/orchestrator.html">编排总监</a>这个角色负责调度。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>Workflow（工作流）</h4>
+    <p>一组 Agent 协作的"剧本"。本项目里 workflow_plan_template.md 定义了完整研发流水线。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>Iteration（迭代）</h4>
+    <p>一轮研发周期。从想法/反馈出发，走完规划-设计-开发-测试-上线，叫一次迭代。本项目的产出按迭代归档（<code>docs/iterations/</code>）。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>长程模式（Long-running）</h4>
+    <p>当一次迭代要做几天甚至几周时，需要跨 session 保留状态。本项目提供 STATE.md / HANDOFF.md / CHECKPOINTS/ 机制。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>质量门禁（Quality Gate）</h4>
+    <p>每个角色的产出验收标准。不合格不让进入下一步。由质量门禁 Agent 把关。</p>
+  </div>
+
+  <h2>产品研发术语</h2>
+
+  <div class="pl-glossary-card">
+    <h4>PRD（产品需求文档）</h4>
+    <p>Product Requirements Document。产品经理写的"要做什么"文档。包含背景、用户故事、功能列表、验收标准。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>用户故事（User Story）</h4>
+    <p>"作为 [角色]，我想 [做什么]，以便 [得到什么价值]"格式的需求描述。比"做一个登录功能"更具体。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>架构（Architecture）</h4>
+    <p>系统的整体结构。包括分层、模块、技术选型、数据流。架构师 Agent 输出 ARCH-XXX 文档。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>API（应用程序接口）</h4>
+    <p>系统模块间约定的"调用规范"。比如前端要拿用户列表，约定 GET /api/users 返回 JSON。后端工程师 Agent 设计 API。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>TDD（测试驱动开发）</h4>
+    <p>先写测试再写代码的开发方法。本项目作为通用 skill 集成。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>QA（质量保证）</h4>
+    <p>Quality Assurance。本项目里测试经理 Agent 负责。产出测试计划、用例脑图。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>CI/CD</h4>
+    <p>持续集成（Continuous Integration）/ 持续交付（Continuous Delivery）。代码提交后自动跑测试、构建、部署。运维 Agent 负责。</p>
+  </div>
+
+  <h2>工具相关</h2>
+
+  <div class="pl-glossary-card">
+    <h4>Claude Code</h4>
+    <p>Anthropic 推出的命令行 AI 编程工具。本项目主要适配它。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>Cursor</h4>
+    <p>带 AI 能力的 IDE（VS Code 分叉）。本项目也支持。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>drawio</h4>
+    <p>免费的流程图工具（draw.io）。本项目通过 MCP 集成，让 AI 直接生成 drawio 图。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>Mermaid</h4>
+    <p>用文本写图的语法。如 <code>graph LR; A--&gt;B</code> 会变成流程图。可以嵌在 markdown 里。本项目作为 drawio 的备选。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>git</h4>
+    <p>代码版本管理工具。本项目所有产出物都建议用 git 管理。</p>
+  </div>
+
+  <h2>本项目特有</h2>
+
+  <div class="pl-glossary-card">
+    <h4>SKILL.md</h4>
+    <p>每个 skill 的入口文件。Claude Code 会自动发现并提示。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>CLAUDE.md</h4>
+    <p>项目根目录的"全局指南"，Claude Code 启动时会读。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>frontmatter</h4>
+    <p>markdown 文件开头 <code>---</code> 包起来的 YAML 元数据。本项目用它声明 Agent 的描述、模型、工具权限。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>STATE.md</h4>
+    <p>长程迭代的状态文件。记录当前进展、待办、阻塞。下次 session 开始时让 AI 读它"恢复记忆"。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>编排模式 A/B/C</h4>
+    <p>
+      A = 从 0 到 1 新项目；
+      B = 已有项目迭代；
+      C = 长程跨 session 恢复。
+      由编排总监决定走哪个。
+    </p>
+  </div>
+
+  <p style="margin-top:48px">
+    继续读 → <a href="04-mental-model.html">1.4 心智模型：把它当作公司</a>
+  </p>
+
+</main>
+</body>
+</html>

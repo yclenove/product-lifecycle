@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 220" font-family="system-ui,sans-serif" font-size="12">
+  <rect width="560" height="220" fill="#fff"/>
+  <rect x="40" y="80" width="120" height="50" rx="6" fill="#1f7a8c"/><text x="100" y="110" text-anchor="middle" fill="#fff">Claude Code</text>
+  <text x="100" y="55" text-anchor="middle" fill="#6b7280">MCP Client</text>
+  <rect x="220" y="80" width="120" height="50" rx="6" fill="#e7f1f3" stroke="#1f7a8c"/><text x="280" y="105" text-anchor="middle">MCP O®</text>
+  <text x="280" y="120" text-anchor="middle" font-size="10">JSON-RPC</text>
+  <rect x="400" y="80" width="120" height="50" rx="6" fill="#e08d3c"/><text x="460" y="110" text-anchor="middle" fill="#fff">drawio Server</text>
+  <path d="M160 105 H220 M340 105 H400" stroke="#1f7a8c" stroke-width="2" marker-end="url(#m)"/>
+  <defs><marker id="m" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#1f7a8c"/></marker></defs>
+  <text x="280" y="180" text-anchor="middle" fill="#6b7280">§ú .drawio / SVG 0yîîU</text>
+</svg>

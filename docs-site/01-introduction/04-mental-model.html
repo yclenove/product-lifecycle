@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>心智模型：把它当作公司 · product-lifecycle</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/nav-data.js"></script>
+  <script src="../assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/01-introduction/04-mental-model.html">
+<main class="pl-content">
+
+  <h1>心智模型：把它当作公司</h1>
+  <p class="pl-lead">
+    建立一个直觉模型很重要。如果你把这套东西想象成"AI 帮你开一家产品公司"，
+    所有概念都会变得自然。本文用 5 分钟建立这个直觉。
+  </p>
+
+  <h2>类比：你刚开了一家小公司</h2>
+  <p>
+    想象：你有个产品想法，找投资人融了一点钱，准备组团队做。你会怎么搭建团队？
+  </p>
+  <p>大致是这样：</p>
+
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/company-analogy.svg" alt="公司组织结构图">
+    <figcaption>图 1：典型小产品公司的组织结构</figcaption>
+  </figure>
+
+  <ul>
+    <li><strong>你</strong>（CEO / 创始人）—— 拍板的</li>
+    <li><strong>产品总监</strong>（PMO）—— 把控时间、人员、风险</li>
+    <li><strong>市场 / 研究团队</strong>—— 看竞品、调研用户</li>
+    <li><strong>产品经理</strong>—— 写需求文档</li>
+    <li><strong>设计师</strong>—— 画 UI</li>
+    <li><strong>技术团队</strong>—— 架构师、前端、后端、DBA</li>
+    <li><strong>测试 / QA</strong>—— 找 bug</li>
+    <li><strong>运维</strong>—— 上线、保稳定</li>
+    <li><strong>安全 + 数据 + 文档</strong>—— 支持职能</li>
+  </ul>
+
+  <h2>product-lifecycle = 一支虚拟公司</h2>
+  <p>
+    现在把上面的每个职位换成"AI 扮演"，就是本项目。
+    你还是 CEO，下面 20 个员工都是 AI（同一个 Claude 在切换角色）。
+  </p>
+
+  <table>
+    <thead><tr><th>真实公司的角色</th><th>本项目的 Agent</th></tr></thead>
+    <tbody>
+      <tr><td>总监 / CTO 调度大家</td><td><code>orchestrator</code> 编排总监</td></tr>
+      <tr><td>PMO / 项目经理</td><td><code>project-manager</code></td></tr>
+      <tr><td>市场调研</td><td><code>market-analyst</code></td></tr>
+      <tr><td>用研 / 主动扫描</td><td><code>proactive-scout</code></td></tr>
+      <tr><td>反馈收集</td><td><code>feedback-analyst</code></td></tr>
+      <tr><td>数据分析</td><td><code>data-analyst</code></td></tr>
+      <tr><td>产品经理</td><td><code>product-manager</code></td></tr>
+      <tr><td>UI/UX 设计师</td><td><code>ui-designer</code></td></tr>
+      <tr><td>架构师</td><td><code>architect</code></td></tr>
+      <tr><td>DBA</td><td><code>dba</code></td></tr>
+      <tr><td>前端开发</td><td><code>frontend-developer</code></td></tr>
+      <tr><td>后端开发</td><td><code>backend-developer</code></td></tr>
+      <tr><td>全栈（小项目）</td><td><code>developer</code></td></tr>
+      <tr><td>测试经理</td><td><code>qa-manager</code></td></tr>
+      <tr><td>代码 reviewer</td><td><code>reviewer</code></td></tr>
+      <tr><td>质量负责人</td><td><code>quality-gatekeeper</code></td></tr>
+      <tr><td>安全负责人</td><td><code>security-engineer</code></td></tr>
+      <tr><td>运维 / SRE</td><td><code>devops</code></td></tr>
+      <tr><td>技术文档</td><td><code>docwriter</code></td></tr>
+      <tr><td>迭代规划</td><td><code>iteration-planner</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>怎么"开会"？</h2>
+  <p>真实公司开 kickoff 会议，产品经理讲需求，架构师讨论方案，工程师认领任务……</p>
+  <p>本项目里类似流程靠"文档"完成（异步开会）：</p>
+
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/document-flow.svg" alt="文档流转图">
+    <figcaption>图 2：Agent 之间通过文档"开会"</figcaption>
+  </figure>
+
+  <ol>
+    <li>产品经理写 PRD（写完保存到 <code>docs/iterations/current/PRD-001.md</code>）</li>
+    <li>UI 设计师读 PRD，写设计稿，存到 <code>UI-001.md</code></li>
+    <li>架构师读 PRD + UI，写架构设计，存到 <code>ARCH-001.md</code></li>
+    <li>开发者读 PRD + 架构，开始写代码</li>
+    <li>测试经理读 PRD + 架构，写测试计划</li>
+    <li>质量门禁检查所有产出物是否合格</li>
+  </ol>
+  <p>
+    这套机制叫"文档驱动"。好处是：
+  </p>
+  <ul>
+    <li>不依赖 AI 的"短期记忆"（context）</li>
+    <li>人可以中途审阅、修改</li>
+    <li>下一轮迭代时可以读历史决策</li>
+    <li>跨 session、跨工具都能工作</li>
+  </ul>
+
+  <h2>谁负责管这个公司？</h2>
+  <p>
+    <strong>编排总监</strong>（orchestrator）。它就是 CTO + COO 的角色：
+  </p>
+  <ul>
+    <li>诊断当前项目状态（新项目？继续迭代？长程恢复？）</li>
+    <li>决定调用哪些角色、什么顺序</li>
+    <li>分配并行任务</li>
+    <li>遇到阻塞时安排重试或换路径</li>
+  </ul>
+  <p>
+    当你说 <code>/product-lifecycle myapp</code> 时，第一个被叫起来的就是它。
+  </p>
+
+  <h2>这个比喻在哪里"不准"？</h2>
+  <p>类比是工具，记得跳出来时它的边界：</p>
+
+  <table>
+    <thead><tr><th>差异</th><th>真实公司</th><th>本项目</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>员工是同一个人</td>
+        <td>20 个不同的人</td>
+        <td>同一个 AI 在切换"扮演"</td>
+      </tr>
+      <tr>
+        <td>记忆共享</td>
+        <td>大家见过面、知道彼此说过什么</td>
+        <td>Agent 之间只通过文档传递信息</td>
+      </tr>
+      <tr>
+        <td>能并行</td>
+        <td>20 个人同时干活</td>
+        <td>通常一次一个（也支持并行调度）</td>
+      </tr>
+      <tr>
+        <td>会犯错</td>
+        <td>人会犯错也会自己纠错</td>
+        <td>AI 会幻觉，需要"质量门禁"主动检查</td>
+      </tr>
+      <tr>
+        <td>成本</td>
+        <td>工资</td>
+        <td>token 费用 / API 调用</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>另一个有用的比喻：流水线</h2>
+  <p>把公司比喻换成"流水线"也行：</p>
+
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/pipeline.svg" alt="产品研发流水线">
+    <figcaption>图 3：产品研发的"流水线"视角</figcaption>
+  </figure>
+
+  <ul>
+    <li>原料：你的想法</li>
+    <li>第 1 道工序：市场分析（→ MKT 报告）</li>
+    <li>第 2 道工序：产品需求（→ PRD）</li>
+    <li>第 3 道工序：设计（→ UI 稿）</li>
+    <li>第 4 道工序：架构（→ ARCH 文档）</li>
+    <li>第 5 道工序：开发（→ 代码）</li>
+    <li>第 6 道工序：测试（→ QA 报告）</li>
+    <li>第 7 道工序：部署（→ 上线）</li>
+    <li>第 8 道工序：反馈（→ FEEDBACK 报告，进入下一轮）</li>
+  </ul>
+  <p>
+    每道工序的"质检员"就是<a href="../04-roles/quality-gatekeeper.html">质量门禁 Agent</a>。
+  </p>
+
+  <h2>什么时候要切换心智？</h2>
+
+  <div class="pl-info">
+    <strong>"公司" 心智用来</strong>：理解为什么要分这么多角色、为什么有 PMO、为什么要 review。
+  </div>
+
+  <div class="pl-info">
+    <strong>"流水线" 心智用来</strong>：理解工序顺序、上下游依赖、什么不能并行。
+  </div>
+
+  <div class="pl-info">
+    <strong>"git 仓库" 心智用来</strong>：理解所有产出都是 markdown 文件、可以版本管理、可以分支。
+  </div>
+
+  <h2>常见误解</h2>
+  <div class="pl-warning">
+    <strong>误解 1：每个 Agent 是独立 AI 实例</strong>
+    <p>不是。本质上还是你的 Claude / GPT，只是换了 prompt。但因为 prompt 不同，AI 的行为完全不一样。</p>
+  </div>
+  <div class="pl-warning">
+    <strong>误解 2：Agent 之间能"对话"</strong>
+    <p>不直接对话。它们通过<strong>读对方写出来的文档</strong>来"沟通"。这是设计选择，不是技术限制。</p>
+  </div>
+  <div class="pl-warning">
+    <strong>误解 3：流水线必须从头走到尾</strong>
+    <p>不必。可以只调用部分角色。小项目就跳过市场分析和 PMO。</p>
+  </div>
+
+  <h2>建立直觉后该读什么</h2>
+  <div class="pl-card-grid">
+    <a class="pl-card" href="../02-concepts/01-agent.html">
+      <div class="pl-card__title">2.1 Agent 详解</div>
+      <div class="pl-card__desc">Agent 到底是什么</div>
+    </a>
+    <a class="pl-card" href="../02-concepts/05-workflow.html">
+      <div class="pl-card__title">2.5 工作流编排</div>
+      <div class="pl-card__desc">编排总监是怎么调度的</div>
+    </a>
+    <a class="pl-card" href="../03-tutorials/03-first-project-walkthrough.html">
+      <div class="pl-card__title">3.3 完整项目走读</div>
+      <div class="pl-card__desc">看真实例子</div>
+    </a>
+    <a class="pl-card" href="../04-roles/index.html">
+      <div class="pl-card__title">4. 20 个角色</div>
+      <div class="pl-card__desc">逐个了解</div>
+    </a>
+  </div>
+
+</main>
+</body>
+</html>

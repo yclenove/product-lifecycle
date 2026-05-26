@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2.4 MCP 协议入门 · product-lifecycle</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/nav-data.js"></script>
+  <script src="../assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/02-concepts/04-mcp.html">
+<main class="pl-content">
+
+  <h1>2.4 MCP 协议入门</h1>
+  <p class="pl-lead">
+    MCP（Model Context Protocol）是 Anthropic 推出的"AI 调外部工具"协议。
+    本项目用它集成了 drawio MCP——让 AI 直接画 draw.io 流程图。
+    本文讲清 MCP 是什么、解决什么问题、本项目怎么用、自己怎么装更多 MCP。
+  </p>
+
+  <h2>先看一个直观例子</h2>
+  <p>没装 MCP 之前，你跟 Claude 说"画一个用户登录的时序图"，它给你的是：</p>
+  <ul>
+    <li>一段 Mermaid 代码（你要复制粘贴到 mermaid.live 或某个支持的工具）</li>
+    <li>或者 ASCII 图（"丑"，难看）</li>
+    <li>或者文字描述（"用户输入 → 前端 → 后端 → 数据库..."）</li>
+  </ul>
+  <p>装了 drawio MCP 之后：</p>
+  <p>
+    Claude 直接调用 MCP 工具，生成一个 <code>.drawio</code> 文件 + 渲染好的 SVG，存到你指定目录。
+    你打开就是漂亮的 draw.io 图，可以继续手工编辑。
+  </p>
+
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/mcp-flow.svg" alt="MCP 工作流">
+    <figcaption>图：MCP 让 AI 拥有"调外部程序"的能力</figcaption>
+  </figure>
+
+  <h2>类比理解</h2>
+  <p>把 AI 模型比作大脑。</p>
+  <ul>
+    <li><strong>没有工具</strong> = 一个只会说话的大脑，啥也干不了</li>
+    <li><strong>内置工具（Read/Edit/Bash）</strong> = 大脑长了眼睛、手、嘴（限于 IDE 内部）</li>
+    <li><strong>MCP 工具</strong> = 大脑可以"打电话"给外部的专业服务（drawio 服务、数据库服务、邮件服务…）</li>
+  </ul>
+
+  <h2>MCP 全称解释</h2>
+  <p><strong>M</strong>odel <strong>C</strong>ontext <strong>P</strong>rotocol</p>
+  <ul>
+    <li><strong>Model</strong>：指 LLM（Claude 等）</li>
+    <li><strong>Context</strong>：上下文。这里指"模型干活需要的额外能力 / 数据"</li>
+    <li><strong>Protocol</strong>：协议。定义了"模型怎么发请求、外部工具怎么回应"</li>
+  </ul>
+  <p>所以 MCP 是 <strong>让模型获取额外能力的标准化协议</strong>。</p>
+
+  <h2>为什么需要"协议"？</h2>
+  <p>没有协议之前的混乱：</p>
+  <ul>
+    <li>OpenAI 有"function calling"格式</li>
+    <li>Claude 有自己的"tool use"格式</li>
+    <li>每个工具开发者写一次，要适配 3-5 个 AI 厂商</li>
+  </ul>
+  <p>有了 MCP 之后：</p>
+  <ul>
+    <li>工具只要实现 MCP 协议（一份代码）</li>
+    <li>任何支持 MCP 的客户端（Claude Desktop、Claude Code、Cursor）都能用</li>
+    <li>就像 USB —— 一个标准，所有设备插上就能用</li>
+  </ul>
+
+  <h2>MCP 客户端 / 服务器</h2>
+  <p>MCP 是 client-server 架构：</p>
+  <ul>
+    <li><strong>MCP Client</strong>：AI 工具，比如 Claude Code、Cursor</li>
+    <li><strong>MCP Server</strong>：提供工具能力的外部程序，比如 drawio MCP</li>
+  </ul>
+  <p>两者通过标准输入输出（stdio）或 SSE 通信，传 JSON-RPC 消息。</p>
+
+  <h2>本项目集成的 MCP</h2>
+
+  <h3>drawio MCP</h3>
+  <p>
+    来自 <a href="https://github.com/DayuanJiang/next-ai-draw-io" target="_blank" rel="noopener">DayuanJiang/next-ai-draw-io</a>，
+    让 AI 能生成 drawio 流程图。
+  </p>
+
+  <h4>能画什么</h4>
+  <ul>
+    <li>流程图（Flowchart）</li>
+    <li>时序图（Sequence Diagram）</li>
+    <li>状态图（State Diagram）</li>
+    <li>类图 / ER 图（Entity Relationship）</li>
+    <li>系统架构图</li>
+    <li>组织结构图</li>
+    <li>泳道图</li>
+    <li>更多 …</li>
+  </ul>
+
+  <h4>怎么调用（在 Claude Code 里）</h4>
+  <pre><code>请帮我画一个用户注册的时序图，
+角色：用户、前端、API网关、用户服务、邮件服务
+存到 docs/iterations/current/diagrams/seq-register.svg
+请用 drawio MCP</code></pre>
+  <p>Claude 会调用 MCP，生成 SVG。</p>
+
+  <h2>本项目的 MCP 配置</h2>
+  <p>项目根目录有 <code>.mcp.json</code>（Claude Desktop 用）和 <code>.cursor/mcp.json</code>（Cursor 用）：</p>
+
+  <pre><code>{
+  "mcpServers": {
+    "drawio": {
+      "command": "npx",
+      "args": ["-y", "next-ai-draw-io"]
+    }
+  }
+}</code></pre>
+
+  <p>意思是："启动一个名为 drawio 的 MCP server，通过 npx 运行 next-ai-draw-io 包"。</p>
+
+  <h2>怎么装</h2>
+
+  <h3>方式 1：用本项目的安装脚本（推荐）</h3>
+  <pre><code>bash scripts/install-mcp.sh
+# 或 Windows
+powershell -File scripts/install-mcp.ps1</code></pre>
+  <p>脚本会注册到 Claude Code 全局配置。</p>
+
+  <h3>方式 2：手动注册（Claude Code）</h3>
+  <pre><code>claude mcp add drawio "npx -y next-ai-draw-io"</code></pre>
+
+  <h3>方式 3：项目级（推荐用方式 1，已自动配好）</h3>
+  <p>项目里有 <code>.mcp.json</code>，Claude Code 在该目录启动时会读取。</p>
+
+  <h2>验证安装</h2>
+  <pre><code>claude mcp list</code></pre>
+  <p>应该能看到 <code>drawio</code> 在列表里。</p>
+
+  <p>或在 Claude Code 里问：</p>
+  <pre><code>你能用 drawio MCP 吗？</code></pre>
+  <p>它应该回复"能"，并能开始画。</p>
+
+  <h2>本项目怎么让 AI 主动用 drawio MCP</h2>
+  <p>三处机制：</p>
+  <ol>
+    <li><strong>Agent prompt</strong>：每个角色的 prompt 里有"应该画的图"章节，注明优先用 drawio MCP</li>
+    <li><strong>模板</strong>：每个文档模板首部有"图示要求"，要求该文档必含哪些图</li>
+    <li><strong>CI 检查</strong>：<code>scripts/check-diagrams.sh</code> 会检查迭代产出中是否包含必要的图</li>
+  </ol>
+
+  <h2>更多 MCP（社区生态）</h2>
+  <p>除了 drawio，还有大量社区 MCP，可以按需装：</p>
+
+  <table>
+    <thead><tr><th>MCP</th><th>能力</th></tr></thead>
+    <tbody>
+      <tr><td>github</td><td>读 issue、PR、代码</td></tr>
+      <tr><td>postgres / mysql</td><td>查数据库</td></tr>
+      <tr><td>slack</td><td>读写 Slack 消息</td></tr>
+      <tr><td>filesystem</td><td>更细粒度的文件操作</td></tr>
+      <tr><td>memory</td><td>给 AI 配长期记忆</td></tr>
+      <tr><td>puppeteer</td><td>操控浏览器</td></tr>
+      <tr><td>fetch</td><td>访问 URL</td></tr>
+    </tbody>
+  </table>
+
+  <p>官方仓库：<a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener">modelcontextprotocol/servers</a></p>
+
+  <h2>注意事项</h2>
+  <div class="pl-warning">
+    <strong>⚠️ MCP 安全提醒</strong>
+    <ul>
+      <li>MCP server 是外部程序，能访问你的文件和网络。装之前确认来源可信</li>
+      <li>给 AI 配的 MCP 工具会消耗 token（每次调用都要传协议消息）</li>
+      <li>调慢的 MCP（比如复杂渲染）会让对话卡顿</li>
+      <li>失败时 AI 会给文字描述兜底（比如 Mermaid 代码）</li>
+    </ul>
+  </div>
+
+  <div class="pl-deep">
+    <strong>⚡ 进阶：MCP 与 Function Calling 的区别</strong>
+    <p>
+      Function Calling（OpenAI、Claude 都有）是模型 API 的能力——
+      模型可以返回"我想调用 funcX(arg1, arg2)"，由<strong>调用方</strong>实际执行。
+    </p>
+    <p>
+      MCP 是更上层的协议——
+      它<strong>标准化了工具描述、调用、返回的格式</strong>，使得：
+    </p>
+    <ul>
+      <li>工具开发者写一份代码适配所有 AI 厂商</li>
+      <li>工具可以被远程托管（不一定本地）</li>
+      <li>工具发现、权限、生命周期都标准化</li>
+    </ul>
+    <p>
+      实际实现上，MCP server 把工具列表给 client，client 通过 LLM 的 function calling 让模型选择，
+      选完后 client 通过 MCP 协议调 server 执行。
+    </p>
+    <p>
+      更深入读 <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a>。
+    </p>
+  </div>
+
+  <h2>延伸阅读</h2>
+  <ul>
+    <li><a href="../05-deep-dive/04-mcp-protocol.html">5.4 MCP 协议深入</a> — JSON-RPC 细节、自己写 server</li>
+    <li><a href="../../docs/05-advanced/DIAGRAMMING.md">绘图规范</a>（主文档） — 什么图用什么工具</li>
+    <li><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">MCP 官网</a></li>
+    <li><a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener">MCP 官方 servers 列表</a></li>
+  </ul>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2.1 什么是 Agent · product-lifecycle</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/nav-data.js"></script>
+  <script src="../assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/02-concepts/01-agent.html">
+<main class="pl-content">
+
+  <h1>2.1 什么是 Agent</h1>
+  <p class="pl-lead">
+    "Agent" 是这两年最火的词之一，但定义混乱。本文先讲业界 3 种主流定义，
+    再讲本项目里 Agent 具体长什么样、怎么工作、跟单纯调用 API 的区别。
+  </p>
+
+  <div class="pl-info">
+    <strong>📍 前置阅读</strong>
+    建议先看 <a href="../01-introduction/04-mental-model.html">1.4 心智模型</a>，建立"公司"直觉。
+  </div>
+
+  <h2>三种主流定义</h2>
+
+  <h3>定义 1：会"循环 + 工具调用"的 LLM</h3>
+  <p>
+    这是 OpenAI / LangChain 等定义。Agent = LLM + 工具 + 循环。
+    流程：
+  </p>
+  <ol>
+    <li>用户给任务</li>
+    <li>LLM 思考：要不要调工具？调哪个？</li>
+    <li>调工具（搜索、计算、读文件…）</li>
+    <li>看结果，决定继续调还是回答用户</li>
+    <li>循环到完成</li>
+  </ol>
+
+  <h3>定义 2：扮演特定身份的 LLM</h3>
+  <p>
+    Anthropic 倾向这个定义。
+    Agent = LLM + 一份让它扮演特定角色/任务的长 prompt。
+    没有循环、没有工具调用也可以叫 Agent。
+  </p>
+
+  <h3>定义 3：能自主完成多步任务的 LLM</h3>
+  <p>
+    AutoGPT、BabyAGI 流派。Agent = LLM 能自己拆任务、自己执行、自己评估，最少人工干预。
+  </p>
+
+  <h3>本项目用哪个？</h3>
+  <p>
+    采用<strong>定义 2 为主，定义 1 为辅</strong>：
+  </p>
+  <ul>
+    <li>每个角色本质是"一份长 prompt"（定义 2）</li>
+    <li>有些角色允许调工具，比如 market-analyst 用 WebSearch，product-manager 可能用 drawio MCP（定义 1）</li>
+    <li>不强行追求"完全自主"（不走定义 3 的极端），而是设计成"半自主"——AI 完成任务，人审阅文档</li>
+  </ul>
+
+  <h2>本项目的 Agent 长什么样</h2>
+  <p>打开 <code>agents/product-manager.md</code>，你看到的是这样的结构：</p>
+
+  <pre><code>---
+description: 产品经理：主动发现需求、定义PRD、用户故事...
+tools: Read, Edit, Write, Bash, WebSearch, Grep, Glob
+model: ${PL_MODEL_MEDIUM:-claude-3-5-sonnet-latest}
+---
+
+# 产品经理 Agent
+
+## 你的核心能力
+- 把市场分析转化为可执行的产品需求
+- 写出工程师能直接照做的 PRD
+- 主动质疑业务诉求的合理性
+...
+
+## Step 0：恢复上下文（长程迭代模式）
+（自动注入的状态恢复逻辑）
+
+## 应该画的图
+- 用户旅程图（mandatory）
+- 用户故事地图（recommended）
+- 信息架构图（recommended）
+（自动注入，优先用 drawio MCP）
+
+## 工作流程
+1. 读取上游产出物（市场分析、反馈）
+2. ...
+
+## 推荐方法论 skills
+- brainstorming
+- chinese-documentation
+
+## 产出物
+- docs/iterations/current/PRD-XXX-...md
+- 必须包含：用户故事、功能列表、验收标准、用户旅程图
+</code></pre>
+
+  <h3>组成拆解</h3>
+
+  <div class="pl-glossary-card">
+    <h4>① Frontmatter（YAML 元数据）</h4>
+    <p>开头 <code>---</code> 之间的部分。Claude Code 读取后知道这是什么 Agent、允许它用哪些工具、用哪个模型。</p>
+    <ul>
+      <li><code>description</code>：给编排总监看的"自我介绍"，让它知道什么时候调你</li>
+      <li><code>tools</code>：白名单。这个 Agent 只能用这些工具</li>
+      <li><code>model</code>：用哪个模型。<code>${PL_MODEL_MEDIUM:-...}</code> 是环境变量带默认值的写法</li>
+    </ul>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>② 核心能力 / 职责</h4>
+    <p>用文字描述这个角色"擅长什么"。AI 看到这个会自动调整思维方式。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>③ Step 0：恢复上下文</h4>
+    <p>本项目特有。每个 Agent 启动时先检查有没有 STATE.md / HANDOFF.md，有就先恢复"记忆"再干活。这是<strong>长程迭代</strong>的关键。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>④ 应该画的图</h4>
+    <p>本项目特有。明确告诉 Agent："你这个角色必须画 X 图，建议画 Y 图。优先用 drawio MCP，备选 Mermaid。"</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>⑤ 工作流程</h4>
+    <p>分步骤的操作指令。AI 按这个顺序干。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>⑥ 推荐方法论 skills</h4>
+    <p>引用通用工作方法。比如开发类角色推荐读 TDD skill。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>⑦ 产出物</h4>
+    <p>明确"做完后要交付什么文件、放在哪里、必须包含什么"。这是产物契约。</p>
+  </div>
+
+  <h2>Agent 跟普通对话的区别</h2>
+
+  <table>
+    <thead><tr><th>方面</th><th>跟 Claude 直接聊天</th><th>调用本项目的 Agent</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>身份</td>
+        <td>通用助手</td>
+        <td>特定角色（产品经理 / 架构师 / ...）</td>
+      </tr>
+      <tr>
+        <td>产出</td>
+        <td>聊天记录</td>
+        <td>结构化文档（按模板）</td>
+      </tr>
+      <tr>
+        <td>工具权限</td>
+        <td>所有可用工具</td>
+        <td>白名单限制</td>
+      </tr>
+      <tr>
+        <td>记忆</td>
+        <td>当次对话</td>
+        <td>跨 session（通过 STATE.md）</td>
+      </tr>
+      <tr>
+        <td>验收</td>
+        <td>你自己判断</td>
+        <td>质量门禁自动检查</td>
+      </tr>
+      <tr>
+        <td>协作</td>
+        <td>无</td>
+        <td>读其他角色的产出，给下一个角色铺路</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Agent 不是 AI</h2>
+  <p>
+    再强调一遍：Agent ≠ AI 模型。
+    Agent 是"<strong>给 AI 戴的一顶帽子</strong>"。
+    底层还是 Claude / GPT，但戴上"架构师"的帽子，它就只想架构的事。
+  </p>
+
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/agent-vs-llm.svg" alt="Agent 与 LLM 的关系">
+    <figcaption>图：Agent = LLM + Prompt + 工具白名单 + 产出契约</figcaption>
+  </figure>
+
+  <h2>为什么不直接给 Claude 全权 prompt？</h2>
+  <p>有人会想："我把所有 20 个角色 prompt 合并成一份大 prompt，一次性给 Claude，不就一步到位？"</p>
+  <p>试过的都知道：不行。原因：</p>
+  <ol>
+    <li><strong>注意力稀释</strong>：prompt 太长，AI 抓不住重点</li>
+    <li><strong>角色串味</strong>：写市场分析时跑去写代码，写代码时回头改需求</li>
+    <li><strong>无法并行</strong>：合并后只能线性走</li>
+    <li><strong>无法 review</strong>：一坨输出没法分阶段把控</li>
+    <li><strong>无法回滚</strong>：发现 PRD 有问题，要全部重做</li>
+    <li><strong>token 浪费</strong>：每次都要传 20 倍内容</li>
+  </ol>
+
+  <h2>本项目 Agent 的设计原则</h2>
+
+  <h3>① 单一职责</h3>
+  <p>一个 Agent 只干一件事。"产品经理"不写代码，"架构师"不画 UI。</p>
+
+  <h3>② 契约清晰</h3>
+  <p>每个 Agent 的输入（读什么文件）、输出（写什么文件）、必含内容（哪些章节）都写明。</p>
+
+  <h3>③ 可组合</h3>
+  <p>编排总监可以挑子集。20 个全用是上限，最少 2 个也能跑（编排+开发）。</p>
+
+  <h3>④ 可观测</h3>
+  <p>所有产出是 markdown 文件，能看、能 diff、能 commit。</p>
+
+  <h3>⑤ 可恢复</h3>
+  <p>支持长程迭代。Step 0 强制读 STATE.md。</p>
+
+  <h2>Agent 的局限性</h2>
+  <div class="pl-warning">
+    <strong>Agent 不能做什么</strong>
+    <ul>
+      <li>不能跨过它的工具白名单（产品经理不能直接 git commit）</li>
+      <li>不能凭空获取项目外的真实数据（除非允许 WebSearch）</li>
+      <li>不能保证 100% 不出错（人 review 必不可少）</li>
+      <li>不能替代你的判断（Agent 写的 PRD 你还要看、改）</li>
+    </ul>
+  </div>
+
+  <h2>动手感受一下</h2>
+  <p>最快的方式：</p>
+  <pre><code># 1. clone 项目
+git clone https://github.com/yclenove/product-lifecycle.git
+cd product-lifecycle
+
+# 2. 看一个具体的 Agent 文件
+cat agents/product-manager.md
+
+# 3. 找差异：跟 architect.md 对比
+diff agents/product-manager.md agents/architect.md</code></pre>
+  <p>你会发现两者结构相同，但每个章节内容完全不同。这就是"换帽子"的本质。</p>
+
+  <div class="pl-deep">
+    <strong>⚡ 进阶：Agent 和 Multi-agent System</strong>
+    <p>
+      学术上叫 Multi-agent System（MAS）。本项目算 cooperative MAS——
+      Agent 之间合作（不是博弈/对抗）。
+      跟 MetaGPT、ChatDev、AutoGen 是同类项目。
+    </p>
+    <p>
+      想深入：
+    </p>
+    <ul>
+      <li><a href="https://arxiv.org/abs/2308.00352" target="_blank" rel="noopener">MetaGPT 论文</a>（多 Agent 协作做软件开发）</li>
+      <li><a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener">AutoGen 论文</a>（微软的多 Agent 框架）</li>
+      <li><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener">Anthropic: Building effective agents</a></li>
+    </ul>
+  </div>
+
+  <h2>延伸阅读</h2>
+  <ul>
+    <li><a href="02-prompt-template.html">2.2 Prompt 与模板</a> — Agent 的"灵魂"</li>
+    <li><a href="03-skill.html">2.3 Skill 是什么</a> — Agent 调用的方法论</li>
+    <li><a href="05-workflow.html">2.5 工作流编排</a> — 多个 Agent 怎么合作</li>
+    <li><a href="../05-deep-dive/02-prompt-engineering.html">5.2 Prompt 工程基础</a> — 怎么写好 Agent</li>
+  </ul>
+
+</main>
+</body>
+</html>

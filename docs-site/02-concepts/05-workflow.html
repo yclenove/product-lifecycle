@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2.5 工作流编排 · product-lifecycle</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/nav-data.js"></script>
+  <script src="../assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/02-concepts/05-workflow.html">
+<main class="pl-content">
+
+  <h1>2.5 工作流编排</h1>
+  <p class="pl-lead">编排总监根据项目状态选择模式，决定调用哪些 Agent、顺序与并行关系。</p>
+
+  <h2>三种模式</h2>
+  <table>
+    <thead><tr><th>模式</th><th>何时</th><th>典型链路</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A · 从 0 到 1</strong></td><td>无代码、无 PRD</td><td>市场 → 产品 → UI → 架构 → 开发 → QA → 门禁</td></tr>
+      <tr><td><strong>B · 迭代</strong></td><td>已有产品，新需求/反馈</td><td>反馈/侦察 → 产品 → 规划 → 开发 → QA</td></tr>
+      <tr><td><strong>C · 长程恢复</strong></td><td>跨 session 续做</td><td>读 STATE.md → 从上次 Agent 继续</td></tr>
+    </tbody>
+  </table>
+
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/pipeline.svg" alt="研发流水线">
+    <figcaption>模式 A 的流水线视角</figcaption>
+  </figure>
+
+  <h2>WORKFLOW_PLAN</h2>
+  <p>复杂项目由编排总监产出 <code>WORKFLOW_PLAN-*.md</code>（模板：<code>templates/workflow_plan_template.md</code>），写明每步 Agent、依赖、并行与门禁。</p>
+
+  <h2>并行示例</h2>
+  <ul>
+    <li>架构定稿后：<strong>前端 + 后端</strong>可并行（都读 ARCH）</li>
+    <li>开发进行中：<strong>测试经理</strong>可提前写测试计划（读 PRD）</li>
+    <li><strong>安全工程师</strong>可与开发后期并行做威胁建模</li>
+  </ul>
+
+  <p>详见 <code>agents/orchestrator.md</code> 与 <code>docs/03-workflow/</code>。</p>
+
+</main>
+</body>
+</html>

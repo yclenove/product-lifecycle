@@ -1,153 +1,128 @@
 #!/usr/bin/env bash
-# validate.sh — 自动化验证脚本
+# validate.sh — 与 quality-gate.yml 对齐的汇总校验（v3.x · 20 Agent）
 set -euo pipefail
 
-ROOT="$(dirname "$(dirname "$0")")"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+EXPECTED=20
 errors=0
 
-echo "=== 验证检查 ==="
+echo "=== validate.sh（期望 ${EXPECTED} 个 Agent）==="
+
+fail() {
+  echo "✗ $*"
+  errors=$((errors + 1))
+}
+
+pass() {
+  echo "✓ $*"
+}
 
 # 1. SKILL.md frontmatter
 echo -n "SKILL.md frontmatter: "
 if head -1 "$ROOT/SKILL.md" | grep -q "^---"; then
-  echo "✓"
+  pass ""
 else
-  echo "✗ 缺少 frontmatter"
-  errors=$((errors+1))
+  fail "缺少 frontmatter"
 fi
 
-# 2. .claude/agents/ 数量
-echo -n ".claude/agents/ 数量: "
-count=$(ls "$ROOT/.claude/agents/"*.md 2>/dev/null | wc -l)
-if [ "$count" -eq 14 ]; then
-  echo "✓ ($count)"
-else
-  echo "✗ ($count/14)"
-  errors=$((errors+1))
-fi
-
-# 3. PRODUCT_PLAN 残留（排除 checklist 自身引用）
-echo -n "PRODUCT_PLAN 残留: "
-if grep -rn "PRODUCT_PLAN" --include="*.md" "$ROOT/agents/" "$ROOT/templates/" "$ROOT/.claude/agents/" "$ROOT/SKILL.md" 2>/dev/null | grep -v CHANGELOG | grep -v worktrees | grep -v quality-gatekeeper | grep -q .; then
-  echo "✗ 有残留"
-  errors=$((errors+1))
-else
-  echo "✓ 无残留"
-fi
-
-# 4. trends 2025（排除 checklist 自身引用）
-echo -n "trends 2025 残留: "
-if grep -rn "trends 2025" "$ROOT/agents/" "$ROOT/.claude/agents/" "$ROOT/templates/" 2>/dev/null | grep -v quality-gatekeeper | grep -q .; then
-  echo "✗ 有残留"
-  errors=$((errors+1))
-else
-  echo "✓ 无残留"
-fi
-
-# 5. 上下文管理
-echo -n "上下文管理覆盖: "
-count=$(grep -l "上下文管理" "$ROOT/agents/"*.md 2>/dev/null | wc -l)
-if [ "$count" -eq 14 ]; then
-  echo "✓ ($count/14)"
-else
-  echo "✗ ($count/14)"
-  errors=$((errors+1))
-fi
-
-# 6. 检查 agent 必需章节
-echo -n "Agent 必需章节: "
-missing=0
-for f in "$ROOT"/agents/*.md; do
-  for section in "任务" "输出" "质量门禁" "上下文管理"; do
-    if ! grep -q "## .*${section}" "$f"; then
-      echo -n "$(basename $f) 缺少 ${section} "
-      missing=$((missing+1))
-    fi
-  done
-done
-if [ $missing -eq 0 ]; then
-  echo "✓"
-else
-  echo "✗ ($missing 项缺失)"
-  errors=$((errors+1))
-fi
-
-# 7. 检查模板元数据
-echo -n "模板元数据: "
-missing=0
-for f in "$ROOT"/templates/*.md; do
-  if ! grep -q "| 字段 |" "$f" && ! grep -q "| 字段" "$f"; then
-    echo -n "$(basename $f) "
-    missing=$((missing+1))
+# 2–4. 三套 agents 数量
+for dir in agents .claude/agents; do
+  echo -n "${dir}/ 数量: "
+  count=$(find "$ROOT/$dir" -maxdepth 1 -name '*.md' | wc -l | tr -d ' ')
+  if [ "$count" -eq "$EXPECTED" ]; then
+    pass "($count)"
+  else
+    fail "($count/${EXPECTED})"
   fi
 done
-if [ $missing -eq 0 ]; then
-  echo "✓"
+
+echo -n ".cursor/agents/ 数量: "
+cursor_count=$(find "$ROOT/.cursor/agents" -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
+if [ "$cursor_count" -eq "$EXPECTED" ]; then
+  pass "($cursor_count)"
 else
-  echo "✗ ($missing 个缺失)"
+  fail "($cursor_count/${EXPECTED})"
 fi
 
-# 8. 检查 Agent 行数范围
-echo -n "Agent 行数范围: "
-line_issues=0
+# 5. PRODUCT_PLAN 残留
+echo -n "PRODUCT_PLAN 残留: "
+if grep -rn "PRODUCT_PLAN" --include="*.md" \
+  "$ROOT/agents/" "$ROOT/templates/" "$ROOT/.claude/agents/" "$ROOT/SKILL.md" 2>/dev/null \
+  | grep -v quality-gatekeeper | grep -q .; then
+  fail "有残留"
+else
+  pass "无"
+fi
+
+# 6. 硬编码年份（搜索关键词）
+echo -n "trends 2025/2024 残留: "
+if grep -rnE "trends 202[45]" \
+  "$ROOT/agents/" "$ROOT/.claude/agents/" "$ROOT/templates/" 2>/dev/null \
+  | grep -v quality-gatekeeper | grep -q .; then
+  fail "有残留"
+else
+  pass "无"
+fi
+
+# 7. Agent 结构（与 lint-prompts 口径一致）
+echo -n "Agent 结构（职责/产出/Step0/skills）: "
+struct_missing=0
 for f in "$ROOT"/agents/*.md; do
   name=$(basename "$f" .md)
-  lines=$(wc -l < "$f")
-  if [ $lines -lt 80 ]; then
-    echo -n "$name($lines 行偏少) "
-    line_issues=$((line_issues+1))
-  elif [ $lines -gt 400 ]; then
-    echo -n "$name($lines 行偏多) "
-    line_issues=$((line_issues+1))
-  fi
+  grep -qE "你的职责|你的核心能力|你的目标|你的工作" "$f" || { echo -n "${name}(职责) "; struct_missing=$((struct_missing + 1)); }
+  grep -qE "## 产出|## 输出" "$f" || { echo -n "${name}(产出) "; struct_missing=$((struct_missing + 1)); }
+  grep -q "Step 0" "$f" || { echo -n "${name}(Step0) "; struct_missing=$((struct_missing + 1)); }
+  grep -q "推荐方法论 skills" "$f" || { echo -n "${name}(skills) "; struct_missing=$((struct_missing + 1)); }
 done
-if [ $line_issues -eq 0 ]; then
-  echo "✓ (全部在 80-400 行范围)"
+if [ "$struct_missing" -eq 0 ]; then
+  pass ""
 else
-  echo " ⚠ ($line_issues 个超出范围)"
+  fail "($struct_missing 项)"
 fi
 
-# 9. 检查 .claude/agents/ 与 agents/ 同步
-echo -n ".claude/agents/ 同步: "
+# 8. .claude/agents 与 agents 文件名对齐
+echo -n "agents ↔ .claude/agents 同步: "
 sync_issues=0
 for f in "$ROOT"/agents/*.md; do
-  name=$(basename "$f" .md)
-  if [ ! -f "$ROOT/.claude/agents/$name.md" ]; then
-    echo -n "$name(缺失) "
-    sync_issues=$((sync_issues+1))
-  fi
+  name=$(basename "$f")
+  [ -f "$ROOT/.claude/agents/$name" ] || { echo -n "${name%.md}(缺) "; sync_issues=$((sync_issues + 1)); }
 done
-if [ $sync_issues -eq 0 ]; then
-  echo "✓ (14/14 同步)"
+if [ "$sync_issues" -eq 0 ]; then
+  pass "(${EXPECTED}/${EXPECTED})"
 else
-  echo "✗ ($sync_issues 个不同步)"
-  errors=$((errors+1))
+  fail "($sync_issues 个缺失)"
 fi
 
-# 10. 检查残留旧 Agent 数字（排除 CHANGELOG 和历史报告）
-echo -n "残留旧 Agent 数字: "
+# 9. 残留旧 Agent 数量文案（11–19，当前应为 20）
+echo -n "残留旧 Agent 数字(11-19): "
 stale_count=0
-for f in "$ROOT/SKILL.md" "$ROOT/README.md" "$ROOT"/docs/01-getting-started/QUICK-START.md "$ROOT"/docs/01-getting-started/DECISION-TREE.md "$ROOT"/docs/01-getting-started/FAQ.md "$ROOT"/docs/04-reference/SKILL-ASSETS.md "$ROOT"/docs/02-tools/SKILL-CURSOR.md "$ROOT"/docs/02-tools/SKILL-CLAUDE-CODE.md "$ROOT"/.cursor/agents/README.md; do
+for f in \
+  "$ROOT/SKILL.md" \
+  "$ROOT/README.md" \
+  "$ROOT/docs/01-getting-started/QUICK-START.md" \
+  "$ROOT/docs/01-getting-started/DECISION-TREE.md" \
+  "$ROOT/docs/01-getting-started/FAQ.md" \
+  "$ROOT/docs/04-reference/SKILL-ASSETS.md" \
+  "$ROOT/docs/02-tools/SKILL-CURSOR.md" \
+  "$ROOT/docs/02-tools/SKILL-CLAUDE-CODE.md" \
+  "$ROOT/.cursor/agents/README.md"; do
   if [ -f "$f" ]; then
-    found=$(grep -nE '(1[1-3])\s*(个|位)?\s*(Agent|角色)' "$f" 2>/dev/null | grep -v '其余' | grep -v 'CHANGELOG' || true)
-    if [ -n "$found" ]; then
-      stale_count=$((stale_count+1))
+    if grep -nE '(1[1-9])\s*(个|位)?\s*(Agent|角色)|1[1-9]\s*角色' "$f" 2>/dev/null | grep -v '其余' | grep -q .; then
+      stale_count=$((stale_count + 1))
       echo -n "$(basename "$f") "
     fi
   fi
 done
-if [ $stale_count -eq 0 ]; then
-  echo "✓ 无残留"
+if [ "$stale_count" -eq 0 ]; then
+  pass "无"
 else
-  echo "✗ ($stale_count 个文件有残留)"
-  errors=$((errors+1))
+  fail "($stale_count 个文件)"
 fi
 
 echo ""
-if [ $errors -eq 0 ]; then
-  echo "全部通过 ✓"
+if [ "$errors" -eq 0 ]; then
+  echo "validate.sh 全部通过 ✓"
   exit 0
-else
-  echo "$errors 项失败 ✗"
-  exit 1
-fi
+fi
+echo "validate.sh：$errors 项失败 ✗"
+exit 1

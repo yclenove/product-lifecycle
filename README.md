@@ -76,7 +76,7 @@ SKILL.md 作为入口，自动加载 Agent prompt 和模板。
    以本仓库为工作区时，另有 `.cursor/skills/product-lifecycle/SKILL.md`（与 `docs/02-tools/SKILL-CURSOR.md` 的 PACKAGE_ROOT 规则一致，自动加载）。适合在本仓库内开发技能本身。
 
 3. **与 Claude Code 对齐（推荐）**  
-   本仓库已含 **`.cursor/agents/`**（14 角色薄封装）。**以本仓库为工作区**时可直接用 **`/orchestrator`** 等。  
+   本仓库已含 **`.cursor/agents/`**（20 角色薄封装）。**以本仓库为工作区**时可直接用 **`/orchestrator`** 等。  
    **在新业务项目里**：Cursor 不会自动写入 Subagent；请设置 `PRODUCT_LIFECYCLE_ROOT` 后运行 **`scripts/install-cursor-subagents.ps1`**（Windows）或 **`scripts/install-cursor-subagents.sh`**（Unix），一键生成该项目下的 `.cursor/agents/` 并嵌入技能包绝对路径（详见 `docs/02-tools/SKILL-CURSOR.md`「新业务项目」节）。亦可使用 **`/create-subagent`** 手动创建并按 `docs/02-tools/SKILL-CURSOR.md` 自行配置。
 
 若作为子目录嵌入其他项目：
@@ -214,7 +214,7 @@ product-lifecycle/
 ├── SKILL.md              # Claude Code 入口（其他工具可忽略）
 ├── .cursor/skills/product-lifecycle/SKILL.md  # Cursor Agent Skill 入口
 ├── .cursor/agents/       # Cursor Subagent 薄封装（/orchestrator、/market-analyst … /reviewer）
-├── .claude/agents/       # Claude Code Subagent 定义（14 角色，含动态上下文注入）
+├── .claude/agents/       # Claude Code Subagent 定义（20 角色，含动态上下文注入）
 ├── CHANGELOG.md          # 版本记录
 ├── README.md             # 本文件
 ├── agents/               # 20 个 Agent 的通用 prompt（真源）

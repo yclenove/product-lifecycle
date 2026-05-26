@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>product-lifecycle 文档</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/nav-data.js"></script>
+  <script src="assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/index.html">
+<main class="pl-content">
+
+  <h1>product-lifecycle 文档</h1>
+  <p class="pl-lead">
+    20 个专业 AI 角色协作，把一个想法变成上线产品的完整生命周期框架。
+    本文档不预设认知门槛 —— 从「Agent 是什么」到「怎么自定义」都有。
+  </p>
+
+  <div class="pl-info">
+    <strong>👋 你是第一次来吗？</strong>
+    建议按顺序读：<a href="01-introduction/01-what-is-product-lifecycle.html">这是什么</a> →
+    <a href="01-introduction/04-mental-model.html">心智模型</a> →
+    <a href="02-concepts/01-agent.html">什么是 Agent</a> →
+    <a href="03-tutorials/01-quickstart-claude-code.html">5 分钟跑通</a>。
+    大约 20 分钟读完，可以开始动手做项目。
+  </div>
+
+  <h2>这是什么？</h2>
+  <p>
+    一句话：让 AI 像一个完整的产品团队那样工作。
+  </p>
+  <p>
+    现在用 AI 写代码（Claude Code、Cursor、Copilot）很容易，但只能干"实现"这一段。
+    真实做产品要走完：<strong>市场分析 → 产品需求 → UI 设计 → 架构 → 开发 → 测试 → 部署 → 反馈 → 下一轮迭代</strong>。
+    每一段需要不同专业。一个通用 AI 助手没法都做好。
+  </p>
+  <p>
+    product-lifecycle 把这条流水线拆成 <strong>20 个专业角色</strong>，
+    每个角色有自己的工作提示（prompt）、文档模板、必画的图、质量门禁。
+    AI 按角色切换身份干活，产出比"光让它写代码"高几个量级。
+  </p>
+
+  <h2>核心特性</h2>
+  <div class="pl-card-grid">
+    <a class="pl-card" href="04-roles/index.html">
+      <div class="pl-card__icon">👥</div>
+      <div class="pl-card__title">20 个专业角色</div>
+      <div class="pl-card__desc">市场、产品、设计、架构、前后端、测试、运维、安全、数据、文档… 全链路覆盖</div>
+    </a>
+    <a class="pl-card" href="02-concepts/05-workflow.html">
+      <div class="pl-card__icon">🔄</div>
+      <div class="pl-card__title">自动编排</div>
+      <div class="pl-card__desc">编排总监根据项目状态决定调用哪些角色，何时并行、何时串行</div>
+    </a>
+    <a class="pl-card" href="02-concepts/06-iteration.html">
+      <div class="pl-card__icon">⏱️</div>
+      <div class="pl-card__title">长程迭代</div>
+      <div class="pl-card__desc">跨多天/多个 session 工作，状态持久化，下次接着干</div>
+    </a>
+    <a class="pl-card" href="02-concepts/04-mcp.html">
+      <div class="pl-card__icon">🎨</div>
+      <div class="pl-card__title">AI 画图</div>
+      <div class="pl-card__desc">drawio MCP 集成，让 AI 给你画流程图、架构图、时序图</div>
+    </a>
+    <a class="pl-card" href="02-concepts/03-skill.html">
+      <div class="pl-card__icon">📚</div>
+      <div class="pl-card__title">方法论 skill</div>
+      <div class="pl-card__desc">TDD、调试、代码审查… 沉淀的工作方法每个角色都可以用</div>
+    </a>
+    <a class="pl-card" href="06-advanced/04-cicd-integration.html">
+      <div class="pl-card__icon">✅</div>
+      <div class="pl-card__title">质量门禁</div>
+      <div class="pl-card__desc">每个角色的产出物都有验收标准；CI 自动检查</div>
+    </a>
+  </div>
+
+  <h2>阅读路径推荐</h2>
+  <table>
+    <thead><tr><th>你是谁</th><th>读什么</th><th>预计时间</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>完全新人</td>
+        <td>01 入门全套 → 02.1 Agent → 03.1 快速开始</td>
+        <td>30 分钟</td>
+      </tr>
+      <tr>
+        <td>用过 Claude Code / Cursor 的</td>
+        <td>01.1 概览 → 03.1 跑通 → 04 选 2-3 个角色精读</td>
+        <td>20 分钟</td>
+      </tr>
+      <tr>
+        <td>想自定义角色</td>
+        <td>02 概念全套 → 05 深入原理 → 06.2 新增角色</td>
+        <td>60 分钟</td>
+      </tr>
+      <tr>
+        <td>团队负责人</td>
+        <td>01.2 为什么多角色 → 06.3 团队协作 → 07 场景配方</td>
+        <td>40 分钟</td>
+      </tr>
+      <tr>
+        <td>查具体名词</td>
+        <td>直接看 <a href="08-glossary.html">大词典</a></td>
+        <td>按需</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3 分钟开干</h2>
+  <h3>Claude Code</h3>
+  <pre><code># 1. 装到 ~/.claude/skills/
+git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/product-lifecycle
+
+# 2.（可选）一键安装方法论 skill
+npx superpowers-zh
+
+# 3. 在 Claude Code 里
+&gt; /product-lifecycle myapp "做一个 SaaS 协作平台"</code></pre>
+
+  <h3>Cursor</h3>
+  <pre><code># 1. clone 到项目根目录
+git clone https://github.com/yclenove/product-lifecycle.git .product-lifecycle
+
+# 2. 把 .product-lifecycle/.cursor/agents/ 拷到你项目的 .cursor/agents/
+
+# 3. 在 Cursor 中用 @orchestrator 启动</code></pre>
+
+  <p>详细步骤见 <a href="03-tutorials/01-quickstart-claude-code.html">3.1</a> / <a href="03-tutorials/02-quickstart-cursor.html">3.2</a>。</p>
+
+  <h2>项目数据</h2>
+  <table>
+    <tbody>
+      <tr><th>角色数</th><td>20 个（含 UI、安全、数据、PMO 等覆盖）</td></tr>
+      <tr><th>模板数</th><td>20 个（PRD、架构、QA、UI、安全、数据 …）</td></tr>
+      <tr><th>方法论 skill</th><td>20+ 个可选（来自 superpowers-zh）</td></tr>
+      <tr><th>MCP 集成</th><td>drawio（画图）</td></tr>
+      <tr><th>支持工具</th><td>Claude Code、Cursor、其他 AI IDE</td></tr>
+      <tr><th>许可协议</th><td>MIT</td></tr>
+    </tbody>
+  </table>
+
+  <h2>不要不读的几页</h2>
+  <ul>
+    <li>📘 <a href="01-introduction/04-mental-model.html">心智模型：把它当作公司</a> — 5 分钟建立直觉</li>
+    <li>📐 <a href="../docs/05-advanced/DIAGRAMMING.md">绘图规范</a>（在主文档里） — 让 AI 画的图不丑</li>
+    <li>🔧 <a href="06-advanced/02-add-new-role.html">怎么新增角色</a> — 体系可扩展</li>
+    <li>❓ <a href="09-faq.html">FAQ</a> — 50+ 常见问题</li>
+  </ul>
+
+  <div class="pl-warning">
+    <strong>⚠️ 文档进度说明</strong>
+    本文档站点（v3.3）目标是 60+ 页完整覆盖，当前优先完成入门 + 概念 + 角色总览 + 词典。
+    深度章节、高级用法、场景配方将在后续版本逐步完善。
+    标 <span style="opacity:.5">（建设中）</span> 的链接表示该页尚未完稿。
+  </div>
+
+</main>
+</body>
+</html>

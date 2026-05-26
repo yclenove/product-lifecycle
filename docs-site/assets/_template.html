@@ -1,0 +1,66 @@
+<!--
+  页面模板 — 复制此文件作为新页起点，修改 4 处：
+  1. <title>
+  2. data-current（指向 /docs-site/xxx.html）
+  3. <main> 内容
+  4. 资源前缀（assets/ 路径相对深度）
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>页面标题 · product-lifecycle</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/nav-data.js"></script>
+  <script src="../assets/layout.js" defer></script>
+</head>
+<body data-current="/docs-site/path/to/this.html">
+<main class="pl-content">
+
+  <h1>页面标题</h1>
+  <p class="pl-lead">一句话总结，写出读者读完本页能获得什么。</p>
+
+  <div class="pl-info">
+    <strong>📍 你在哪里</strong>
+    告诉读者这一页在整个知识图谱里的位置，前置阅读是什么。
+  </div>
+
+  <h2>🤔 你可能在想</h2>
+  <ul>
+    <li>这是什么？</li>
+    <li>为什么需要它？</li>
+    <li>跟 XX 有什么区别？</li>
+  </ul>
+
+  <h2>通俗解释</h2>
+  <p>类比 + 生活化例子。</p>
+
+  <h2>名词速查</h2>
+  <div class="pl-glossary-card">
+    <h4>名词 A</h4>
+    <p>解释。</p>
+  </div>
+
+  <h2>工作原理</h2>
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/example.svg" alt="示意图">
+    <figcaption>图说：xxx</figcaption>
+  </figure>
+
+  <h2>动手试试</h2>
+  <pre><code>bash command --here</code></pre>
+
+  <div class="pl-deep">
+    <strong>⚡ 进阶</strong>
+    给专业读者的内容。
+  </div>
+
+  <h2>延伸阅读</h2>
+  <ul>
+    <li><a href="#">…</a></li>
+  </ul>
+
+</main>
+</body>
+</html>
