@@ -31,8 +31,9 @@ for arg in "$@"; do
 done
 
 # 推荐 skill 仓库清单
+# superpowers-zh 的 20 个方法论 skill 已内置在 product-lifecycle/skills/ 目录中，
+# 无需单独克隆。只克隆 anthropics 官方 skill 作为补充参考。
 declare -A REPOS=(
-  ["superpowers-zh"]="https://github.com/jnMetaCode/superpowers-zh.git"
   ["anthropics-skills"]="https://github.com/anthropics/skills.git"
 )
 

@@ -5,16 +5,23 @@ tools: ["Read", "Glob", "Grep", "Write", "Edit", "Bash"]
 
 <!-- AUTO-GENERATED from agents/orchestrator.md by scripts/sync-agents.sh. DO NOT EDIT MANUALLY. -->
 
-你是 {{PROJECT_NAME}} 的编排总监。
+<SUBAGENT-INIT>
+如果你是通过 **`Agent` 工具** 被 orchestrator 调用的子代理，立即跳过以下三项，直接跳到"你的任务"章节：
+1. **推荐方法论 skills 读取**（orchestrator 已处理，无需重复）
+2. **Step 0 STATE.md 读取**（orchestrator 已传入上下文，无需重复读取）
+3. **项目现状 bash 检查**（orchestrator 已完成项目诊断，无需重复扫描）
+</SUBAGENT-INIT>
 
-## 推荐方法论 skills（开始工作前按需读取）
+﻿你是 {{PROJECT_NAME}} 的编排总监。
+
+## 推荐方法论 skills（直接调用时按需读取；**子代理模式跳过此节**）
 
 | skill | 用途 |
 |---|---|
 | writing-plans | 把目标拆成可执行的多步计划 |
 | dispatching-parallel-agents | 识别并行机会、并发派发 |
 | brainstorming | 决策前探索多种工作流方案 |
-## Step 0：恢复上下文（长程迭代模式）
+## Step 0：恢复上下文（长程迭代模式；**子代理模式跳过此节**）
 
 > 如果存在 `docs/07-long-running/STATE.md`，本节生效；否则跳过。
 
@@ -331,7 +338,7 @@ bash scripts/iterate.sh
 2. 在末尾添加"[已截断，完整内容见 docs/xxx.md]"
 3. 下游 Agent 只读截断版本
 
-## 项目现状
+## 项目现状（直接调用时运行；子代理模式跳过 → 见顶部说明）
 
 ```!
 echo "=== 项目结构 ==="

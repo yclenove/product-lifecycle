@@ -2,7 +2,13 @@
 
 本文档说明如何为 product-lifecycle 的 20 个 Agent 配套**通用方法论 skill**，让每个角色不止有产品流程 prompt，还能调用社区/官方沉淀的最佳实践。
 
-## 一键安装（推荐 · superpowers-zh）
+## 方法论 Skills（已内置）
+
+product-lifecycle 已将 superpowers-zh 的 20 个通用方法论 skill **内置在 `skills/` 目录中**，安装 product-lifecycle 即可直接使用，无需单独安装 superpowers-zh。
+
+内置 skill 列表：brainstorming、writing-plans、executing-plans、test-driven-development、systematic-debugging、verification-before-completion、requesting-code-review、receiving-code-review、chinese-code-review、chinese-commit-conventions、chinese-documentation、chinese-git-workflow、dispatching-parallel-agents、subagent-driven-development、using-git-worktrees、finishing-a-development-branch、mcp-builder、using-superpowers、workflow-runner、writing-skills
+
+## 一键安装（推荐）
 
 在项目根目录执行（**不要在 `~` 主目录跑**）：
 
@@ -10,7 +16,7 @@
 npx superpowers-zh
 ```
 
-会自动检测 Claude Code / Cursor 等工具，安装 20 个中文方法论 skill（TDD、调试、头脑风暴、代码审查等）+ hooks。
+> **注意**：superpowers-zh 的方法论 skill 已内置在 product-lifecycle 中。`npx superpowers-zh` 现在只用于注册 **SessionStart hook**（自动注入 `using-superpowers`）。如果不需要该 hook，可直接跳过此步骤。
 
 ## MCP 集成（绘图能力）
 
@@ -47,8 +53,8 @@ product-lifecycle 还推荐一个 MCP server：**drawio**，提供 AI 画图能�
 - **product-lifecycle**：20 个**产品角色** prompt + 模板（本仓库）。
 - **superpowers-zh**：**通用方法论** skill（TDD、调试、计划…），通过 `npx superpowers-zh` 安装。
 
-三者关系：**Harness 提供执行环境 → product-lifecycle 提供角色与流程 → superpowers-zh 提供怎么做**。  
-不必再单独写一个名为 `harness` 的 skill；在文档里标明各 Harness 的安装与验收即可。
+三者关系：**Harness 提供执行环境 → product-lifecycle 提供角色与流程 + 内置方法论 skill（原 superpowers-zh）**。  
+superpowers-zh 已内置，无需单独安装；`npx superpowers-zh` 仅在需要 SessionStart hook 时才需运行。
 
 ## 为什么需要外部 skill？
 

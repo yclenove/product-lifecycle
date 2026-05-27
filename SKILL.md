@@ -1,7 +1,7 @@
 ---
 name: product-lifecycle
-description: Use when starting a new product/project and need to orchestrate a full development lifecycle from market analysis through architecture, implementation, testing, deployment, and continuous iteration. 中文触发：产品迭代、全流程开发、产品生命周期、市场分析+开发+测试、20个Agent协作。
-when_to_use: "new product launch, full lifecycle management, Phase kickoff, product iteration, market analysis needed, PRD creation, architecture design, product upgrade, new feature lifecycle, 产品迭代, 全流程开发, 产品生命周期, 市场分析, 需求分析, 产品规划, PRD编写, 架构设计, 版本迭代, 持续迭代, 多Agent协作, 编排总监, 需求侦察, 反馈分析, 迭代计划, 使用product-lifecycle, 跑一轮迭代, 帮我迭代"
+description: 20-Agent 产品开发全流程编排框架。仅在用户明确说「/product-lifecycle」「启动产品生命周期」「跑全流程」「全量迭代」时激活；不要为普通编码、单一功能修改或 bug 修复自动触发。小任务请用 writing-plans 或 systematic-debugging。
+when_to_use: "/product-lifecycle, /pl, 启动产品生命周期, 跑全流程迭代, 全量产品迭代, run product lifecycle, start full product workflow, orchestrate all agents, 编排总监开始工作, 20个Agent"
 argument-hint: "[项目名] [一句话描述]"
 allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
 ---
@@ -39,9 +39,27 @@ bash scripts/configure-models.sh
 
 ---
 
+## Phase 0：确认范围（必须在派发任何 Agent 之前执行）
+
+**不要跳过此步骤。** 在读取任何角色文件或调用 Agent 工具之前，先问用户：
+
+> 我可以启动 product-lifecycle 工作流。**请先确认执行范围：**
+>
+> | 模式 | 说明 | 预计工具调用 |
+> |------|------|------------|
+> | **A. 完整流程** | 20 Agent 全量运行（模式 A 或 B）| ~80-140 次 |
+> | **B. 精简模式** | 编排 + 指定 2-4 个角色 | ~20-40 次 |
+> | **C. 单角色** | 只运行 1 个 Agent | ~8-15 次 |
+>
+> 你想要哪种模式？如果不确定，推荐先用 **B 精简模式** 并告诉我需要哪些角色。
+
+收到确认后，再继续执行后续步骤。**若用户未明确选择，默认使用精简模式（B），不自动启动全量流程。**
+
+---
+
 ## Agent 调用示例
 
-**你是编排总监。你必须使用 Agent 工具派发子代理，不能自己一个人干所有事。**
+**在完成 Phase 0 确认后**，你作为编排总监按用户选择的范围派发子代理（精简模式只派发用户指定的角色，不要全量跑）。
 
 配置完成后，这样调用第一个子代理：
 

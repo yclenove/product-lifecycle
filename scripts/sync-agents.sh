@@ -68,8 +68,18 @@ declare -A TOOLS=(
 )
 
 
-# 动态上下文注入代码块
-CONTEXT_INJECTION='## 项目现状
+# ── 子代理短路头（注入到每个生成文件的顶部）────────────────────
+# 作用：当 orchestrator 通过 Agent 工具调用子代理时，跳过冗余的初始化步骤
+# 可节省约 8 个 tool calls / agent（4 bash + 3 skill + 1 STATE.md read）
+SUBAGENT_GUARD='<SUBAGENT-INIT>
+如果你是通过 **`Agent` 工具** 被 orchestrator 调用的子代理，立即跳过以下三项，直接跳到"你的任务"章节：
+1. **推荐方法论 skills 读取**（orchestrator 已处理，无需重复）
+2. **Step 0 STATE.md 读取**（orchestrator 已传入上下文，无需重复读取）
+3. **项目现状 bash 检查**（orchestrator 已完成项目诊断，无需重复扫描）
+</SUBAGENT-INIT>'
+
+# 动态上下文注入代码块（仅在直接调用时运行；子代理跳过见顶部 SUBAGENT-INIT）
+CONTEXT_INJECTION='## 项目现状（直接调用时运行；子代理模式跳过 → 见顶部说明）
 
 ```!
 echo "=== 项目结构 ==="
@@ -125,6 +135,8 @@ tools: ${TOOLS[$name]}
 ---
 
 <!-- AUTO-GENERATED from agents/${name}.md by scripts/sync-agents.sh. DO NOT EDIT MANUALLY. -->
+
+${SUBAGENT_GUARD}
 
 ${core_content}
 

@@ -5,15 +5,22 @@ tools: ["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write"]
 
 <!-- AUTO-GENERATED from agents/feedback-analyst.md by scripts/sync-agents.sh. DO NOT EDIT MANUALLY. -->
 
-你是 {{PROJECT_NAME}} 的反馈分析师。
+<SUBAGENT-INIT>
+如果你是通过 **`Agent` 工具** 被 orchestrator 调用的子代理，立即跳过以下三项，直接跳到"你的任务"章节：
+1. **推荐方法论 skills 读取**（orchestrator 已处理，无需重复）
+2. **Step 0 STATE.md 读取**（orchestrator 已传入上下文，无需重复读取）
+3. **项目现状 bash 检查**（orchestrator 已完成项目诊断，无需重复扫描）
+</SUBAGENT-INIT>
 
-## 推荐方法论 skills（开始工作前按需读取）
+﻿你是 {{PROJECT_NAME}} 的反馈分析师。
+
+## 推荐方法论 skills（直接调用时按需读取；**子代理模式跳过此节**）
 
 | skill | 用途 |
 |---|---|
 | brainstorming | 反馈分类与因果追问 |
 | chinese-documentation | 中文反馈分析报告 |
-## Step 0：恢复上下文（长程迭代模式）
+## Step 0：恢复上下文（长程迭代模式；**子代理模式跳过此节**）
 
 > 如果存在 `docs/07-long-running/STATE.md`，本节生效；否则跳过。
 
@@ -207,7 +214,7 @@ tools: ["Read", "Glob", "Grep", "WebSearch", "WebFetch", "Write"]
 - 反馈模式分析不少于 2 个主题
 
 
-## 项目现状
+## 项目现状（直接调用时运行；子代理模式跳过 → 见顶部说明）
 
 ```!
 echo "=== 项目结构 ==="
