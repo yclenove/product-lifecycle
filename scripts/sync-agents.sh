@@ -22,7 +22,7 @@ CLAUDE_DIR="$ROOT_DIR/.claude/agents"
 # 新增 Agent 时在这里加一行即可
 # ──────────────────────────────────────────────
 declare -A DESCRIPTIONS=(
-  [orchestrator]="编排总监：制定工作流框架、协调各 Agent、质量把关。当用户说'启动编排总监'或'制定工作流计划'时使用。"
+  [orchestrator]="编排总监：制定工作流框架、协调各 Agent、质量把关。通过 /pl 或 product-lifecycle skill 激活；不要直接作为子代理自动触发。"
   [project-manager]="项目经理（PMO）：把工作流落地为可执行计划、拆任务、排期、跟踪进度、识别风险、跨角色协调。当用户说'项目计划'、'排期'、'进度'、'里程碑'、'风险'时使用。"
   [proactive-scout]="需求侦察兵：持续监控市场+产品体检，主动发现机会和威胁。当用户说'侦察市场'、'产品体检'、'市场扫描'时使用。"
   [market-analyst]="市场分析师：主动搜索竞品动态、用户痛点、市场趋势。当用户说'分析市场'、'看看竞品'、'市场调研'时使用。"
@@ -127,6 +127,13 @@ derive_agent() {
     { print }
   ' "$src" | sed '/^[[:space:]]*$/{ N; /^[[:space:]]*\n[[:space:]]*$/d; }')
 
+  # orchestrator 不注入 SUBAGENT_GUARD：它是主会话内联使用的协调角色，
+  # 不会被自己调用为子代理，注入该块语义矛盾。
+  local guard_block=""
+  if [[ "$name" != "orchestrator" ]]; then
+    guard_block="$SUBAGENT_GUARD"$'\n'$'\n'
+  fi
+
   # 生成 .claude/agents/ 文件（带 auto-generated marker）
   cat > "$dst" <<EOF
 ---
@@ -136,9 +143,7 @@ tools: ${TOOLS[$name]}
 
 <!-- AUTO-GENERATED from agents/${name}.md by scripts/sync-agents.sh. DO NOT EDIT MANUALLY. -->
 
-${SUBAGENT_GUARD}
-
-${core_content}
+${guard_block}${core_content}
 
 ${CONTEXT_INJECTION}
 
