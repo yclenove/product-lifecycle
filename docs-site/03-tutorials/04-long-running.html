@@ -10,15 +10,55 @@
 </head>
 <body data-current="/docs-site/03-tutorials/04-long-running.html">
 <main class="pl-content">
+
   <h1>3.4 长程跨天迭代</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">项目跨多天、多 session 时，用 <code>STATE.md</code> + checkpoint + handoff 让 AI 不用每次从头读完全部历史。</p>
+
+  <h2>何时需要长程模式？</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li>项目周期超过 3 天</li>
+    <li>单 session 上下文接近模型上限</li>
+    <li>经常换机器或关窗口续做</li>
+    <li>多人交接同一条迭代线</li>
   </ul>
+  <p>半天内能做完的小任务<strong>不必</strong>启用，避免过度工程。</p>
+
+  <h2>三件套</h2>
+  <table>
+    <thead><tr><th>文件</th><th>作用</th></tr></thead>
+    <tbody>
+      <tr><td><code>docs/07-long-running/STATE.md</code></td><td>心跳：已完成 Agent、阻塞项、下一步</td></tr>
+      <tr><td><code>docs/07-long-running/HANDOFF.md</code></td><td>session 结束前的移交单</td></tr>
+      <tr><td><code>docs/07-long-running/CHECKPOINTS/</code></td><td>阶段里程碑快照（PRD/架构/QA 等）</td></tr>
+    </tbody>
+  </table>
+
+  <h2>启用</h2>
+  <pre><code># 在业务项目根目录
+cp docs/07-long-running/STATE.template.md docs/07-long-running/STATE.md
+# 编辑 STATE.md 填写当前迭代与阶段</code></pre>
+  <p>存在 <code>STATE.md</code> 后，各 Agent 的 Step 0 会自动读取并更新（子代理被编排器调用时可跳过，见 v3.4 优化说明）。</p>
+
+  <h2>常用命令</h2>
+  <pre><code># 新 session 恢复上下文
+bash scripts/resume.sh
+
+# 阶段完成打检查点
+bash scripts/checkpoint.sh product-manager "PRD v1 定稿"
+
+# session 结束前生成交移交单
+bash scripts/handoff.sh</code></pre>
+
+  <h2>SessionStart 自动注入</h2>
+  <p>技能包 <code>hooks/session-start.sh</code> 会在 Claude Code 新会话启动时，把 <code>STATE.md</code> 摘要注入上下文（若文件存在）。</p>
+
+  <div class="pl-warning">
+    <strong>与 iterations 目录的区别</strong>
+    <code>07-long-running/</code> 是<strong>进行中</strong>状态；<code>docs/iterations/</code> 归档<strong>已结束</strong>迭代的产物。
+  </div>
+
+  <p>仓库权威说明：<code>docs/07-long-running/README.md</code></p>
+
 </main>
 </body>
 </html>

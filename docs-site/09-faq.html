@@ -10,15 +10,63 @@
 </head>
 <body data-current="/docs-site/09-faq.html">
 <main class="pl-content">
-  <h1>FAQ</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
-  <ul>
-    <li><a href="01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="08-glossary.html">大词典</a></li>
-  </ul>
+
+  <h1>常见问题（FAQ）</h1>
+  <p class="pl-lead">安装、模式选择、断流与工具数等高频问题。权威 Markdown：<code>docs/01-getting-started/FAQ.md</code>。</p>
+
+  <h2>使用相关</h2>
+
+  <div class="pl-glossary-card">
+    <h4>我只想用 1 个 Agent，可以吗？</h4>
+    <p>可以。直接 Read <code>agents/xxx.md</code> 并按指引执行，或在 <code>/pl</code> 选 <strong>C 单角色</strong>。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>小项目也要 20 个 Agent 吗？</h4>
+    <p>不需要。最小集：编排总监、开发工程师、测试经理、质量门禁（4 个）。见 <code>docs/01-getting-started/DECISION-TREE.md</code>。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>/pl 没反应或 unrecognized？</h4>
+    <p>确认 <code>~/.claude/skills/pl/SKILL.md</code> 存在（顶层 <code>pl</code> 目录，不是只在 product-lifecycle 包内嵌路径）。安装后需<strong>新开 session</strong>。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>编排总监为什么变成子 Agent？</h4>
+    <p>设计上是：主会话读 SKILL.md <strong>扮演</strong>编排总监，再派发其他 19 个角色。不应把 orchestrator 当普通子代理自动触发（v3.4+ 已修正 description 与 SUBAGENT_GUARD）。</p>
+  </div>
+
+  <h2>模式与流程</h2>
+
+  <div class="pl-glossary-card">
+    <h4>模式 A 和 B 有什么区别？</h4>
+    <p><strong>A</strong>：0→1，完整调研与架构。<strong>B</strong>：已有产品，侦察/反馈驱动增量迭代。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>Agent 之间如何传递信息？</h4>
+    <p>通过 <code>docs/</code> 下结构化文档；下游优先读摘要与 WORKFLOW_PLAN，按需读全文。</p>
+  </div>
+
+  <h2>技术与故障</h2>
+
+  <div class="pl-glossary-card">
+    <h4>为什么有 149 个 tools？</h4>
+    <p>常见原因：项目 <code>.mcp.json</code> 挂了 mysql-mcp-server（约 99 tool）+ 20 agent + 内置工具。从业务项目移除未用的 MCP，全局 <code>~/.claude/settings.json</code> 的 mcpServers 保持空。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>peer closed connection / incomplete chunked read？</h4>
+    <p>多为上游中转在流式响应中超时（大上下文 ~8 万 token + 多 tool）。缓解：<code>/compact</code>、精简模式、减少 MCP、大上下文换长上下文模型路由。</p>
+  </div>
+
+  <div class="pl-glossary-card">
+    <h4>还要单独装 superpowers-zh 吗？</h4>
+    <p>不需要。方法论 skill 已内置在 <code>product-lifecycle/skills/</code>。</p>
+  </div>
+
+  <p>更多：<code>docs/06-troubleshooting/TROUBLESHOOTING.md</code></p>
+
 </main>
 </body>
 </html>

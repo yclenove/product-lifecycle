@@ -10,15 +10,27 @@
 </head>
 <body data-current="/docs-site/07-cookbook/04-microservice.html">
 <main class="pl-content">
-  <h1>7.4 微服务</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+
+  <h1>7.4 微服务配方</h1>
+  <p class="pl-lead">服务拆分、事件驱动、可观测性——架构师与 DBA、运维权重更高。</p>
+
+  <h2>推荐 Agent</h2>
+  <p>编排 → 产品（边界用例）→ 架构师 → DBA → 后端工程师（可按服务并行 subagent）→ 安全 → DevOps → QA → 门禁</p>
+
+  <h2>架构产出应包含</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li>服务清单与职责、同步/异步边界</li>
+    <li>时序图（下单、支付等关键路径，建议 drawio）</li>
+    <li>数据所有权（每服务一张表）</li>
+    <li>分布式事务 / Saga / 幂等策略</li>
+    <li>可观测：日志关联 ID、指标、追踪</li>
   </ul>
+
+  <h2>DevOps</h2>
+  <p>容器化、环境矩阵（dev/staging/prod）、健康检查与回滚脚本写入 <code>docs/iterations/current/devops/</code>。</p>
+
+  <p>画图规范：<code>docs/05-advanced/DIAGRAMMING.md</code></p>
+
 </main>
 </body>
 </html>

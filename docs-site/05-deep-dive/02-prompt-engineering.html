@@ -10,15 +10,39 @@
 </head>
 <body data-current="/docs-site/05-deep-dive/02-prompt-engineering.html">
 <main class="pl-content">
+
   <h1>5.2 Prompt 工程基础</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">本项目的 20 个 <code>agents/*.md</code> 就是 20 份「生产级 prompt」：身份、步骤、产出格式、禁忌一并写清。</p>
+
+  <h2>好 prompt 的四个块</h2>
+  <table>
+    <thead><tr><th>块</th><th>作用</th><th>本项目示例</th></tr></thead>
+    <tbody>
+      <tr><td>身份</td><td>固定角色与边界</td><td>「你是 XX 的架构师」</td></tr>
+      <tr><td>输入</td><td>读哪些文档、用什么工具</td><td>必读 PRD、可选 drawio MCP</td></tr>
+      <tr><td>步骤</td><td>可执行 checklist</td><td>Step 0 恢复上下文 → 设计 → 产出 ARCH</td></tr>
+      <tr><td>输出</td><td>模板 + 字数预算</td><td><code>templates/architecture_template.md</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>为什么要模板</h2>
+  <p>自由散文难以被下游 Agent 解析。模板强制章节（背景、方案、风险、决策记录），便于 grep 与摘要传递。</p>
+
+  <h2>常见反模式</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li>「你是全能专家」→ 角色漂移</li>
+    <li>无输出上限 → token 浪费、中转超时</li>
+    <li>不引用真实文件路径 → 幻觉路径与 API</li>
+    <li>在子代理里重复读 5 个 skill → 已用 SUBAGENT_GUARD 短路（v3.4+）</li>
   </ul>
+
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/prompt-template.svg" alt="Prompt 结构">
+    <figcaption>Prompt + 模板 + 工具 的关系</figcaption>
+  </figure>
+
+  <p>入门：<a href="../02-concepts/02-prompt-template.html">2.2 Prompt 与模板</a> · 真源：<code>agents/</code> + <code>templates/</code></p>
+
 </main>
 </body>
 </html>

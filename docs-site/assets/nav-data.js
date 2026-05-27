@@ -105,6 +105,6 @@ window.PL_NAV = [
 // 站点元信息（用于搜索索引、面包屑等）
 window.PL_SITE = {
   title: "product-lifecycle 文档",
-  subtitle: "v3.3 · 20 Agent 产品生命周期框架",
+  subtitle: "v3.4 · 20 Agent 产品生命周期框架",
   repo: "https://github.com/yclenove/product-lifecycle"
 };

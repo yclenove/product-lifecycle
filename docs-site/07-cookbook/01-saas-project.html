@@ -10,15 +10,31 @@
 </head>
 <body data-current="/docs-site/07-cookbook/01-saas-project.html">
 <main class="pl-content">
-  <h1>7.1 SaaS 项目</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+
+  <h1>7.1 SaaS 项目配方</h1>
+  <p class="pl-lead">多租户、订阅计费、权限与审计——典型 B2B SaaS 的 Agent 子集与顺序建议。</p>
+
+  <h2>推荐 Agent 子集</h2>
+  <p><strong>模式 A（0→1）</strong>：编排 → 市场 → 产品 → UI → 架构 → DBA → 前端 + 后端（可并行）→ 安全 → QA → 门禁 → 运维 → 文档</p>
+  <p><strong>模式 B（迭代）</strong>：侦察 + 反馈 → 市场 → 产品 → 迭代规划 → 架构（影响分析）→ 开发 → QA → 门禁</p>
+
+  <h2>关键产出</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li>PRD：租户模型、套餐、RBAC</li>
+    <li>ARCH：服务边界、鉴权、审计日志、数据隔离</li>
+    <li>安全工程师：STRIDE、OWASP 清单</li>
+    <li>数据分析师：北极星指标、漏斗（可选）</li>
   </ul>
+
+  <h2>注意点</h2>
+  <ul>
+    <li>尽早定多租户策略（库级 / schema / 行级），避免开发后期推翻</li>
+    <li>支付、邮件等第三方用 MCP 或明确 mock 边界</li>
+    <li>不要一次跑满 20 Agent；MVP 用 6–8 个角色即可</li>
+  </ul>
+
+  <p>走读：<a href="../03-tutorials/03-first-project-walkthrough.html">3.3 第一个项目</a></p>
+
 </main>
 </body>
 </html>

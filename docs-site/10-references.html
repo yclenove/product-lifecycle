@@ -10,15 +10,42 @@
 </head>
 <body data-current="/docs-site/10-references.html">
 <main class="pl-content">
+
   <h1>扩展阅读</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">仓库内 Markdown 文档（维护者向）与外部官方文档链接。</p>
+
+  <h2>仓库 docs/ 索引</h2>
+  <table>
+    <thead><tr><th>路径</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td><code>docs/01-getting-started/</code></td><td>FAQ、决策树</td></tr>
+      <tr><td><code>docs/02-tools/</code></td><td>Claude Code、Cursor、Harness、其他 IDE</td></tr>
+      <tr><td><code>docs/03-workflow/</code></td><td>WORKFLOW_PLAN、流程细节、Agent 通信</td></tr>
+      <tr><td><code>docs/04-reference/</code></td><td>Skill 集成、模型配置、产出路径</td></tr>
+      <tr><td><code>docs/05-advanced/</code></td><td>绘图、Token、安全、国际化</td></tr>
+      <tr><td><code>docs/06-troubleshooting/</code></td><td>排障</td></tr>
+      <tr><td><code>docs/07-long-running/</code></td><td>长程迭代 STATE / checkpoint</td></tr>
+    </tbody>
+  </table>
+
+  <h2>关键脚本</h2>
   <ul>
-    <li><a href="01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="08-glossary.html">大词典</a></li>
+    <li><code>scripts/sync-agents.sh</code> — 真源 → .claude/agents</li>
+    <li><code>scripts/generate-docs-site.sh</code> — 角色页与骨架</li>
+    <li><code>scripts/serve-docs.sh</code> — 本地预览 HTML 文档站</li>
+    <li><code>scripts/install-cursor-subagents.ps1</code> — Cursor 业务项目安装</li>
   </ul>
+
+  <h2>外部链接</h2>
+  <ul>
+    <li><a href="https://github.com/yclenove/product-lifecycle">GitHub 仓库</a></li>
+    <li><a href="https://cursor.com/docs/subagents">Cursor Subagents</a></li>
+    <li><a href="https://modelcontextprotocol.io/">Model Context Protocol</a></li>
+  </ul>
+
+  <h2>本 HTML 文档站</h2>
+  <p>面向零基础读者；维护：改 <code>docs-site/**/*.html</code> 或从 <code>agents/*.md</code> 生成角色页后跑 <code>generate-docs-site.sh</code>。</p>
+
 </main>
 </body>
 </html>

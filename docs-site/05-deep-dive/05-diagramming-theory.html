@@ -10,15 +10,38 @@
 </head>
 <body data-current="/docs-site/05-deep-dive/05-diagramming-theory.html">
 <main class="pl-content">
+
   <h1>5.5 画图的认知原理</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">图不是装饰：它降低读者工作记忆负荷，让架构决策、流程边界和依赖关系可被一眼核对。</p>
+
+  <h2>何时必须画图</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li>多角色/多系统交互（时序、泳道）</li>
+    <li>状态机、审批流、发布流程</li>
+    <li>部署拓扑、数据流</li>
+    <li>PRD/架构正式交付物（给评审用）</li>
   </ul>
+
+  <h2>工具选择</h2>
+  <table>
+    <thead><tr><th>工具</th><th>适合</th></tr></thead>
+    <tbody>
+      <tr><td><strong>drawio MCP</strong></td><td>正式文档、复杂图、可导出 SVG</td></tr>
+      <tr><td><strong>Mermaid</strong></td><td>PR 内嵌、轻量草图、diff 友好</td></tr>
+      <tr><td><strong>ASCII</strong></td><td>终端/聊天快速示意</td></tr>
+    </tbody>
+  </table>
+
+  <h2>认知原则</h2>
+  <ul>
+    <li><strong>一图一主题</strong>：不要一张图塞五种图类型</li>
+    <li><strong>命名一致</strong>：与 PRD/代码里的服务名相同</li>
+    <li><strong>图要有图说</strong>：说明读者应得出什么结论</li>
+    <li><strong>与文字互证</strong>：正文决策点在图中要有对应节点</li>
+  </ul>
+
+  <p>规范全文：<code>docs/05-advanced/DIAGRAMMING.md</code> · 各角色 prompt 里有「应该画的图」清单。</p>
+
 </main>
 </body>
 </html>

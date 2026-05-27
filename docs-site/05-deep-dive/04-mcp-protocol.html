@@ -10,15 +10,38 @@
 </head>
 <body data-current="/docs-site/05-deep-dive/04-mcp-protocol.html">
 <main class="pl-content">
+
   <h1>5.4 MCP 协议深入</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">MCP（Model Context Protocol）让 AI 以统一方式调用外部工具：数据库、画图、浏览器等。每个 MCP server 会向客户端注册一批 tool。</p>
+
+  <h2>在本项目中的用法</h2>
+  <p>仓库根 <code>.mcp.json</code> 默认启用 <strong>drawio</strong> MCP，供架构师、产品经理等画正式交付图：</p>
+  <pre><code>{
+  "mcpServers": {
+    "drawio": {
+      "command": "npx",
+      "args": ["-y", "@next-ai-drawio/mcp-server@latest"]
+    }
+  }
+}</code></pre>
+
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/mcp-flow.svg" alt="MCP 调用流">
+    <figcaption>AI ↔ MCP Server ↔ 外部能力</figcaption>
+  </figure>
+
+  <h2>工具数与性能</h2>
+  <p>全局挂载大型 MCP（如 mysql-mcp-server 约 99 个 tool）会让<strong>每次请求</strong>都带上巨大 tool schema，加剧上下文与断流风险。建议：</p>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li>按<strong>项目</strong>配置 <code>.mcp.json</code>，需要数据库的项目再加 MySQL MCP</li>
+    <li>保持全局 <code>~/.claude/settings.json</code> 的 <code>mcpServers</code> 尽量空</li>
   </ul>
+
+  <h2>安装 drawio（任意项目）</h2>
+  <pre><code>bash scripts/install-mcp.sh   # 或 install-mcp.ps1</code></pre>
+
+  <p>入门：<a href="../02-concepts/04-mcp.html">2.4 MCP 协议入门</a> · 绘图：<a href="05-diagramming-theory.html">5.5 画图的认知原理</a></p>
+
 </main>
 </body>
 </html>

@@ -10,15 +10,54 @@
 </head>
 <body data-current="/docs-site/03-tutorials/02-quickstart-cursor.html">
 <main class="pl-content">
+
   <h1>3.2 Cursor 5 分钟</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">装技能包 → 解析 PACKAGE_ROOT → 在业务项目里用 Subagent 或 Read 扮演角色。Cursor 没有 Claude Code 的 <code>/pl</code> 斜杠命令，但流程可以对齐。</p>
+
+  <div class="pl-info">
+    <strong>📍 前置阅读</strong>
+    <a href="../01-introduction/01-what-is-product-lifecycle.html">这是什么</a> ·
+    <a href="../02-concepts/01-agent.html">什么是 Agent</a>
+  </div>
+
+  <h2>1. 全局安装技能包</h2>
+  <pre><code># Windows PowerShell
+git clone https://github.com/yclenove/product-lifecycle.git "$env:USERPROFILE\.cursor\skills\product-lifecycle"
+
+# 建议设置环境变量（避免路径歧义）
+[Environment]::SetEnvironmentVariable("PRODUCT_LIFECYCLE_ROOT", "$env:USERPROFILE\.cursor\skills\product-lifecycle", "User")</code></pre>
+
+  <h2>2. 在新业务项目里安装 Subagent（推荐）</h2>
+  <p>Cursor <strong>不会</strong>在你打开新项目时自动写入 <code>.cursor/agents/</code>，需要手动执行一次：</p>
+  <pre><code>cd H:\path\to\your-app
+$env:PRODUCT_LIFECYCLE_ROOT = "$env:USERPROFILE\.cursor\skills\product-lifecycle"
+pwsh -File "$env:PRODUCT_LIFECYCLE_ROOT\scripts\install-cursor-subagents.ps1" -Target .</code></pre>
+  <p>完成后可在 Agent 输入框使用 <code>@orchestrator</code>、<code>@developer</code> 等调用各角色。</p>
+
+  <h2>3. 轻量用法（不装 Subagent）</h2>
+  <p>在对话里让 AI 读取真源 prompt 并扮演角色：</p>
+  <pre><code>你是编排总监。PACKAGE_ROOT 在 %USERPROFILE%\.cursor\skills\product-lifecycle
+请先 Read agents/orchestrator.md，再为当前项目制定 WORKFLOW_PLAN，产出写到本仓库 docs/</code></pre>
+
+  <h2>Cursor 与 Claude Code 的差异</h2>
+  <table>
+    <thead><tr><th>能力</th><th>Claude Code</th><th>Cursor</th></tr></thead>
+    <tbody>
+      <tr><td>快捷入口</td><td><code>/pl</code>、<code>/product-lifecycle</code></td><td>对话 + <code>@角色名</code> 或 Read <code>agents/*.md</code></td></tr>
+      <tr><td>子代理</td><td><code>Agent</code> 工具</td><td>Subagent（<code>.cursor/agents/</code>）</td></tr>
+      <tr><td>方法论 skill</td><td><code>skills/</code> 内置在包内</td><td>同上，Read <code>PACKAGE_ROOT/skills/</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="pl-tip"><strong>权威说明</strong> 仓库 <code>docs/02-tools/SKILL-CURSOR.md</code> 含 PACKAGE_ROOT 解析顺序、Hooks、与官方 Subagents 文档对照。</div>
+
+  <h2>延伸阅读</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li><a href="03-first-project-walkthrough.html">3.3 第一个项目完整走读</a></li>
+    <li><a href="01-quickstart-claude-code.html">3.1 Claude Code 5 分钟</a></li>
+    <li><a href="../04-roles/orchestrator.html">编排总监</a></li>
   </ul>
+
 </main>
 </body>
 </html>

@@ -10,15 +10,81 @@
 </head>
 <body data-current="/docs-site/08-glossary.html">
 <main class="pl-content">
+
   <h1>大词典</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
-  <ul>
-    <li><a href="01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="08-glossary.html">大词典</a></li>
-  </ul>
+  <p class="pl-lead">
+    按主题整理的术语表（80+ 条）。入门可先读
+    <a href="01-introduction/03-glossary-mini.html">1.3 关键名词速查（30 个）</a>。
+  </p>
+
+  <h2>AI 与模型</h2>
+  <div class="pl-glossary-card"><h4>LLM</h4><p>大语言模型，如 Claude、GPT、Gemini。</p></div>
+  <div class="pl-glossary-card"><h4>Token</h4><p>模型计费与上下文的最小单位；中文约一字一词。</p></div>
+  <div class="pl-glossary-card"><h4>Context / 上下文</h4><p>当前对话可见的全部内容，有上限。</p></div>
+  <div class="pl-glossary-card"><h4>Prompt</h4><p>给模型的指令；角色 prompt 常为数百至数千字。</p></div>
+  <div class="pl-glossary-card"><h4>Hallucination / 幻觉</h4><p>模型编造不存在的事实；用模板与文件引用缓解。</p></div>
+  <div class="pl-glossary-card"><h4>Streaming / 流式</h4><p>逐块返回 SSE；中转超时会出现 chunked read 错误。</p></div>
+  <div class="pl-glossary-card"><h4>Compact</h4><p>Claude Code 压缩历史上下文（<code>/compact</code>）。</p></div>
+  <div class="pl-glossary-card"><h4>Subagent / 子代理</h4><p>主会话派发的独立上下文工作者。</p></div>
+  <div class="pl-glossary-card"><h4>Harness</h4><p>运行 skill/agent 的宿主环境（Claude Code、Cursor 等）。</p></div>
+
+  <h2>本项目核心</h2>
+  <div class="pl-glossary-card"><h4>product-lifecycle</h4><p>20 角色 + 模板 + 脚本的产品研发技能包。</p></div>
+  <div class="pl-glossary-card"><h4>Agent / 角色</h4><p>AI + 专用 <code>agents/*.md</code> prompt。</p></div>
+  <div class="pl-glossary-card"><h4>Skill</h4><p>可复用方法论，位于 <code>skills/</code>。</p></div>
+  <div class="pl-glossary-card"><h4>/pl</h4><p>启动全流程的短命令；需 <code>~/.claude/skills/pl/</code>。</p></div>
+  <div class="pl-glossary-card"><h4>编排总监 orchestrator</h4><p>主会话扮演，协调顺序与门禁，非普通子代理。</p></div>
+  <div class="pl-glossary-card"><h4>PACKAGE_ROOT</h4><p>技能包磁盘根目录；Cursor 必先解析再 Read agents。</p></div>
+  <div class="pl-glossary-card"><h4>Phase 0</h4><p>派发前确认全量/精简/单角色。</p></div>
+  <div class="pl-glossary-card"><h4>SUBAGENT_GUARD</h4><p>子代理跳过重复初始化的注入块（不含 orchestrator）。</p></div>
+  <div class="pl-glossary-card"><h4>模式 A / B / C</h4><p>0→1 / 持续迭代 / 长程恢复。</p></div>
+  <div class="pl-glossary-card"><h4>WORKFLOW_PLAN</h4><p>编排总监产出的执行计划文档。</p></div>
+  <div class="pl-glossary-card"><h4>质量门禁</h4><p>产出验收；不通过则回环修复。</p></div>
+  <div class="pl-glossary-card"><h4>agents/ 真源</h4><p>角色 prompt 唯一应编辑处；<code>sync-agents.sh</code> 派生 .claude/agents。</p></div>
+  <div class="pl-glossary-card"><h4>templates/</h4><p>各角色产出格式模板。</p></div>
+
+  <h2>MCP 与工具</h2>
+  <div class="pl-glossary-card"><h4>MCP</h4><p>Model Context Protocol，统一外挂工具协议。</p></div>
+  <div class="pl-glossary-card"><h4>mcpServers</h4><p>配置 MCP 的 JSON 段；可在项目 .mcp.json 或全局 settings。</p></div>
+  <div class="pl-glossary-card"><h4>drawio MCP</h4><p>生成 draw.io / SVG 图；本项目 .mcp.json 默认启用。</p></div>
+  <div class="pl-glossary-card"><h4>Tool schema</h4><p>每个 tool 的定义；过多 tool 会撑大每轮请求。</p></div>
+
+  <h2>长程与文档</h2>
+  <div class="pl-glossary-card"><h4>STATE.md</h4><p>长程迭代心跳文件。</p></div>
+  <div class="pl-glossary-card"><h4>HANDOFF.md</h4><p>跨 session 移交单。</p></div>
+  <div class="pl-glossary-card"><h4>CHECKPOINT</h4><p>阶段里程碑快照目录。</p></div>
+  <div class="pl-glossary-card"><h4>docs/iterations/</h4><p>按迭代归档的产物。</p></div>
+  <div class="pl-glossary-card"><h4>PRD</h4><p>产品需求文档。</p></div>
+  <div class="pl-glossary-card"><h4>ARCH</h4><p>架构设计文档前缀。</p></div>
+  <div class="pl-glossary-card"><h4>MKT / DEV / QA</h4><p>市场、开发、测试产出文件前缀。</p></div>
+
+  <h2>研发与工程</h2>
+  <div class="pl-glossary-card"><h4>用户故事</h4><p>As a … I want … So that …</p></div>
+  <div class="pl-glossary-card"><h4>验收标准</h4><p>可测试的完成定义。</p></div>
+  <div class="pl-glossary-card"><h4>API</h4><p>模块间调用约定。</p></div>
+  <div class="pl-glossary-card"><h4>TDD</h4><p>测试驱动开发 skill。</p></div>
+  <div class="pl-glossary-card"><h4>CI/CD</h4><p>自动化构建测试部署。</p></div>
+  <div class="pl-glossary-card"><h4>STRIDE</h4><p>威胁建模方法；安全工程师使用。</p></div>
+  <div class="pl-glossary-card"><h4>RBAC</h4><p>基于角色的访问控制。</p></div>
+  <div class="pl-glossary-card"><h4>Saga</h4><p>微服务分布式事务模式。</p></div>
+
+  <h2>角色速查（20）</h2>
+  <p>详见 <a href="04-roles/index.html">角色总览</a>：orchestrator、project-manager、proactive-scout、market-analyst、product-manager、ui-designer、architect、dba、developer、frontend-developer、backend-developer、qa-manager、devops、security-engineer、data-analyst、feedback-analyst、iteration-planner、docwriter、reviewer、quality-gatekeeper。</p>
+
+  <h2>工具与 IDE</h2>
+  <div class="pl-glossary-card"><h4>Claude Code</h4><p>CLI AI 编程；支持 /pl、Agent 工具、Skill。</p></div>
+  <div class="pl-glossary-card"><h4>Cursor</h4><p>AI IDE；Subagent + 全局 skills。</p></div>
+  <div class="pl-glossary-card"><h4>SKILL.md</h4><p>Skill 入口与 frontmatter。</p></div>
+  <div class="pl-glossary-card"><h4>CLAUDE.md</h4><p>项目级 Claude 指南。</p></div>
+  <div class="pl-glossary-card"><h4>frontmatter</h4><p>YAML 元数据块（description、tools 等）。</p></div>
+  <div class="pl-glossary-card"><h4>Mermaid</h4><p>文本画图语法，可嵌 Markdown。</p></div>
+  <div class="pl-glossary-card"><h4>docs-site</h4><p>本 HTML 静态教程站目录。</p></div>
+
+  <h2>方法论 skills（内置）</h2>
+  <p>brainstorming、writing-plans、executing-plans、systematic-debugging、test-driven-development、verification-before-completion、requesting-code-review、receiving-code-review、chinese-code-review、chinese-commit-conventions、chinese-documentation、chinese-git-workflow、dispatching-parallel-agents、subagent-driven-development、using-git-worktrees、finishing-a-development-branch、mcp-builder、using-superpowers、workflow-runner、writing-skills</p>
+
+  <p style="margin-top:32px">仍有遗漏？在 <a href="https://github.com/yclenove/product-lifecycle/issues">GitHub Issues</a> 提议补充。</p>
+
 </main>
 </body>
 </html>

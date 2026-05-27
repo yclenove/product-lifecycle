@@ -133,7 +133,7 @@ git clone https://github.com/yclenove/product-lifecycle.git .product-lifecycle
     <tbody>
       <tr><th>角色数</th><td>20 个（含 UI、安全、数据、PMO 等覆盖）</td></tr>
       <tr><th>模板数</th><td>20 个（PRD、架构、QA、UI、安全、数据 …）</td></tr>
-      <tr><th>方法论 skill</th><td>20+ 个可选（来自 superpowers-zh）</td></tr>
+      <tr><th>方法论 skill</th><td>20 个内置（<code>skills/</code>，无需单独安装 superpowers-zh）</td></tr>
       <tr><th>MCP 集成</th><td>drawio（画图）</td></tr>
       <tr><th>支持工具</th><td>Claude Code、Cursor、其他 AI IDE</td></tr>
       <tr><th>许可协议</th><td>MIT</td></tr>
@@ -143,16 +143,14 @@ git clone https://github.com/yclenove/product-lifecycle.git .product-lifecycle
   <h2>不要不读的几页</h2>
   <ul>
     <li>📘 <a href="01-introduction/04-mental-model.html">心智模型：把它当作公司</a> — 5 分钟建立直觉</li>
-    <li>📐 <a href="../docs/05-advanced/DIAGRAMMING.md">绘图规范</a>（在主文档里） — 让 AI 画的图不丑</li>
+    <li>📐 <a href="05-deep-dive/05-diagramming-theory.html">画图的认知原理</a> — 让 AI 画的图不丑；仓库内详见 <code>docs/05-advanced/DIAGRAMMING.md</code></li>
     <li>🔧 <a href="06-advanced/02-add-new-role.html">怎么新增角色</a> — 体系可扩展</li>
     <li>❓ <a href="09-faq.html">FAQ</a> — 50+ 常见问题</li>
   </ul>
 
-  <div class="pl-warning">
-    <strong>⚠️ 文档进度说明</strong>
-    本文档站点（v3.3）目标是 60+ 页完整覆盖，当前优先完成入门 + 概念 + 角色总览 + 词典。
-    深度章节、高级用法、场景配方将在后续版本逐步完善。
-    标 <span style="opacity:.5">（建设中）</span> 的链接表示该页尚未完稿。
+  <div class="pl-info">
+    <strong>📘 文档站 v3.4</strong>
+    教程、深度解析、高级用法、场景配方、FAQ 与大词典已补全。本地预览：<code>bash scripts/serve-docs.sh</code>，浏览器打开 <code>http://127.0.0.1:8765/docs-site/index.html</code>。
   </div>
 
 </main>

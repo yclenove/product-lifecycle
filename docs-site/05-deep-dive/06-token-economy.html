@@ -10,15 +10,39 @@
 </head>
 <body data-current="/docs-site/05-deep-dive/06-token-economy.html">
 <main class="pl-content">
+
   <h1>5.6 Token 经济学</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">Token 既是成本单位，也是上下文上限。全量 20 Agent + 149 个 tool 定义 + 8 万 input，很容易在中转层 2 分钟左右断流。</p>
+
+  <h2>主要消耗来源</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li>对话历史累积（每轮 tool 结果都进上下文）</li>
+    <li>工具 schema（tool 越多，每请求越大）</li>
+    <li>全文 Read 大文档 / 大仓库</li>
+    <li>子代理重复初始化（v3.4 已用 SUBAGENT_GUARD 缓解）</li>
   </ul>
+
+  <h2>各角色输出预算（参考）</h2>
+  <table>
+    <thead><tr><th>角色</th><th>建议字数</th></tr></thead>
+    <tbody>
+      <tr><td>编排总监 / 架构师</td><td>~3000</td></tr>
+      <tr><td>产品 / 市场</td><td>~2000–2500</td></tr>
+      <tr><td>开发 / 测试 / 其他</td><td>~1500–2000</td></tr>
+    </tbody>
+  </table>
+
+  <h2>省钱与稳态建议</h2>
+  <ol>
+    <li>用 <strong>/pl</strong> 选精简模式，不要默认全量</li>
+    <li>移除不必要的项目级 MCP（如未用的 mysql-mcp-server）</li>
+    <li>大 session 定期 <code>/compact</code> 或新开对话</li>
+    <li>长程迭代用 STATE 摘要，勿重复读全部 iterations 历史</li>
+    <li>网关不稳时，大上下文走长上下文专线模型（见 FCC 路由配置）</li>
+  </ol>
+
+  <p>仓库：<code>docs/05-advanced/TOKEN-EFFICIENCY.md</code> · <code>docs/04-reference/MODEL-CONFIG.md</code></p>
+
 </main>
 </body>
 </html>

@@ -10,15 +10,35 @@
 </head>
 <body data-current="/docs-site/06-advanced/03-team-workflow.html">
 <main class="pl-content">
+
   <h1>6.3 团队协作工作流</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">多人时，用 Git + 结构化 <code>docs/</code> + <code>WORKFLOW_PLAN</code> 分工，编排总监负责阶段与门禁，避免多人改同一份 PRD 冲突。</p>
+
+  <h2>推荐分工</h2>
+  <table>
+    <thead><tr><th>真人角色</th><th>对应 Agent</th><th>产出</th></tr></thead>
+    <tbody>
+      <tr><td>产品负责人</td><td>产品经理 / 迭代规划师</td><td>PRD、迭代计划</td></tr>
+      <tr><td>技术负责人</td><td>架构师 / DBA</td><td>ARCH、数据模型</td></tr>
+      <tr><td>开发</td><td>前端 / 后端 / 开发工程师</td><td>代码 + DEV 文档</td></tr>
+      <tr><td>QA</td><td>测试经理 / 质量门禁</td><td>QA 报告、门禁结论</td></tr>
+      <tr><td>项目经理</td><td>项目经理 / 编排总监</td><td>排期、风险、WORKFLOW_PLAN</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Git 约定</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li><code>docs/iterations/current/</code>：当前迭代，可频繁提交</li>
+    <li><code>docs/07-long-running/STATE.md</code>：可个人 gitignore，或团队共管需约定 merge 规则</li>
+    <li><code>CHECKPOINTS/</code>：建议进库，作为里程碑</li>
+    <li>迭代结束：归档到 <code>docs/iterations/archive/</code> 或历史目录</li>
   </ul>
+
+  <h2>沟通</h2>
+  <p>Agent 间不传私聊，只传<strong>文档</strong>。评审在 PR 里对 <code>docs/iterations/current/product/PRD-*.md</code> 评论，AI 下一轮读取最新版继续。</p>
+
+  <p>见 <code>docs/03-workflow/AGENT-COMMUNICATION.md</code></p>
+
 </main>
 </body>
 </html>

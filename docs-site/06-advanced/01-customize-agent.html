@@ -10,15 +10,34 @@
 </head>
 <body data-current="/docs-site/06-advanced/01-customize-agent.html">
 <main class="pl-content">
+
   <h1>6.1 自定义已有 Agent</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">改真源 <code>agents/&lt;role&gt;.md</code>，再同步到 Claude Code；不要直接改 <code>.claude/agents/</code>（会被脚本覆盖）。</p>
+
+  <h2>正确流程</h2>
+  <ol>
+    <li>编辑 <code>agents/developer.md</code>（示例）</li>
+    <li>调整输出预算、技术栈约束、必读的 docs 路径</li>
+    <li>运行 <code>bash scripts/sync-agents.sh developer</code>（或全量无参数）</li>
+    <li>若在 Cursor 业务项目装了 subagent，重新运行 <code>install-cursor-subagents.ps1</code></li>
+  </ol>
+
+  <h2>可改什么</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li>任务步骤与检查清单</li>
+    <li>推荐引用的 <code>skills/</code> 方法论</li>
+    <li>产出模板路径（<code>templates/</code>）</li>
+    <li>「应该画的图」列表</li>
   </ul>
+
+  <h2>不建议改什么</h2>
+  <ul>
+    <li><code>.claude/agents/*.md</code> 手写内容（有 AUTO-GENERATED 标记）</li>
+    <li>编排总监的「通过 /pl 激活」语义（避免又被当成普通子代理）</li>
+  </ul>
+
+  <p>模型分级：<code>bash scripts/configure-models.sh</code> · 见 <code>docs/04-reference/MODEL-CONFIG.md</code></p>
+
 </main>
 </body>
 </html>

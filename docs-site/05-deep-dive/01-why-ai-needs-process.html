@@ -10,15 +10,43 @@
 </head>
 <body data-current="/docs-site/05-deep-dive/01-why-ai-needs-process.html">
 <main class="pl-content">
+
   <h1>5.1 为什么 AI 需要流程</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">单次对话能写代码，但做产品需要<strong>顺序、门禁、可追溯产出</strong>。流程不是 bureaucracy，而是对抗幻觉、遗忘和上下文爆炸的手段。</p>
+
+  <h2>没有流程时会发生什么</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li><strong>跳步</strong>：没 PRD 就写库表，后期返工</li>
+    <li><strong>幻觉</strong>：编造不存在的 API、竞品数据</li>
+    <li><strong>失忆</strong>：新 session 不知道上一轮定了什么</li>
+    <li><strong>膨胀</strong>：同一文件被反复全文读取，token 暴涨</li>
   </ul>
+
+  <h2>流程在本项目里是什么</h2>
+  <p>不是瀑布文档堆砌，而是：</p>
+  <ol>
+    <li><strong>角色分工</strong>：每个 Agent 只做一类事（产品不写代码、开发不擅自改需求）</li>
+    <li><strong>文档传递</strong>：下游读上游产出（PRD → 架构 → 开发）</li>
+    <li><strong>质量门禁</strong>：测试/审查不通过则回环</li>
+    <li><strong>可恢复状态</strong>：长程模式下 <code>STATE.md</code> 记录进度</li>
+  </ol>
+
+  <figure class="pl-figure">
+    <img src="../assets/diagrams/pipeline.svg" alt="研发流水线">
+    <figcaption>模式 A：从调研到发布的流水线视角</figcaption>
+  </figure>
+
+  <h2>与「一个超强 prompt」的对比</h2>
+  <table>
+    <thead><tr><th>方式</th><th>优点</th><th>缺点</th></tr></thead>
+    <tbody>
+      <tr><td>单 prompt 包办</td><td>启动快</td><td>难维护、难并行、难审计</td></tr>
+      <tr><td>多 Agent + 流程</td><td>可裁剪、可复用、产出结构化</td><td>需要学习编排与目录约定</td></tr>
+    </tbody>
+  </table>
+
+  <p>详见 <code>docs/03-workflow/WORKFLOW_DETAILS.md</code>、<a href="../02-concepts/05-workflow.html">2.5 工作流编排</a>。</p>
+
 </main>
 </body>
 </html>

@@ -10,15 +10,34 @@
 </head>
 <body data-current="/docs-site/05-deep-dive/03-context-management.html">
 <main class="pl-content">
+
   <h1>5.3 上下文管理</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">上下文 = 模型当前能「看见」的全部对话与工具结果。多 Agent 协作时，管理不好会导致断流、失忆和费用飙升。</p>
+
+  <h2>分层读取（L0–L3）</h2>
+  <table>
+    <thead><tr><th>层级</th><th>内容</th><th>何时读</th></tr></thead>
+    <tbody>
+      <tr><td>L0</td><td>SKILL.md 模式选择</td><td>每次启动</td></tr>
+      <tr><td>L1</td><td>WORKFLOW_PLAN / STATE 摘要</td><td>每个 Agent 启动</td></tr>
+      <tr><td>L2</td><td>PRD/ARCH 相关章节</td><td>需要细节时</td></tr>
+      <tr><td>L3</td><td>全文 + 大段代码</td><td>极少</td></tr>
+    </tbody>
+  </table>
+
+  <h2>摘要传递</h2>
+  <p>上游产出 3000 字文档 → 在计划里写 300 字摘要 → 下游默认只读摘要，按需展开原文。</p>
+
+  <h2>实践技巧</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li>用 Grep 定位章节，避免 Read 整个仓库</li>
+    <li>全量 20 Agent 前先做 <code>/compact</code> 或开新 session</li>
+    <li>项目级 MCP 只加载需要的（勿全局挂 99 个 MySQL 工具）</li>
+    <li>长程用 <code>STATE.md</code>，不要每轮重读所有历史 PRD</li>
   </ul>
+
+  <p>仓库：<code>docs/05-advanced/TOKEN-EFFICIENCY.md</code> · <a href="06-token-economy.html">5.6 Token 经济学</a></p>
+
 </main>
 </body>
 </html>

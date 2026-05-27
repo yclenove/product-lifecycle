@@ -10,15 +10,34 @@
 </head>
 <body data-current="/docs-site/06-advanced/04-cicd-integration.html">
 <main class="pl-content">
+
   <h1>6.4 CI/CD 集成</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
-  <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
-  </ul>
+  <p class="pl-lead">CI 跑确定性检查（lint、测试、模板校验）；AI 角色仍在开发阶段产出文档与代码，发布前由流水线兜底。</p>
+
+  <h2>可接入的脚本</h2>
+  <pre><code># 质量与结构校验
+bash scripts/validate.sh
+bash scripts/validate-templates.sh
+bash scripts/lint-prompts.sh
+
+# Agent 冒烟（可选）
+bash scripts/test-agents.sh</code></pre>
+
+  <h2>GitHub Actions 示例</h2>
+  <pre><code>name: quality
+on: [pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/validate.sh</code></pre>
+
+  <h2>与质量门禁的关系</h2>
+  <p><a href="../04-roles/quality-gatekeeper.html">质量门禁</a> Agent 产出人工可读的审查报告；CI 的 <code>validate.sh</code> 做机器可判定的规则。两者互补，不互相替代。</p>
+
+  <p>仓库已有 <code>.github/workflows/</code>，可按团队规范扩展。</p>
+
 </main>
 </body>
 </html>

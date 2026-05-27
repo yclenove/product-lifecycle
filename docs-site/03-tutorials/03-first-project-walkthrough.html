@@ -10,15 +10,59 @@
 </head>
 <body data-current="/docs-site/03-tutorials/03-first-project-walkthrough.html">
 <main class="pl-content">
+
   <h1>3.3 第一个项目完整走读</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
+  <p class="pl-lead">用「精简模式」跑通一次：编排 → 产品 → 架构 → 开发 → 测试，产出落在业务仓库的 <code>docs/</code> 里。</p>
+
+  <div class="pl-info">
+    <strong>📍 假设</strong> 你有一个空目录或半成品 Web 应用，想用 product-lifecycle 从需求写到可运行代码。全程约 30–60 分钟（视模型与网络而定）。
+  </div>
+
+  <h2>第 0 步：准备业务仓库</h2>
+  <pre><code>mkdir my-saas-demo &amp;&amp; cd my-saas-demo
+git init
+mkdir docs docs/iterations/current</code></pre>
+
+  <h2>第 1 步：启动编排（Claude Code 示例）</h2>
+  <pre><code>cd my-saas-demo
+claude
+&gt; /pl my-saas-demo "团队任务管理 SaaS，支持看板与提醒"</code></pre>
+  <p>在 Phase 0 确认里选 <strong>B 精简模式</strong>，指定角色：编排总监、产品经理、架构师、开发工程师、测试经理。</p>
+
+  <h2>第 2 步：各角色产出（建议顺序）</h2>
+  <table>
+    <thead><tr><th>顺序</th><th>角色</th><th>典型产出路径</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>编排总监</td><td><code>docs/WORKFLOW_PLAN.md</code> 或 <code>docs/iterations/current/...</code></td></tr>
+      <tr><td>2</td><td>产品经理</td><td><code>docs/iterations/current/product/PRD-*.md</code></td></tr>
+      <tr><td>3</td><td>架构师</td><td><code>docs/iterations/current/architecture/ARCH-*.md</code></td></tr>
+      <tr><td>4</td><td>开发工程师</td><td>代码 + <code>docs/iterations/current/dev/DEV-*.md</code></td></tr>
+      <tr><td>5</td><td>测试经理</td><td><code>docs/iterations/current/qa/QA-*.md</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>第 3 步：检查门禁</h2>
   <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
+    <li>PRD 是否包含用户故事与验收标准？</li>
+    <li>架构是否覆盖数据模型与 API 边界？</li>
+    <li>代码是否可 <code>npm test</code> / <code>go test</code> 通过？</li>
   </ul>
+  <p>可选：让<a href="../04-roles/quality-gatekeeper.html">质量门禁</a>做最后一轮审查。</p>
+
+  <h2>常见踩坑</h2>
+  <ul>
+    <li><strong>在技能包目录里跑 /pl</strong>：应在<strong>业务项目</strong>根目录打开 Claude Code，产出才进业务 <code>docs/</code>。</li>
+    <li><strong>一次选全量 20 Agent</strong>：上下文会暴涨，中转易断流；新手务必用精简模式。</li>
+    <li><strong>未替换占位符</strong>：各 <code>agents/*.md</code> 里的 <code>{{PROJECT_NAME}}</code> 需换成真实项目名。</li>
+  </ul>
+
+  <h2>延伸阅读</h2>
+  <ul>
+    <li><a href="04-long-running.html">3.4 长程跨天迭代</a></li>
+    <li><a href="../07-cookbook/01-saas-project.html">7.1 SaaS 场景配方</a></li>
+    <li><a href="../02-concepts/05-workflow.html">2.5 工作流编排</a></li>
+  </ul>
+
 </main>
 </body>
 </html>

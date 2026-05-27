@@ -10,15 +10,26 @@
 </head>
 <body data-current="/docs-site/06-advanced/02-add-new-role.html">
 <main class="pl-content">
+
   <h1>6.2 新增一个角色</h1>
-  <p class="pl-lead">本页为文档站占位，正文将在后续版本补充。请先阅读 <a href="../index.html">首页</a> 与已完成的入门章节。</p>
-  <div class="pl-warning"><strong>建设中</strong> 对应 Markdown 主文档可能已有更完整内容，见仓库 <code>docs/</code> 目录。</div>
-  <h2>你可以先看</h2>
-  <ul>
-    <li><a href="../01-introduction/01-what-is-product-lifecycle.html">product-lifecycle 是什么</a></li>
-    <li><a href="../02-concepts/01-agent.html">什么是 Agent</a></li>
-    <li><a href="../08-glossary.html">大词典</a></li>
-  </ul>
+  <p class="pl-lead">新增 Agent = 新 prompt 真源 + 模板 + sync-agents 注册 + 文档站角色页（可选）。</p>
+
+  <h2>检查清单</h2>
+  <ol>
+    <li>在 <code>agents/</code> 新建 <code>my-role.md</code>（参考同层角色结构）</li>
+    <li>在 <code>templates/</code> 添加 <code>my_role_template.md</code></li>
+    <li>编辑 <code>scripts/sync-agents.sh</code>：在 <code>DESCRIPTIONS</code>、<code>TOOLS</code> 各加一行</li>
+    <li>运行 <code>bash scripts/sync-agents.sh my-role</code></li>
+    <li>更新 <code>docs-site/assets/nav-data.js</code> 与 <code>04-roles/</code>（或跑 <code>generate-docs-site.sh</code>）</li>
+    <li>在 <code>agents/orchestrator.md</code> 工作流里加入该角色的调用时机</li>
+  </ol>
+
+  <div class="pl-info">
+    <strong>命名</strong> 文件名用 kebab-case，与 <code>subagent_type</code> / <code>@name</code> 一致，如 <code>security-auditor</code>。
+  </div>
+
+  <p>产出路径约定：<code>docs/04-reference/OUTPUT-PATHS.md</code></p>
+
 </main>
 </body>
 </html>
