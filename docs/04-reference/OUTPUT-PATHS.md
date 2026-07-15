@@ -10,7 +10,7 @@
 | **长程状态** | `docs/07-long-running/` | `STATE.md`、`HANDOFF.md` |
 | **工作流总览** | `docs/03-workflow/WORKFLOW_PLAN.md` | 框架级，不按迭代分 |
 
-**不要**再写到 `docs/` 根目录或 `docs/iterations/current/product/PRD-*.md` 扁平路径。
+**不要**写到 `docs/` 根目录，也不要把迭代文件直接平铺在 `docs/iterations/current/`；必须进入对应的 `<类型>/` 子目录。
 
 ## 子目录与前缀
 
@@ -41,4 +41,4 @@ init-iteration.sh v2.0
 ## 读取上一轮产物
 
 - 同迭代续做：读 `docs/iterations/current/` 下已有文件
-- 跨迭代参考：读 `docs/iterations/<旧ID>/` 或 `_legacy-by-role/`（历史）
+- 跨迭代参考：读 `docs/iterations/<旧ID>/` 或 `_legacy-by-role/`（历史）

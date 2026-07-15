@@ -5,24 +5,23 @@
 | Harness | 支持级别 | 说明 |
 |---------|----------|------|
 | **Claude Code** | ⭐ 一等 | `/product-lifecycle`、`Agent` 子代理、`hooks/`、`.mcp.json` |
-| **Cursor** | ⭐ 一等 | `.cursor/agents/` 薄封装、`@orchestrator`、`create-subagent` |
-| **OpenCode / Codex CLI** | ✅ 可用 | 读 `agents/` + `templates/`，无 slash 时需手动 @ 角色 |
+| **Codex** | ⭐ 一等 | 根 `SKILL.md`、`.agents/skills/` 显式入口、可选并行角色 |
+| **Cursor** | ⭐ 一等 | `.cursor/agents/` 薄封装、`/orchestrator`、`create-subagent` |
+| **OpenCode** | ✅ 可用 | 读根 Skill、`agents/` 与 `templates/` |
 | **其他 IDE** | ⚠️ 部分 | 只要能读 markdown prompt，即可按角色文件驱动 |
 
 ## 什么叫「完整」？
 
-product-lifecycle **本体** = 20 个角色 prompt + 模板 + 脚本 + 文档。
+product-lifecycle **本体** = 20 个角色 prompt + 20 个核心模板 + 20 个内置方法 Skill + 脚本 + 文档。
 
 要接近「开箱即用」的完整体验，建议在 Harness 上叠加：
 
-1. **本仓库**（角色与流程）
-2. **superpowers-zh**（方法论 skill：`npx superpowers-zh`）
-3. **drawio MCP**（`bash scripts/install-mcp.sh`）
-4. **Harness 原生能力**（子代理、工具白名单、项目级 MCP）
+1. **本仓库**（角色、流程与内置 superpowers-zh 方法 Skill）
+2. **drawio MCP**（`bash scripts/install-mcp.sh`）
+3. **Harness 原生能力**（子代理、工具白名单、项目级 MCP）
 
-缺第 2 步：流程在，但 TDD/调试/计划等方法论需自己补。  
-缺第 3 步：图可手写 Mermaid，无法用 drawio MCP 一键出图。  
-缺第 4 步：例如在纯 Chat 里无法派发子 Agent，只能单会话串行扮演角色。
+缺第 2 步：图可手写 Mermaid，但无法用 drawio MCP 一键出图。
+缺第 3 步：例如在纯 Chat 里无法派发子 Agent，只能单会话串行扮演角色。
 
 ## 与 superpowers-zh 的 harness 概念对齐
 
@@ -40,6 +39,7 @@ product-lifecycle 的验收建议：
 
 | Harness | 文档 |
 |---------|------|
+| Codex | [SKILL-CODEX.md](./SKILL-CODEX.md) |
 | Claude Code | [SKILL-CLAUDE-CODE.md](./SKILL-CLAUDE-CODE.md) |
 | Cursor | [SKILL-CURSOR.md](./SKILL-CURSOR.md) |
 | 其他 | [SKILL-OTHER-TOOLS.md](./SKILL-OTHER-TOOLS.md) |

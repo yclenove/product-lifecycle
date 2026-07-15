@@ -2,6 +2,8 @@
 
 > product-lifecycle 文档分门别类索引。新人从「入门」开始，进阶看「参考」和「高级」。
 
+运行时入口、真源和宿主适配层的边界见 [`04-reference/SKILL-ASSETS.md`](04-reference/SKILL-ASSETS.md#包结构与真源)。
+
 **给人看的 HTML 教程站**：[`docs-site/`](../docs-site/) · 本地预览 `bash scripts/serve-docs.sh`
 
 ## 01-getting-started — 入门
@@ -16,6 +18,8 @@
 
 | 文档 | 工具 |
 |------|------|
+| [HARNESS](02-tools/HARNESS.md) | 宿主能力与支持级别总览 |
+| [SKILL-CODEX](02-tools/SKILL-CODEX.md) | Codex |
 | [SKILL-CLAUDE-CODE](02-tools/SKILL-CLAUDE-CODE.md) | Claude Code |
 | [SKILL-CURSOR](02-tools/SKILL-CURSOR.md) | Cursor |
 | [SKILL-OTHER-TOOLS](02-tools/SKILL-OTHER-TOOLS.md) | 其它工具通用集成 |
@@ -34,7 +38,7 @@
 
 | 文档 | 用途 |
 |------|------|
-| [SKILL-ASSETS](04-reference/SKILL-ASSETS.md) | 20 个 Agent + 20 个模板的总目录 |
+| [SKILL-ASSETS](04-reference/SKILL-ASSETS.md) | 包结构、真源边界、20 个 Agent + 20 个核心模板 |
 | [SKILL-INTEGRATION](04-reference/SKILL-INTEGRATION.md) | 角色 × Skill 矩阵 + 一键安装 |
 | [MODEL-CONFIG](04-reference/MODEL-CONFIG.md) | 模型分级配置（强 / 均衡 / 经济） |
 | [DOC-MAP](04-reference/DOC-MAP.md) | 文档与 Agent 的对应关系 |

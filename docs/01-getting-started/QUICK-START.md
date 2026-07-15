@@ -1,125 +1,98 @@
-# 快速入门指南
+# 快速入门
 
 ## 30 秒理解
 
-product-lifecycle 是一个 20 Agent 产品开发全流程框架。它不是一个代码生成器——它是一套方法论，通过专业 Agent 协作，驱动产品从市场分析到代码实现再到持续迭代。
+product-lifecycle 是一个显式触发、精简模式优先的 20 Agent 产品开发工作流。它负责选择角色、组织依赖、约束产出路径并完成质量闭环，不是一次性把 20 个 prompt 全塞进上下文。
 
-**核心价值：** 不再手动协调调研、设计、开发、测试、部署——Agent 自动编排。
+你不需要一次用全部 20 个 Agent。大多数任务使用编排总监加 2-6 个相关角色即可。
 
-**配套能力：**
-- 📚 方法论 skill（TDD/调试/审查/头脑风暴）：`npx superpowers-zh`
-- 🎨 AI 画图（流程/架构/时序/ER…）：仓库内 `.mcp.json` 已配 drawio MCP，规范见 [`docs/05-advanced/DIAGRAMMING.md`](../05-advanced/DIAGRAMMING.md)
-- 🕒 长程跨 session：`bash scripts/resume.sh`
+## 先分清两个目录
 
-## 5 分钟体验
+- `PACKAGE_ROOT`：product-lifecycle 的安装目录，包含 `SKILL.md`、`agents/`、`templates/`、`skills/` 和 `docs/`。
+- `WORKSPACE_ROOT`：你的业务项目，代码和 `docs/iterations/` 产出写在这里。
 
-### Claude Code 用户
+全局安装时二者通常不同。不要把业务 PRD、架构文档或代码写进 Skill 安装目录。
+
+## 安装
+
+### Codex
 
 ```bash
-# 1. 安装（一次性）
-git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/product-lifecycle
+git clone https://github.com/yclenove/product-lifecycle.git "${CODEX_HOME:-$HOME/.codex}/skills/product-lifecycle"
+```
 
-# 2. 使用
+新建任务后输入：
+
+```text
+$product-lifecycle 为现有项目增加登录风控，使用精简模式
+```
+
+仓库内维护时还可使用 `/product-lifecycle` 或 `/pl`。详见 [Codex 指南](../02-tools/SKILL-CODEX.md)。
+
+### Claude Code
+
+```bash
+git clone https://github.com/yclenove/product-lifecycle.git ~/.claude/skills/product-lifecycle
+```
+
+```text
 /product-lifecycle myapp "一个简单的待办事项应用"
 ```
 
-编排总监会自动检测项目状态，制定工作流，启动必要的 Agent。
+### Cursor
 
-### Cursor 用户
+安装、路径解析和角色 Subagent 配置见 [Cursor 指南](../02-tools/SKILL-CURSOR.md)。
+
+### 其他工具
+
+克隆仓库后，让工具读取根 `SKILL.md`。若宿主没有 Skill 发现机制，先读取 `agents/orchestrator.md`，再按编排结果读取其他角色和模板。
+
+## 第一次运行
+
+推荐从精简模式开始：
+
+```text
+请运行 product-lifecycle 精简模式。
+
+目标：为现有 SaaS 增加团队邀请功能。
+约束：沿用当前技术栈，不做大规模迁移。
+期望：给出必要的产品、架构、实现、QA 和质量门禁产出。
+```
+
+工作流会：
+
+1. 确认 `WORKSPACE_ROOT` 和已有项目状态。
+2. 选择 2-6 个必要角色。
+3. 读取对应 prompt、模板和方法 Skill。
+4. 执行实现、验证与反馈循环。
+5. 把文档写到 `WORKSPACE_ROOT/docs/iterations/current/<type>/`。
+
+## 三种范围
+
+| 模式 | 何时使用 | 示例 |
+|---|---|---|
+| A. 完整生命周期 | 新产品或重大版本 | “全量规划一个新 SaaS” |
+| B. 精简迭代 | 现有产品功能或产品级重构 | “给支付模块增加退款流程” |
+| C. 单角色 | 只需要一个专业视角 | “只让 architect 做影响分析” |
+
+普通 bug、单文件修改和简单问答直接处理，不必启动完整工作流。
+
+## 常用入口
+
+| 目标 | 文档 |
+|---|---|
+| 不知道选哪些角色 | [DECISION-TREE](DECISION-TREE.md) |
+| 查角色和模板 | [SKILL-ASSETS](../04-reference/SKILL-ASSETS.md) |
+| 查产出路径 | [OUTPUT-PATHS](../04-reference/OUTPUT-PATHS.md) |
+| 跨天续做 | [长程迭代](../07-long-running/README.md) |
+| 出现路径或宿主问题 | [TROUBLESHOOTING](../06-troubleshooting/TROUBLESHOOTING.md) |
+
+## 验证安装
+
+维护本 Skill 仓库时运行：
 
 ```bash
-# 1. 安装（一次性）
-git clone https://github.com/yclenove/product-lifecycle.git ~/.cursor/skills/product-lifecycle
-
-# 2. 使用 — 方式 A：完整流程
-# 在对话中说：读取 ~/.cursor/skills/product-lifecycle/SKILL.md，按照指引执行
-
-# 3. 使用 — 方式 B：单独角色
-# 在对话中说：/orchestrator
+python scripts/check-product-lifecycle-skill.py --root .
 ```
 
-### 其他工具用户
-
-```bash
-# 1. 克隆仓库
-git clone https://github.com/yclenove/product-lifecycle.git
-
-# 2. 在对话中说：
-# 读取 agents/orchestrator.md，按照指引执行编排总监角色。
-# 项目描述：[你的项目描述]
-```
-
-## 最小可用集（4 个核心 Agent）
-
-不需要一次用全部 20 个 Agent。从这 4 个开始：
-
-| Agent | 职责 | 何时用 |
-|-------|------|--------|
-| 编排总监 | 制定框架 | **必选** — 每次都从这里开始 |
-| 开发工程师 | 代码实现 | **必选** — 有代码要写 |
-| 测试经理 | 测试验证 | **必选** — 验证实现 |
-| 质量门禁 | 代码审查 | **必选** — 发布前审查 |
-
-**进阶：** 熟练后逐步加入市场分析师、产品经理、架构师等。
-
-## 常见问题
-
-**Q: 我的小项目也需要 20 个 Agent 吗？**
-A: 不需要。用 4 个核心 Agent 就够了。详见上面的「最小可用集」。
-
-**Q: 我用的是 Windsurf / OpenCode / 其他工具，能用吗？**
-A: 能。核心价值在 `agents/` 目录的 prompt 文件，任何 AI 工具都能读取使用。
-
-**Q: Agent 执行太慢怎么办？**
-A: 使用渐进式采用——只启动必要的 Agent。编排总监会自动判断。
-
-**Q: 上下文窗口不够用怎么办？**
-A: 参见 `docs/CONTEXT-MANAGEMENT.md`，包含摘要传递和上下文预算机制。
-
-**Q: 如何只用核心 Agent 跳过调研？**
-A: 直接启动编排总监，它会检测项目状态。如果有代码，自动进入模式 B（持续迭代），跳过市场分析。
-
-## 进阶用法
-
-### 自定义 Agent
-
-1. 复制 `agents/developer.md` 为 `agents/security-auditor.md`
-2. 修改内容为安全审计角色
-3. 在 `scripts/sync-agents.sh` 中添加配置
-4. 运行 `bash scripts/sync-agents.sh`
-
-### 集成到 CI/CD
-
-在 CI 流程中使用质量门禁：
-
-```yaml
-# .github/workflows/quality.yml
-- name: Quality Gate
-  run: bash scripts/validate.sh
-```
-
-### 多项目管理
-
-每个项目独立的 docs/ 目录，共享同一套 agents/ 和 templates/。
-
-### Agent 组合选择
-
-根据项目规模选择合适的 Agent 组合：
-
-| 场景 | Agent 组合 | 预计耗时 |
-|------|-----------|----------|
-| 快速原型 | 编排 + 开发 | 30 分钟 |
-| MVP | 编排 + 开发 + 测试 | 1 小时 |
-| 正式发布 | 核心 4 个 | 2 小时 |
-| 完整项目 | 全部 20 个 | 4-8 小时 |
-| 持续迭代 | 侦察 + 反馈 + 规划 + 核心 4 个 | 每轮 1-2 小时 |
-
-详细的决策树请参考 `docs/01-getting-started/DECISION-TREE.md`。
-
-### 上下文管理优化
-
-当 Agent 输出过多或过少时，可以调整上下文预算：
-
-1. 在 agent prompt 中修改"控制在 XXX 字以内"
-2. 使用摘要传递机制减少上下文消耗
-3. 参考 `docs/CONTEXT-MANAGEMENT.md` 了解详细策略
+普通业务项目不需要复制或运行包维护脚本。

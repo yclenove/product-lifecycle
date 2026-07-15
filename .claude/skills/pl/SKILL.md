@@ -1,25 +1,16 @@
 ---
 name: pl
-description: product-lifecycle 20-Agent 产品开发全流程。仅在用户明确说「/pl」「/product-lifecycle」「帮我跑产品生命周期」「启动迭代流程」时触发；不要为普通编码任务自动激活。
-when_to_use: "/pl, /product-lifecycle, 启动产品生命周期, 帮我跑全流程迭代, run product lifecycle, start full product workflow"
-argument-hint: "[项目名] [一句话描述]"
-allowed-tools: Agent WebSearch WebFetch Read Write Edit Glob Grep Bash TodoWrite
+description: Short Claude Code alias for the product-lifecycle 20-agent workflow. Use only when the user explicitly invokes /pl or /product-lifecycle, requests a full or lean product lifecycle, coordinates multiple product roles, or needs lifecycle artifacts such as PRD, architecture, implementation, QA, and quality-gate reports. Do not use for ordinary coding tasks, small bug fixes, or single-file edits.
 ---
 
-# product-lifecycle 短别名
+# Product Lifecycle Short Alias
 
-**这是 `/product-lifecycle` 的快捷入口。**
+Delegate the workflow to the repository root skill.
 
-## 启动前先确认范围
+1. Resolve `PACKAGE_ROOT` to the nearest ancestor containing `SKILL.md`, `agents/`, `templates/`, `skills/`, and `docs/`.
+2. Set `WORKSPACE_ROOT` to the active business repository.
+3. Read `PACKAGE_ROOT/SKILL.md` completely and follow it.
+4. Use Claude Code-specific behavior only as described in `PACKAGE_ROOT/docs/02-tools/SKILL-CLAUDE-CODE.md`.
+5. Keep package assets in `PACKAGE_ROOT` and business outputs in `WORKSPACE_ROOT`.
 
-在读取任何文件之前，先问用户：
-
-> 我可以启动 product-lifecycle 工作流。请确认：
->
-> **A. 完整流程**（20 Agent，约 80-140 个工具调用）  
-> **B. 精简模式**（编排 + 1-3 个指定角色，约 15-30 个工具调用）  
-> **C. 单角色**（只运行某一个 Agent，如：架构师/产品经理/开发工程师）
->
-> 你想要哪种模式？如果不确定，推荐先用 **B 精简模式**。
-
-收到用户回复后，再读取 `~/.claude/skills/product-lifecycle/SKILL.md` 并按用户选择的范围执行。
+Preserve unrelated worktree changes and load only the selected role, template, and method files.

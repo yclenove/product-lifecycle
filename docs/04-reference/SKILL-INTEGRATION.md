@@ -4,19 +4,28 @@
 
 ## 方法论 Skills（已内置）
 
-product-lifecycle 已将 superpowers-zh 的 20 个通用方法论 skill **内置在 `skills/` 目录中**，安装 product-lifecycle 即可直接使用，无需单独安装 superpowers-zh。
+product-lifecycle 已将 superpowers-zh 的 20 个通用方法论 skill **内置在 `skills/` 目录中**，安装 product-lifecycle 即可直接使用，无需单独安装 superpowers-zh。当前同步基线为 **superpowers-zh v1.7.0**（commit `84026e57664cbb4d042f22b816db250f84890d62`），来源记录见 `skills/.superpowers-zh-source.json`。
 
 内置 skill 列表：brainstorming、writing-plans、executing-plans、test-driven-development、systematic-debugging、verification-before-completion、requesting-code-review、receiving-code-review、chinese-code-review、chinese-commit-conventions、chinese-documentation、chinese-git-workflow、dispatching-parallel-agents、subagent-driven-development、using-git-worktrees、finishing-a-development-branch、mcp-builder、using-superpowers、workflow-runner、writing-skills
 
-## 一键安装（推荐）
+## Codex 使用方式
 
-在项目根目录执行（**不要在 `~` 主目录跑**）：
+运行 `/pl` 或 `/product-lifecycle` 时，编排 Skill 会直接读取 `skills/<name>/SKILL.md`。这条包内路径不依赖 Codex 是否把 20 个方法 Skill 单独显示在技能列表里，也是本仓库的默认方式。
+
+如果还希望在 product-lifecycle 之外独立调用这些方法 Skill，可选用上游安装器。与内置版本严格对齐：
 
 ```bash
-npx superpowers-zh
+npx superpowers-zh@1.7.0 --global --tool codex
 ```
 
-> **注意**：superpowers-zh 的方法论 skill 已内置在 product-lifecycle 中。`npx superpowers-zh` 现在只用于注册 **SessionStart hook**（自动注入 `using-superpowers`）。如果不需要该 hook，可直接跳过此步骤。
+上游 v1.7.0 的 Codex 全局安装会写入 `~/.agents/skills/`。项目级安装可在项目根目录运行 `npx superpowers-zh@1.7.0 --tool codex`；不要在 `~` 目录运行项目级安装。安装后新开 Codex 会话以刷新技能发现。
+
+| 参数 | 用途 |
+|------|------|
+| `--tool codex` | 显式选择 Codex，避免自动检测装错宿主 |
+| `--global` | 安装到用户级目录，让多个项目共享 |
+| `--uninstall` | 卸载对应范围内由上游安装器复制的 Skill |
+| `@latest` | 独立升级到高于本仓库内置基线的版本；可能与内置内容不同 |
 
 ## MCP 集成（绘图能力）
 
@@ -33,30 +42,27 @@ product-lifecycle 还推荐一个 MCP server：**drawio**，提供 AI 画图能�
 
 绘图规范、角色×图矩阵、反模式：[`docs/05-advanced/DIAGRAMMING.md`](../05-advanced/DIAGRAMMING.md)
 
-| 参数 | 用途 |
-|------|------|
-| `--tool cursor` | 检测不到时显式指定工具 |
-| `--uninstall` | 按哨兵注释精确卸载，不删用户自写内容 |
-| `--dry-run` | 仅预览 |
+## 安装方式关系
 
 与本仓库脚本的关系：
 
-- `npx superpowers-zh` → 装**通用方法论**到 `~/.claude/skills/` 等
-- `bash scripts/install-skills.sh` → 克隆 Git 仓库版（离线 / CI 用）
-- 两者可并存；重复 skill 以**先安装者**为准，冲突时见下文「命名空间」
+- `skills/` → product-lifecycle 内置的 20 个方法 Skill，编排时按路径直接读取
+- `npx superpowers-zh@1.7.0 --global --tool codex` → 可选的 Codex 原生发现安装
+- `bash scripts/install-skills.sh` / `scripts/install-skills.ps1` → 只安装 Anthropic 官方补充 Skill，不更新内置 superpowers-zh
+- 三者可以并存；product-lifecycle 编排始终优先使用包内明确路径，避免同名版本漂移
 
-卸载 superpowers-zh：`npx superpowers-zh@latest --uninstall`
+卸载上面的 Codex 全局安装：`npx superpowers-zh@1.7.0 --global --tool codex --uninstall`
 
 ## Harness（宿主环境）与 skill 的关系
 
 - **Harness**：运行本技能包的 IDE/CLI（Claude Code、Cursor、OpenCode 等）。详见 [`docs/02-tools/HARNESS.md`](../02-tools/HARNESS.md)。
 - **product-lifecycle**：20 个**产品角色** prompt + 模板（本仓库）。
-- **superpowers-zh**：**通用方法论** skill（TDD、调试、计划…），通过 `npx superpowers-zh` 安装。
+- **superpowers-zh**：**通用方法论** skill（TDD、调试、计划…），已按 v1.7.0 内置；`npx` 仅用于可选的宿主原生发现安装。
 
 三者关系：**Harness 提供执行环境 → product-lifecycle 提供角色与流程 + 内置方法论 skill（原 superpowers-zh）**。  
-superpowers-zh 已内置，无需单独安装；`npx superpowers-zh` 仅在需要 SessionStart hook 时才需运行。
+superpowers-zh 已内置，无需单独安装；只有需要在 product-lifecycle 之外独立发现这些 Skill 时才运行 `npx`。
 
-## 为什么需要外部 skill？
+## 为什么需要方法 Skill？
 
 每个 Agent 的 prompt 聚焦「**做什么**」（What），通用 skill 聚焦「**怎么做**」（How）。两者结合后：
 
@@ -100,8 +106,8 @@ superpowers-zh 已内置，无需单独安装；`npx superpowers-zh` 仅在需�
 
 ### 2. Superpowers 中文版（推荐）
 
-- **仓库**：[https://github.com/jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)（上游 [obra/superpowers](https://github.com/obra/superpowers) 汉化 + 6 个中国特色 skill）
-- **npm**：`npx superpowers-zh`（推荐，含 hooks + bootstrap）
+- **仓库**：[https://github.com/jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)（14 个上游 Skill 汉化 + 4 个中文团队 Skill + `mcp-builder` / `workflow-runner`）
+- **npm**：`npx superpowers-zh@1.7.0`（可选原生发现安装；hooks / bootstrap 行为按宿主而异）
 - **包含**：
   - `brainstorming` — 创造性工作前先探索
   - `writing-plans` — 多步任务的实现计划
@@ -130,7 +136,9 @@ superpowers-zh 已内置，无需单独安装；`npx superpowers-zh` 仅在需�
 - **特点**：Cursor 原生支持，按工作流场景组织
 - **安装位置**：`~/.cursor/skills/`
 
-## 一键安装推荐 skill
+## 可选安装 Anthropic 补充 Skill
+
+以下脚本只为 Claude Code / Cursor 克隆 Anthropic 官方 Skill，**不会**覆盖 `skills/` 中内置的 superpowers-zh，也不是 Codex 使用 product-lifecycle 的前置条件。
 
 ### macOS / Linux
 
@@ -146,7 +154,7 @@ bash scripts/install-skills.sh
 
 脚本会：
 1. 检测已安装的 skill（避免重复克隆）
-2. 克隆官方 + superpowers-zh 到 `~/.claude/skills/` 和 `~/.cursor/skills/`
+2. 克隆 Anthropic 官方 Skill 到 `~/.claude/skills/` 和 `~/.cursor/skills/`
 3. 验证 skill 完整性（SKILL.md 存在、frontmatter 合法）
 
 ## 在 Agent prompt 中引用 skill
@@ -173,9 +181,9 @@ Agent 不会盲目读取所有 skill，只在场景匹配时按需调用。
 
 如果同名 skill 存在于多个来源：
 
-1. **项目级 skill** 优先（`.claude/skills/` 在仓库内）
-2. **用户级 skill** 次之（`~/.claude/skills/` 在 home 目录）
-3. **官方 skill** 兜底
+1. product-lifecycle 编排中显式读取的 `PACKAGE_ROOT/skills/<name>/SKILL.md`
+2. 宿主发现的项目级同名 Skill
+3. 宿主发现的用户级同名 Skill
 
 冲突时显式用完整路径引用，避免歧义。
 
@@ -203,7 +211,7 @@ description: 团队代码风格与协作约定。当用户说"按团队规范"�
 
 **Q: 推荐 skill 都需要装吗？**
 
-A: 不需要。`必装` 是高频场景，`建议` 是按需扩展。最小可用集只需装 `superpowers-zh` 一个仓库即可覆盖 80%。
+A: 不需要。20 个 superpowers-zh 方法 Skill 已内置并按需读取；只有独立调用或补充其他来源时才需要额外安装。
 
 **Q: skill 太多会拖慢 Agent 吗？**
 

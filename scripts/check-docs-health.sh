@@ -56,8 +56,7 @@ check_count_in() {
   fi
 }
 
-check_count_in "$ROOT_DIR/SKILL.md" "[0-9]+个Agent" "frontmatter description"
-check_count_in "$ROOT_DIR/SKILL.md" "通过 [0-9]+ 个专业" "概述段"
+check_count_in "$ROOT_DIR/SKILL.md" "[0-9]+-agent" "frontmatter description"
 check_count_in "$ROOT_DIR/README.md" "通过 \\*\\*[0-9]+ 个" "顶部段"
 check_count_in "$ROOT_DIR/README.md" "## [0-9]+ 个 Agent 角色" "角色表标题"
 check_count_in "$ROOT_DIR/docs/04-reference/SKILL-ASSETS.md" "## [0-9]+ Agent 角色与产出" "速览表标题"
@@ -65,8 +64,30 @@ check_count_in "$ROOT_DIR/docs/02-tools/SKILL-CURSOR.md" "固定 \\*\\*[0-9]+ �
 check_count_in "$ROOT_DIR/docs/01-getting-started/DECISION-TREE.md" "企业级 → 全部 [0-9]+ 个" "决策树企业级"
 check_count_in "$ROOT_DIR/docs/01-getting-started/QUICK-START.md" "不需要一次用全部 [0-9]+ 个" "QUICK-START 提示"
 check_count_in "$ROOT_DIR/docs/01-getting-started/FAQ.md" "小项目也需要 [0-9]+ 个" "FAQ"
-check_count_in "$ROOT_DIR/docs/04-reference/DOC-MAP.md" "agents/\\*\\.md（[0-9]+ 个）" "DOC-MAP"
 check_count_in "$ROOT_DIR/templates/workflow_plan_template.md" "本文档定义 [0-9]+ 个专业" "workflow_plan_template"
+
+# ───────────────────────────────────────────
+# 双根目录与薄适配器
+# ───────────────────────────────────────────
+echo ""
+echo "=== Skill 结构检查 ==="
+
+for f in \
+  "$ROOT_DIR/SKILL.md" \
+  "$ROOT_DIR/.agents/skills/pl/SKILL.md" \
+  "$ROOT_DIR/.agents/skills/product-lifecycle/SKILL.md" \
+  "$ROOT_DIR/.claude/skills/pl/SKILL.md" \
+  "$ROOT_DIR/.cursor/skills/product-lifecycle/SKILL.md"; do
+  if [ ! -f "$f" ]; then
+    log_err "缺少宿主入口：${f#$ROOT_DIR/}"
+    continue
+  fi
+  if grep -q "PACKAGE_ROOT" "$f" && grep -q "WORKSPACE_ROOT" "$f"; then
+    log_ok "${f#$ROOT_DIR/}: 双根目录"
+  else
+    log_err "${f#$ROOT_DIR/}: 缺少 PACKAGE_ROOT / WORKSPACE_ROOT"
+  fi
+done
 
 # ───────────────────────────────────────────
 # 模板与角色对应检查

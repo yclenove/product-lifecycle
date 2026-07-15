@@ -1,113 +1,109 @@
 # 一致性检查清单
 
-## 迭代工作流（每次迭代必读）
+## 核心不变量
 
-```
-1. 在 agents/*.md 上编辑（真源）
-2. 检查脚本是否需要改：bash scripts/iterate.sh --check
-3. 如需改脚本（新增 Agent 等），先改 scripts/sync-agents.sh
-4. 一键收尾：bash scripts/iterate.sh
-   → 自动同步 .claude/agents/
-   → 自动更新本机 skill (~/.claude/skills/product-lifecycle)
+1. 根 `SKILL.md` 是唯一执行协议。
+2. `agents/`、`templates/`、`skills/` 是运行资产真源。
+3. `.agents/`、`.claude/`、`.cursor/` 是宿主适配层，只做发现、路径解析和工具差异说明。
+4. `PACKAGE_ROOT` 只读技能资产，`WORKSPACE_ROOT` 承载业务代码和迭代产出。
+5. README 只做用户导航，详细矩阵放在 `docs/04-reference/SKILL-ASSETS.md`。
+6. `docs-site/` 是展示层，不反向成为 Agent 运行真源。
+
+## 目录职责
+
+| 目录 | 内容 | 可直接编辑 |
+|---|---|---|
+| `agents/*.md` | 20 个通用角色 prompt | 是 |
+| `templates/*.md` | 核心产出模板 | 是 |
+| `skills/<name>/` | 内置方法 Skill | 是，注意上游来源 |
+| `.claude/agents/*.md` | Claude Code 派生角色 | 否，运行同步脚本 |
+| `.cursor/agents/*.md` | Cursor 薄角色包装 | 仅修改适配逻辑 |
+| `.agents/skills/*/SKILL.md` | Codex 显式入口 | 仅修改适配逻辑 |
+| `.claude/skills/pl/SKILL.md` | Claude Code 短别名 | 仅修改适配逻辑 |
+| `.cursor/skills/product-lifecycle/SKILL.md` | Cursor Skill 入口 | 仅修改适配逻辑 |
+| `docs/` | 权威参考文档 | 是 |
+| `docs-site/` | HTML 展示与生成资源 | 通过生成流程维护 |
+
+## 双根目录检查
+
+每个根 Skill 与宿主入口都应满足：
+
+- 能解析包含 `SKILL.md`、`agents/`、`templates/`、`skills/`、`docs/` 的 `PACKAGE_ROOT`。
+- 把当前业务仓库识别为 `WORKSPACE_ROOT`。
+- 从 `PACKAGE_ROOT` 读取资产。
+- 向 `WORKSPACE_ROOT/docs/iterations/` 写业务文档。
+- 不硬编码用户 home 下的安装路径。
+- 不默认把业务产出写入全局 Skill 安装目录。
+
+## 角色修改流程
+
+```text
+编辑 agents/*.md
+  -> bash scripts/iterate.sh --check
+  -> 必要时调整 scripts/sync-agents.sh
+  -> bash scripts/iterate.sh
+  -> 验证 .claude/agents 与 .cursor/agents
 ```
 
-**脚本已配置免授权**（.claude/settings.json），跑 `bash scripts/iterate.sh` 不需要点确认。
+常用命令：
 
 | 命令 | 用途 |
-|------|------|
-| `bash scripts/iterate.sh` | 完整收尾（检查 + 同步 + 更新 skill） |
-| `bash scripts/iterate.sh --check` | 只检查，不执行 |
-| `bash scripts/iterate.sh --sync-only` | 只同步，不更新 skill |
-| `bash scripts/sync-agents.sh` | 只同步 .claude/agents/ |
-| `bash scripts/sync-agents.sh orchestrator` | 只同步指定 Agent |
+|---|---|
+| `bash scripts/iterate.sh --check` | 只检查本轮是否需要同步 |
+| `bash scripts/iterate.sh` | 检查、同步并收尾 |
+| `bash scripts/sync-agents.sh` | 同步全部 Claude Code 角色 |
+| `bash scripts/sync-agents.sh orchestrator` | 同步指定角色 |
+| `python scripts/check-product-lifecycle-skill.py --root .` | Skill、适配器、README 与结构门禁 |
 
-## 三个目录的角色
+## 文档修改规则
 
-| 目录 | 角色 | 真源？ | 内容 |
-|------|------|--------|------|
-| `agents/*.md` | 通用 Agent prompt | **是** | 完整的任务指引和方法论 |
-| `.claude/agents/*.md` | Claude Code Subagent | 否 | frontmatter + 动态上下文注入 + 精简 prompt |
-| `.cursor/agents/*.md` | Cursor Subagent 薄封装 | 否 | frontmatter + Read `agents/*.md` |
+| 内容 | 权威位置 |
+|---|---|
+| 用户快速选择 | `README.md` |
+| 首次运行步骤 | `docs/01-getting-started/QUICK-START.md` |
+| 宿主差异 | `docs/02-tools/SKILL-*.md` |
+| 工作流依赖 | `docs/03-workflow/WORKFLOW_DETAILS.md` |
+| 包结构、角色和模板矩阵 | `docs/04-reference/SKILL-ASSETS.md` |
+| 产出目录 | `docs/04-reference/OUTPUT-PATHS.md` |
+| 全量文档导航 | `docs/README.md` |
 
-## 同步规则
+不要在 README、宿主适配器和 docs-site 中分别维护完整角色表。
 
-**核心原则：只在 `agents/*.md`（主干）上编辑，然后跑脚本派生。**
+## 角色数量口径
+
+当前值为 20。新增或移除角色时至少检查：
+
+- `SKILL.md` frontmatter description
+- `README.md` 顶部说明
+- `docs/01-getting-started/QUICK-START.md`
+- `docs/01-getting-started/DECISION-TREE.md`
+- `docs/01-getting-started/FAQ.md`
+- `docs/04-reference/SKILL-ASSETS.md`
+- `docs/04-reference/DOC-MAP.md`
+- `templates/workflow_plan_template.md`
+- `scripts/check-product-lifecycle-skill.py`
+- `scripts/check-docs-health.sh`
+
+不要再要求 README 维护第二份 20 角色职责表；完整列表由 SKILL-ASSETS 负责。
+
+## 自动验证
 
 ```bash
-# 改完 agents/ 后，一条命令同步：
-bash scripts/sync-agents.sh
-
-# 只同步单个 Agent：
-bash scripts/sync-agents.sh orchestrator
+python scripts/check-product-lifecycle-skill.py --root .
+bash scripts/check-docs-health.sh
+bash scripts/validate.sh
 ```
 
-1. **所有实质性编辑在 `agents/*.md`** — 这是真源
-2. **跑 `scripts/sync-agents.sh`** 自动派生 `.claude/agents/*.md`（加 frontmatter + 动态上下文注入）
-3. **不要直接编辑 `.claude/agents/*.md`** — 下次同步会覆盖
-4. `.cursor/agents/*.md` 不需要同步 — 它 Read `agents/` 真源
-5. frontmatter（description/tools/model）配置在 `scripts/sync-agents.sh` 的关联数组中
+另外对根 Skill、四个宿主入口和 20 个内置方法 Skill 运行 Codex `quick_validate.py`。
 
-## 检查步骤
+## 提交前检查
 
-1. 对比 agents/ 和 .claude/agents/ 的核心 prompt
-2. 检查 .cursor/agents/ 的 Read 引用路径
-3. 检查 frontmatter 字段一致性
-4. 检查上下文管理章节是否都有
-
-## 常见不一致场景
-
-| 场景 | 检查方法 | 修复方法 |
-|------|----------|----------|
-| agents/ 更新但 .claude/ 未同步 | diff 对比 | `bash scripts/sync-agents.sh` |
-| .claude/ 被直接编辑 | git diff 检查 | 丢弃改动，从 agents/ 重新派生 |
-| 新增 Agent 未配置 | sync 脚本报错 | 在脚本的 DESCRIPTIONS/TOOLS/MODELS 中添加配置 |
-| .cursor/ Read 路径错误 | 检查 frontmatter | 修正路径 |
-| model 字段不一致 | grep 对比 | 统一值 |
-| 缺少上下文管理章节 | grep 检查 | 补充 |
-
-## 20 Agent 一致性状态
-
-| Agent | agents/ | .claude/agents/ | .cursor/agents/ | 模板 | 状态 |
-|-------|---------|-----------------|-----------------|------|------|
-| orchestrator | 有 | 有 | 有 | workflow_plan | OK |
-| project-manager | 有 | 有 | 有 | pmo | OK |
-| proactive-scout | 有 | 有 | 有 | scout | OK |
-| market-analyst | 有 | 有 | 有 | market | OK |
-| product-manager | 有 | 有 | 有 | product | OK |
-| ui-designer | 有 | 有 | 有 | ui_design | OK |
-| architect | 有 | 有 | 有 | architecture | OK |
-| dba | 有 | 有 | 有 | （ADR） | OK |
-| developer | 有 | 有 | 有 | developer | OK |
-| frontend-developer | 有 | 有 | 有 | frontend | OK |
-| backend-developer | 有 | 有 | 有 | backend | OK |
-| qa-manager | 有 | 有 | 有 | qa | OK |
-| devops | 有 | 有 | 有 | devops | OK |
-| security-engineer | 有 | 有 | 有 | security | OK |
-| docwriter | 有 | 有 | 有 | docwriter | OK |
-| data-analyst | 有 | 有 | 有 | data | OK |
-| feedback-analyst | 有 | 有 | 有 | feedback | OK |
-| iteration-planner | 有 | 有 | 有 | iteration | OK |
-| reviewer | 有 | 有 | 有 | reviewer | OK |
-| quality-gatekeeper | 有 | 有 | 有 | quality_report | OK |
-
-## 角色数量口径检查（自动化）
-
-每次新增/移除角色后，必须同步以下位置：
-
-| 位置 | 关键词 | 当前值 |
-|------|--------|--------|
-| `SKILL.md` frontmatter description | `XX个Agent` | 20 |
-| `SKILL.md` 概述段 | `通过 XX 个专业 Agent` | 20 |
-| `README.md` 顶部段 | `通过 XX 个专业 Agent` | 20 |
-| `README.md` 角色表标题 | `## XX 个 Agent 角色` | 20 |
-| `docs/04-reference/SKILL-ASSETS.md` 速览表标题 | `## XX Agent 角色与产出` | 20 |
-| `docs/02-tools/SKILL-CURSOR.md` Best practices | `固定 XX 个角色` | 20 |
-| `docs/01-getting-started/DECISION-TREE.md` | `全部 XX 个` | 20 |
-| `docs/01-getting-started/QUICK-START.md` | `全部 XX 个` | 20 |
-| `docs/01-getting-started/FAQ.md` Q: 小项目 | `XX 个 Agent` | 20 |
-| `docs/04-reference/DOC-MAP.md` | `agents/*.md（XX 个）` | 20 |
-| `templates/workflow_plan_template.md` | `XX 个专业 Agent` | 20 |
-| `agents/orchestrator.md` | `全部 XX 个` | 20 |
-| `.claude/agents/orchestrator.md` | `全部 XX 个` | 20 |
-
-运行 `bash scripts/check-docs-health.sh` 自动检查。
+- [ ] 根 `SKILL.md` 保持简短并使用按需路由。
+- [ ] README 在行数预算内，所有本地链接有效。
+- [ ] 四个宿主入口仍是薄适配器。
+- [ ] `PACKAGE_ROOT` 与 `WORKSPACE_ROOT` 没有混用。
+- [ ] 20 个角色文件存在且非空。
+- [ ] 20 个核心模板存在且非空。
+- [ ] 20 个方法 Skill frontmatter 可被 Codex 解析。
+- [ ] 迭代产出路径相对 `WORKSPACE_ROOT`。
+- [ ] 三条自动验证命令通过。

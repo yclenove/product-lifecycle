@@ -5,10 +5,11 @@ set -euo pipefail
 ROOT="$(dirname "$(dirname "$0")")"
 errors=0
 total=0
+expected=20
 
 echo "=== 模板测试 ==="
 
-for f in "$ROOT"/templates/*.md; do
+for f in "$ROOT"/templates/*_template.md; do
   name=$(basename "$f")
   total=$((total+1))
   echo -n "$name: "
@@ -46,7 +47,10 @@ done
 
 echo ""
 echo "测试结果: $total 个模板"
-if [ $errors -eq 0 ]; then
+if [ "$total" -ne "$expected" ]; then
+  echo "核心模板数量错误：$total/$expected"
+  exit 1
+elif [ $errors -eq 0 ]; then
   echo "全部通过 ✓"
   exit 0
 else

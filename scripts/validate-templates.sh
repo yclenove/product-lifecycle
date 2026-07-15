@@ -4,7 +4,7 @@
 # 用法：bash scripts/validate-templates.sh
 #
 # 说明：
-#   - 检查 templates/ 目录下所有 .md 文件
+#   - 检查 templates/ 目录下 20 个 *_template.md 核心模板
 #   - 验证三项格式规范：
 #     1. 元数据表（包含"| 字段 | 值 |"或"| 字段 |"）
 #     2. 修订记录（包含"修订记录"标题）
@@ -15,10 +15,13 @@ set -euo pipefail
 
 ROOT="$(dirname "$(dirname "$0")")"
 ERRORS=0
+EXPECTED=20
+TOTAL=0
 
 echo "=== 模板验证 ==="
 
-for f in "$ROOT"/templates/*.md; do
+for f in "$ROOT"/templates/*_template.md; do
+  TOTAL=$((TOTAL+1))
   name=$(basename "$f")
   echo -n "$name: "
 
@@ -47,8 +50,13 @@ for f in "$ROOT"/templates/*.md; do
 done
 
 echo ""
-if [ $ERRORS -eq 0 ]; then
+if [ "$TOTAL" -ne "$EXPECTED" ]; then
+  echo "核心模板数量错误：$TOTAL/$EXPECTED"
+  exit 1
+elif [ $ERRORS -eq 0 ]; then
   echo "全部通过 ✓"
+  exit 0
 else
   echo "$ERRORS 项问题"
+  exit 1
 fi

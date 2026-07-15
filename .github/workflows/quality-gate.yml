@@ -16,6 +16,9 @@ jobs:
         run: |
           head -1 SKILL.md | grep -q "^---" || (echo "Missing frontmatter" && exit 1)
 
+      - name: Validate product-lifecycle Skill structure
+        run: python3 scripts/check-product-lifecycle-skill.py --root .
+
       - name: Check .claude/agents/ completeness (20 agents)
         run: |
           count=$(ls .claude/agents/*.md | wc -l)
@@ -68,7 +71,10 @@ jobs:
         run: bash scripts/validate.sh
 
       - name: Run agent tests
-        run: bash scripts/test-agents.sh || true
+        run: bash scripts/test-agents.sh
 
       - name: Run template tests
-        run: bash scripts/test-templates.sh || true
+        run: bash scripts/test-templates.sh
+
+      - name: Validate core template structure
+        run: bash scripts/validate-templates.sh

@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/jnMetaCode/superpowers-zh",
+  "version": "1.7.0",
+  "tag": "v1.7.0",
+  "commit": "84026e57664cbb4d042f22b816db250f84890d62",
+  "synced_at": "2026-07-15",
+  "skill_count": 20,
+  "license": "MIT",
+  "frontmatter_policy": [
+    "name",
+    "description"
+  ]
+}

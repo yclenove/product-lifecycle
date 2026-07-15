@@ -1,0 +1,7 @@
+interface:
+  display_name: "Product Lifecycle"
+  short_description: "Run product lifecycle roles from Codex"
+  default_prompt: "Use $pl to run a lean product lifecycle iteration for my project."
+
+policy:
+  allow_implicit_invocation: false

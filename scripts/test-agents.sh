@@ -5,6 +5,7 @@ set -euo pipefail
 ROOT="$(dirname "$(dirname "$0")")"
 errors=0
 total=0
+expected=20
 
 echo "=== Agent Prompt 测试 ==="
 
@@ -13,14 +14,13 @@ for f in "$ROOT"/agents/*.md; do
   total=$((total+1))
   echo -n "$name: "
 
-  # 检查必需章节
+  # 与 lint-prompts.sh 使用同一套核心结构口径。
   missing=0
-  for section in "任务" "输出" "质量门禁" "上下文管理"; do
-    if ! grep -q "## .*${section}" "$f"; then
-      echo -n "${section}✗ "
-      missing=$((missing+1))
-    fi
-  done
+  grep -qE "你的职责|你的核心能力|你的目标|你的工作" "$f" || { echo -n "职责✗ "; missing=$((missing+1)); }
+  grep -qE "## 产出|## 输出" "$f" || { echo -n "产出✗ "; missing=$((missing+1)); }
+  grep -q "Step 0" "$f" || { echo -n "Step0✗ "; missing=$((missing+1)); }
+  grep -q "推荐方法论 skills" "$f" || { echo -n "skills✗ "; missing=$((missing+1)); }
+  grep -q "质量门禁" "$f" || { echo -n "门禁✗ "; missing=$((missing+1)); }
 
   # 检查上下文管理指令
   if grep -q "上下文管理" "$f"; then
@@ -47,7 +47,10 @@ done
 
 echo ""
 echo "测试结果: $total 个 Agent, $errors 个失败"
-if [ $errors -eq 0 ]; then
+if [ "$total" -ne "$expected" ]; then
+  echo "Agent 数量错误：$total/$expected ✗"
+  exit 1
+elif [ $errors -eq 0 ]; then
   echo "全部通过 ✓"
   exit 0
 else

@@ -2,6 +2,37 @@
 
 根目录 `SKILL.md` 引用本文件，避免在正文中重复长表格。
 
+## 包结构与真源
+
+| 层 | 路径 | 职责 | 真源规则 |
+|---|---|---|---|
+| 执行入口 | `SKILL.md` | 触发、范围、按需路由、完成标准 | 只保留执行协议 |
+| 运行资产 | `agents/`、`templates/`、`skills/` | 角色 prompt、核心模板、方法 Skill | 业务知识真源 |
+| 宿主适配 | `.agents/`、`.claude/`、`.cursor/` | Codex、Claude Code、Cursor 的发现与薄包装 | 只解析路径并转交根 Skill |
+| 参考文档 | `docs/` | 入门、宿主指南、工作流、参考、排障 | 详细说明真源 |
+| 展示站点 | `docs-site/` | 面向人的 HTML 教程与静态资源 | 展示层，不作为 Agent 运行真源 |
+| 维护工具 | `scripts/` | 同步、校验、迭代归档、预览 | 确定性操作 |
+
+不要在 README、宿主适配器或生成站点中复制完整角色矩阵；统一链接本文件。
+
+## 双根目录
+
+- `PACKAGE_ROOT`：上述技能资产所在目录，安装后默认只读。
+- `WORKSPACE_ROOT`：当前业务项目，代码与 `docs/iterations/` 产出写在这里。
+
+全局安装时二者不同；维护本仓库时可以相同。任何宿主适配器都必须保留这一区分。
+
+## 修改归属
+
+| 要修改的内容 | 修改位置 |
+|---|---|
+| 角色职责或流程 | `agents/*.md`，再运行同步脚本 |
+| 输出格式 | `templates/*.md` |
+| 通用方法论 | `skills/<name>/` |
+| 触发和编排协议 | 根 `SKILL.md` |
+| Codex / Claude / Cursor 差异 | `docs/02-tools/` 与对应薄适配器 |
+| 用户入门导航 | 根 `README.md`、`docs/README.md` |
+
 ## 通用 Agent Prompts（`agents/`）
 
 适用于任意 AI 工具；用法：读取文件，替换 `{{PROJECT_NAME}}` 与 `{{PROJECT_DESCRIPTION}}`，在会话中作为系统/用户指令使用。**Claude Code** 优先用 `.claude/agents/`（见 `docs/02-tools/SKILL-CLAUDE-CODE.md`）。**Cursor** 推荐在业务项目 `.cursor/agents/` 中为每角色建薄 Subagent，正文 Read 本表所列 `agents/*.md`；官方亦支持加载项目内 `.claude/agents/`（与 `.cursor/agents/` 同名时以前者优先），详见 `docs/02-tools/SKILL-CURSOR.md` 与 [Cursor 文档：Subagents](https://cursor.com/docs/subagents)。
@@ -113,9 +144,9 @@
 
 **注意：** 不使用 Cursor 特有的 `@file` 语法，保持工具无关。
 
-## 其他文件
+## 延伸参考
 
-- **`docs/CONTEXT-MANAGEMENT.md`** — 多 Agent 协作时的上下文管理（摘要传递、上下文预算、交接规范）。
+- **`docs/05-advanced/CONTEXT-MANAGEMENT.md`** — 多 Agent 协作时的上下文管理（摘要传递、上下文预算、交接规范）。
 - **`examples/cloudflow.md`** — 虚构项目 CloudFlow 的完整生命周期示例（时间线与产出物清单）。
 
 
@@ -130,4 +161,4 @@
 | 模型 | 适用场景 | Agent |
 |------|----------|-------|
 | 继承用户当前模型 | 复杂推理、全局协调 | orchestrator、architect、project-manager |
-| 继承用户当前模型 | 常规任务 | 其余 17 个 Agent |
+| 继承用户当前模型 | 常规任务 | 其余 17 个 Agent |
